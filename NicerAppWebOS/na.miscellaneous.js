@@ -585,7 +585,7 @@ na.m = {
         return label in na.m.settings.waitForCondition;
     },
 
-    walkArray : function (rt, a, keyCallback, valueCallback, callKeyForValues, callbackParams, k, level, path) {
+    walkArray : function (rt, a, keyCallback, valueCallback, callKeyForValues, callbackParams, k, level, path, cd) {
     /*
      * LICENSE : https://opensource.org/license/mit
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
@@ -596,31 +596,41 @@ na.m = {
         if (typeof a !== 'object') {
             //debugger;
         } else {
-            for (var k in a) {
+            if (!cd) {
                 var
-                v = a[k],
                 cd = {
                     type : 'key',
                     path : path,
                     level : level,
                     root : rt,
+                    refs : [a],
                     at : a,
                     k : k,
                     v : v,
                     params : callbackParams
                 };
-                //if (typeof v=='object' && v!==null && typeof v.length=='number') continue;
-                if (typeof keyCallback=='function' && (callKeyForValues || typeof v==='object')) keyCallback (cd);
-                if (typeof v==='object') {
-                    cd.type = 'value';
-                    if (typeof valueCallback=='function') valueCallback(cd);
+            } else {
 
-                    na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k);
-                } else {
-                    cd.type = 'value';
-                    if (typeof valueCallback=='function') valueCallback(cd);
+            }
+            for (var k in a) {
+                if (!cd.refs.includes(a[k])) {
+                    var
+                    v = a[k];
+                    if (typeof v == 'object') cd.refs.push (v);
+                    //if (typeof v=='object' && v!==null && typeof v.length=='number') continue;
+                    if (typeof keyCallback=='function' && (callKeyForValues || typeof v==='object')) keyCallback (cd);
+                    if (typeof v==='object') {
+                        cd.type = 'value';
+                        if (typeof valueCallback=='function') valueCallback(cd);
+
+                        na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k, cd);
+                    } else {
+                        cd.type = 'value';
+                        if (typeof valueCallback=='function') valueCallback(cd);
+                    }
                 }
             }
+            if (typeof a == 'object') cd.refs.push(a);
         }
     },
 
@@ -1189,11 +1199,11 @@ na.m = {
             }
         };
 
-        //na.m.log (30, 'na.m.eventChainCheck() : report=\n'+na.m.makePlaintextReportForEventChain(ec));
-        //na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', numRootFunctions='+numRootFunctions, false);
-        //na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', validFunctions.length='+validFunctions.length, false);
+        na.m.log (30, 'na.m.eventChainCheck() : report=\n'+na.m.makePlaintextReportForEventChain(ec));
+        na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', numRootFunctions='+numRootFunctions, false);
+        na.m.log (33, 'na.m.eventChainCheck() : numCompletedFunctions='+numCompletedFunctions+', validFunctions.length='+validFunctions.length, false);
 
-        var debugMe = false;
+        var debugMe = true;
         if (!na.m.settings.completedFunctions) na.m.settings.completedFunctions = 0;
         if ( numCompletedFunctions === numRootFunctions ) {
             if (debugMe) debugger;
@@ -1231,15 +1241,17 @@ na.m = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
-        /*
-        var
-        report = {
-            plaintext : na.m.makePlaintextReportForEventChain (ec),
-            html : na.m.makeHTMLreportForEventChain (ec)
-        };
-        */
+        if (false) {
+            var
+            report = {
+                plaintext : na.m.makePlaintextReportForEventChain (ec),
+                html : na.m.makeHTMLreportForEventChain (ec)
+            };
+            console.log (report.plaintext);
+        }
         ec.completed = true;
         na.site.settings.current.loadContent.current.ec = null;
+        return true;
     },
 
     findEvent : function (ec, eventID) {
@@ -1348,7 +1360,7 @@ na.m = {
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
         if (typeof cd.v=='function') return false;
-        if (typeof cd.v=='object' && cd.v!==null && typeof cd.v.length=='number') debugger;
+        //if (typeof cd.v=='object' && cd.v!==null && typeof cd.v.length=='number') debugger; // fires too many times on many datastructures
         if (cd.v) {
             var it = cd.v;
             if (cd.k=='stacktrace') {

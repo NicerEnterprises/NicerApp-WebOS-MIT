@@ -23,6 +23,9 @@ $pageTitle = str_replace('_', '&nbsp;', $pageTitle);
 ?>
         <link type="text/css" rel="StyleSheet" media="screen" href="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/news/index.css?changed=<?php echo $naWebOS->fileDateTimeStamp(dirname(__FILE__).'/index.css');?>"/>
                 <script type="text/javascript">
+                na.site.settings.current.loadingApps = false;
+                na.site.settings.running_loadTheme = false;
+                na.site.settings.current.running_loadTheme = false;
                 if ($(window).width() < na.site.globals.smallDeviceWidth) {
                     setTimeout(function() {
                         $('#div_newsApp_info, .newsApp__header__datetime').css({display:'none'});

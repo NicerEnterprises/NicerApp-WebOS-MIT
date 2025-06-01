@@ -32,6 +32,7 @@ na.site = {
     },
     settings : {
         current : {},
+        dialogs : {},
         heldUp : {}, menus : {}, buttons : {}, eventHandlers : [],
         loadContent : {
             recent : [],
@@ -154,7 +155,7 @@ na.site = {
         var t = this;
         t.s = t.settings;
 
-        if (navigator.connection) {
+        if (navigator && navigator.connection) {
             console.log(`Effective network type: ${navigator.connection.effectiveType}`);
             console.log(`Downlink Speed: ${navigator.connection.downlink}Mb/s`);
             console.log(`Round Trip Time: ${navigator.connection.rtt}ms`);
@@ -234,7 +235,7 @@ na.site = {
                     na.te.onload('siteContent');
                     t.setSpecificity();
                     t.loadTheme();
-                }, 100);
+                }, 20);
                 t.startTooltips();
                 $('.vividDialog').css ({
                     overflow : 'hidden'
@@ -248,10 +249,9 @@ na.site = {
 
 
         na.site.transformLinks ($('#siteContent')[0]);
-        debugger;
 		History.Adapter.bind(window,'statechange', na.site.stateChange); // use HTML5 History API if available:
 
-        console.log (this);
+        //console.log (this);
         return this;
     },
 
@@ -549,11 +549,13 @@ na.site = {
             ac.url = ac.url.replace('\/\/','/');
             $.ajax(ac);
 
+            /*
             if (!url1.match(/\/view\//) && url1.indexOf('/')===0) {
                 na.analytics.logMetaEvent('na.site.loadContent() : url='+url1);
             } else {
                 na.analytics.logMetaEvent('na.site.loadContent() : url2='+url2);
             }
+            */
         };
 
         if (app && app.meta && app.meta.mustBeLoggedIn) {
@@ -714,7 +716,7 @@ na.site = {
 
 
         $('.vividDialog'/*, vdc[0]*/).each(function(idx,el){
-            if (!na.site.settings.dialogs['#'+el.id]) na.site.settings.dialogs['#'+el.id] = new naVividDialog(el);
+            if (!na.site.settings.dialogs['#'+el.id]) na.site.settings.dialogs['#'+el.id] = new vividUserInterface_2D_dialog(el);
         });
         $('#siteContent > .vividDialogContent').css({scale:1});
 
@@ -727,7 +729,7 @@ na.site = {
 
 
         $('.vividButton4, .vividButton, .vividButton_icon_50x50_siteTop, .vividButton_icon_50x50').each(function(idx,el){
-            if (!na.site.settings.buttons['#'+el.id]) na.site.settings.buttons['#'+el.id] = new naVividButton(el);
+            if (!na.site.settings.buttons['#'+el.id]) na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button(el);
         });
 
         /* i have no idea anymore what this is supposed to do! ;)
@@ -752,6 +754,29 @@ na.site = {
             +'.todoList_l2 > li > pre '
         );
     },
+
+    bindTodoListAnimations : function (selector) {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+        $(selector).each(function(idx,el) {
+            $(el).bind('mouseover', function(evt) {
+                $(evt.currentTarget).removeClass('in-active').addClass('active');
+            });
+            $(el).bind('mouseout', function(evt) {
+                $(evt.currentTarget).removeClass('active').addClass('in-active');
+                var f1 = function (evt2) {
+                    $(evt2.currentTarget).removeClass('in-active');
+                    evt2.currentTarget.removeEventListener('animationend', f1);
+                };
+                evt.currentTarget.addEventListener('animationend', f1);
+            });
+        });
+
+    },
+
 
     initializeScriptsForApps : function (ec, eventIdx, eventParams, f) {
     /*
@@ -884,6 +909,7 @@ na.site = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
+    debugger;
         if (ec) {
             var
             fncn = 'na.site.loadContent():::5::na.site.initializeApps()',
@@ -925,7 +951,6 @@ na.site = {
                             if (typeof handlers.onload == 'function') {
                                 c.divsInitializing.push ({appID:appID,divID:divID});
                                 na.m.log (50, fncn+' : #'+divID+' : Now calling na.apps.loaded["'+appID+'"].settings.loadedIn["#'+divID+'"].onload();');
-                                debugger;
                                 //setTimeout(function(){
                                     handlers.onload ({
                                         callbackParams : [ divID ],
@@ -978,6 +1003,7 @@ na.site = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
+    debugger;
         var c = na.site.settings.current;
         for (var i=0; i < c.divsInitializing.length; i++) {
             var it = c.divsInitializing[i];
@@ -1008,6 +1034,7 @@ na.site = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
+    debugger;
         var fncn = 'na.site.resizeApps()';
         if (typeof ec=='object') {
             var
@@ -1087,6 +1114,7 @@ na.site = {
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
      * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
      */
+    debugger;
         var c = na.site.settings.current;
         c.numAppsResized++;
         c.appsResizing[appID] = false;
@@ -1197,6 +1225,117 @@ na.site = {
         //setTimeout (function() {
             $.ajax(ac2);
         //}, 50);
+    },
+
+    renderAllCustomHeadingsAndLinks : function () {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+
+        return false;
+
+        /*
+        // LEGACY JS-ONLY COLOR GRADIENT HORIZONTAL ANIMATIONS (PRE-CSS3) FOLLOWS:
+
+        if (!na.site.globals.useVividTexts) return false;
+        if (jQuery('#pageTitle')[0]) {
+            if (!$('#pageTitle')[0].el) {
+                $('#pageTitle')[0].vividTextCmd = {
+                        el : $('#pageTitle')[0],
+                        theme : na.cg.themes.naColorgradientScheme_OrangeYellow,//naColorgradientScheme_GreenWhiteBlue_classics,
+                        animationType : na.vividText.globals.animationTypes[0],
+                        animationSpeed : 4 * 1000
+                };
+                na.vividText.initElement ($('#pageTitle')[0].vividTextCmd);
+            }
+        };
+        if ($('.contentSectionTitle1')[0]) {
+            $('.contentSectionTitle1').each (function(idx,el) {
+                //setTimeout (function() {
+                    el.vividTextCmd = {
+                            el : el,
+                            theme : na.cg.themes.naColorgradientScheme_OrangeYellow,
+                            animationType : na.vividText.globals.animationTypes[0],
+                            animationSpeed : 4 * 1000
+                    };
+                    na.vividText.initElement (el.vividTextCmd);
+                //}, 20 * (idx + 1) );
+            });
+        };
+        if ($('.contentSectionTitle2')[0]) {
+            $('.contentSectionTitle2').each (function(idx,el) {
+                //setTimeout (function() {
+                    el.vividTextCmd = {
+                            el : el,
+                            theme : na.cg.themes.naColorgradientSchemeMagicalBlue,
+                            animationType : na.vividText.globals.animationTypes[0],
+                            animationSpeed : 4 * 1000
+                    };
+                    na.vividText.initElement (el.vividTextCmd);
+                //}, 20 * (idx + 1) );
+            });
+        };
+        if ($('.contentSectionTitle3')[0]) {
+            $('.contentSectionTitle3').each (function(idx,el) {
+                //setTimeout (function() {
+                    el.vividTextCmd = {
+                            el : el,
+                            theme : na.cg.themes.naColorgradientSchemeGreenVividText2,//naColorgradientSchemeGreenVividText,
+                            animationType : na.vividText.globals.animationTypes[0],
+                            animationSpeed : 4 * 1000
+                    };
+                    if ($(el).parent().is('span')) $(el).css({padding:0,margin:0});
+                    na.vividText.initElement (el.vividTextCmd);
+                //}, 20 * idx);
+            });
+        };
+        setTimeout (function() {
+            var noGo = $('ul > li > a, div > center > a, .newsApp__item__outer a');
+            if ($('a').not(noGo)[0]) {
+                $('a').not(noGo).each (function(idx,el) {
+                    //setTimeout (function() {
+                        if (!el.vividTextCmd) {
+                            el.vividTextCmd = {
+                                    el : el,
+                                    theme : na.cg.themes.naColorgradientSchemeGreenVividText2,//naColorgradientSchemeGreenVividText,
+                                    animationType : na.vividText.globals.animationTypes[0],
+                                    animationSpeed : 4 * 1000
+                            };
+                            if ($(el).parent().is('span')) $(el).css({padding:0,margin:0});
+                            na.vividText.initElement (el.vividTextCmd);
+                        }
+                    //}, 20 * idx);
+                });
+            };
+        }, 500);
+        */
+    },
+
+    closeAll_2D_apps : function() {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+
+    },
+    closeAll_3D_apps : function() {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+        for (var elID in na.site.settings.na3D) {
+            var el = na.site.settings.na3D[elID];
+            if (el.settings.loadedIn) {
+                for (var divID in el.settings.loadedIn) {
+                    var div = el.settings.loadedIn[divID];
+                    if (typeof div.ondestroy=='function') div.ondestroy();
+                }
+            }
+        }
     },
     // END na.site.loadContent()
 
@@ -1604,7 +1743,7 @@ na.site = {
                 na.site.globals.themeDBkeys = na.site.globals.themesDBkeys[i];
                 //na.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
                 $('.na_themes_dropdown__specificity > .vividDropDownBox_selected').html (na.site.globals.themeDBkeys.specificityName);
-                na.te.settings.specificity = na.site.globals.themeDBkeys;
+                na.te.settings.current.specificity = na.site.globals.themeDBkeys;
             };
 
             //debugger;
@@ -1771,7 +1910,7 @@ na.site = {
     loadTheme : function (callback, theme, doGetPageSpecificSettings, doSwitchSpecificities, specificityName, loadBackground, includeClientOnlyThemes, preserveCurrentTheme, stickToCurrentSpecificity) {
         var
         fncn = 'na.loadTheme(callback,theme)',
-        s = na.te.settings.specificity,
+        s = na.te.settings.current.specificity,
         u = na.site.settings.url,
         apps = na.site.globals.app;
 
@@ -1849,6 +1988,7 @@ na.site = {
         if (typeof includeClientOnlyThemes=='undefined') includeClientOnlyThemes = true;
         if (typeof stickToCurrentSpecificity=='undefined') stickToCurrentSpecificity = true;
 
+    debugger;
         var
         state = History.getState(),
         url = state.url.replace(document.location.origin,'').replace('/view/', ''),
@@ -1861,7 +2001,7 @@ na.site = {
                 viewID : na.m.base64_encode_url(JSON.stringify(na.site.globals.app)),// url2
                 includeClientOnlyThemes : includeClientOnlyThemes || na.site.globals.specificityName.match(' client')?'true':'false',
                 stickToCurrentSpecificity : stickToCurrentSpecificity,
-                specificityName : na.te.s.c.specificity.specificityName,
+                specificityName : na.te.s.selectedThemeName,
                 c : na.m.changedDateTime_current()
             },
             success : function (data2, ts2, xhr2) {
@@ -1882,7 +2022,7 @@ na.site = {
                     } else {
                         if (theme) na.site.globals.themeName = theme;
                     }
-                    na.setSpecificity(true);
+                    na.site.setSpecificity(true);
                 }
                 setTimeout(function () {
                     if (typeof callback=='function') callback(true);
@@ -1901,7 +2041,7 @@ na.site = {
     loadTheme_do : function (callback, specificityName, theme, loadBackground) {
         var
         fncn = 'na.loadTheme_do(callback,theme)',
-        s = na.te.settings.specificity,
+        s = na.te.settings.current.specificity,
         u = na.site.settings.url,
         apps = na.site.globals.app,
         acData = {
@@ -1964,7 +2104,7 @@ na.site = {
                     var themes = JSON.parse(data);
                 } catch (error) {
                     na.m.log (10, 'na.loadTheme() : FAILED (could not decode JSON data - '+error.message+')+');
-                    na.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
+                    na.site.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
                     if (typeof callback=='function') callback(true);
 
                     // only significantly slows down startup for new viewers :
@@ -2024,7 +2164,7 @@ na.site = {
                 .each (function(idx,el) {
                     /*if (el.innerHTML === dat.specificityName) {
                         $(el).addClass('selected');
-                        na.te.settings.specificity = na.site.globals.themesDBkeys[$(el).attr('value')];
+                        na.te.settings.current.specificity = na.site.globals.themesDBkeys[$(el).attr('value')];
                     };*/
                     /*
                     var l = Object.keys(na.site.globals.themesDBkeys).length - 1;
@@ -2032,7 +2172,7 @@ na.site = {
                         $(el).parent().find('.vividDropDownBox_selected').html(el.innerHTML);
                         $(el).addClass('selected');
                         na.site.globals.specificityName = el.innerHTML;
-                        na.te.settings.specificity = na.site.globals.themesDBkeys[$(el).attr('value')];
+                        na.te.settings.current.specificity = na.site.globals.themesDBkeys[$(el).attr('value')];
                     };
                     */
 
@@ -2281,7 +2421,7 @@ na.site = {
     saveTheme : function (callback, theme, loadBackground) {
         var
         fncn = 'na.saveTheme(callback,theme)',
-        s = na.te.settings.specificity,
+        s = na.te.settings.current.specificity,
         u = na.site.components.url,
         apps = na.site.globals.app;
 

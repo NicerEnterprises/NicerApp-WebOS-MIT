@@ -2,8 +2,9 @@ class vividUserInterface_2D_dialog {
     constructor (cmd) {
         var t = this;
         t.cmd = cmd;
+        t.cmd.el = [];
 
-        t.cmd.el[0].vividUserInterface_2D_dialog = this;
+        t.cmd.el[0]     = this;
         if (!$('canvas',t.cmd.el)[0]) {
             var c = document.createElement('canvas');
             $(c).css({
@@ -14,7 +15,7 @@ class vividUserInterface_2D_dialog {
                 left : 0
 
             });
-            t.cmd.el.append(c);
+            t.cmd.el.push(c);
             t.canvas = c;
         } else {
             t.canvas = $('canvas',t.cmd.el)[0];

@@ -172,6 +172,7 @@ na.desktop = na.d = {
         na.d.s.visibleDivs.push('#siteContent');
 
         //var cr = $.extend(true, {}, na.desktop.settings.negotiateOptions );
+        debugger;
         var cr = JSON.parse(JSON.stringify(na.desktop.settings.negotiateOptions));
         while (JSON.stringify(cr).match('conditions')) {
             var cr = t.parseOptions(t, cr);
@@ -708,6 +709,7 @@ na.desktop = na.d = {
         var dd = $.extend({}, desktopDefinition);
 
         var p = { t : t, ld2 : {}, idxPath : '', idxPath2 : '/0' };
+    debugger;
         na.m.walkArray (dd, dd, null, t.parseOptions_walkValue, false, p);
 
         var

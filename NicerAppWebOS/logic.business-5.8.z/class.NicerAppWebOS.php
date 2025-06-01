@@ -103,7 +103,7 @@ class NicerAppWebOS {
             '{$desktopDefinition}' => $desktopDefinition,
             //'{$customerHTML}' => $templateCustomer,
             '{$pageSpecificCSS}' => $this->getPageCSS(),
-            //'{$theme}' => $this->cssTheme,
+            // '{$theme}' => $this->cssThemes
             //'{$viewport}' => $this->getMetaTags_viewport(),
             //'{$siteMenu_avoid}' => $siteMenu_avoid
         );
@@ -1127,7 +1127,7 @@ class NicerAppWebOS {
         $selectors = $d2['selectors'];
         if ($debug) {
             echo '<pre style="color:lime;background:green"'; var_dump ($selectors); echo '</pre>';
-            $this->echoDebugData ($selectors, $fncn.' : 2', 'naDebugData_getPageCSS');
+            // $this->echoDebugData ($selectors, $fncn.' : 2', 'naDebugData_getPageCSS');
         };
 
         $selectorsCachedFN = 'getPageCSS_'.randomString(50);
@@ -1252,7 +1252,7 @@ class NicerAppWebOS {
                     //$r .= "\tspecificityName_revert : \"".$specificityName."\",".PHP_EOL;
                     //echo '<pre style="background:navy;color:lime;border-radius:10px;">'; var_dump ($css); echo '</pre>';
                     $r .= "\tspecificityName : \"".$specificityName."\",".PHP_EOL;
-                    //$r .= "\tspecificityNames : ".json_encode($selectorNames).",".PHP_EOL;
+                    $r .= "\tspecificityNames : ".json_encode($selectorNames).",".PHP_EOL;
                     $r .= "\tthemesDBkeys : ".json_encode($selectors2, JSON_PRETTY_PRINT).",".PHP_EOL;
                     $r .= "\tnaLAN : ".($naLAN ? 'true' : 'false').','.PHP_EOL;
                     $r .= "\tnaHasErrors : ".((array_key_exists('naErrors',$_SESSION) && is_string ($_SESSION['naErrors']) && $_SESSION['naErrors']!=='') ? 'true' : 'false').','.PHP_EOL;
@@ -1276,10 +1276,10 @@ class NicerAppWebOS {
                 };
 
 
-                if ($doSetSpecificity) {
+                if (true || $doSetSpecificity) {
                     $r .= '$(document).ready(function() {'.PHP_EOL;
                     //$r .= "\tna.m.waitForCondition('HTML BODY : document.ready -> na.site.setSpecificity', na.m.HTMLidle, na.site.setSpecificity, 50);".PHP_EOL;
-                    //$r .= "\tna.setSpecificity();".PHP_EOL;
+                    $r .= "\tna.site.setSpecificity();".PHP_EOL;
                     $r .= "});".PHP_EOL;
                 }
                 $r .= '</script>'.PHP_EOL;
@@ -1296,6 +1296,7 @@ class NicerAppWebOS {
                 //$r .= "\t\tthemeName : '".$css['theme']."'".PHP_EOL;
                 //$r .= "\t});".PHP_EOL;
                 //$r .= '</script>'.PHP_EOL;
+                $r = '';
                 $r = '<style id="cssPageSpecific" type="text/css" theme="'.$theme['theme'].'" sel=\''.(json_encode($css['sel'])).'\' csn="'.$selector['specificityName'].'" dbID="'.$theme['dbID'].'">'.PHP_EOL;
                 //echo '<pre style="color:green">'; var_dump ($theme); echo '</pre>'; exit();
                 $r .= css_array_to_css2($theme['themeSettings']).PHP_EOL;

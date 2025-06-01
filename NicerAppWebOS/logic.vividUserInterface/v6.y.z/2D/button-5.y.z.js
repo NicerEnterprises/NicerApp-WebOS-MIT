@@ -16,16 +16,26 @@
 ---*/
 
 class vividUserInterface_2D_button {
-    constructor(cmd) {
+    constructor(el, cmd) {
         var t = this;
-        t.cmd = cmd;
+        t.el = el;
+        t.cmd = cmd || {};
 
-        var
-        el = cmd.el,
-        html = cmd.html,
-        parent = cmd.parent,
-        createHTML = cmd.createHTML,
-        idx = cmd.idx;
+        if (typeof cmd == 'object') {
+            var
+            el = cmd.el || el,
+            html = cmd.html || '',
+            parent = cmd.parent || '',
+            createHTML = cmd.createHTML || false,
+            idx = cmd.idx || 0;
+        } else {
+            var
+            el = el,
+            html = '',
+            parent = '',
+            createHTML = false,
+            idx = 0;
+        }
 
         t.p = parent;
         if (createHTML===undefined) createHTML = true;

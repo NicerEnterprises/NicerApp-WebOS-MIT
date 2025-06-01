@@ -27,8 +27,7 @@
         <a href="<?php echo $naURLs['docs__todoList'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">To-Do List</span></h3></a>
         <a href="<?php echo $naURLs['docs__companyOverview'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Company Overview</span></h3></a>
     </div>
-<!--<script type="text/javascript">
-    na.site.settings.current.loadingApps = false;
-    na.site.settings.current.startingApps = false;
-</script>
--->
+    <script type="text/javascript">
+        na.site.settings.current.loadingApps = false;
+        na.site.settings.current.startingApps = false;
+    </script>

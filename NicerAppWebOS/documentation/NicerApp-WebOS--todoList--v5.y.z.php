@@ -16,7 +16,8 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
 
     <li class="todoList"><div>(2025) Write an in-app tutorial API for this WebOS, for the v5 and v6 branch, in one go.</div></li>
 
-    <li class="todoList"><div>(2025) Get na.m.log() to log per datetimeRangeBegin.milliseconds to datetimeRangeEnd.milliseconds into a database on the server, for use in /view/logs as the PHP data belonging to a PHP session_id().</div></li>
+    <li class="todoList"><div>(2025) Get na.m.log() to log per datetimeRangeBegin.milliseconds to datetimeRangeEnd.milliseconds into a database on the server, for use in /view/logs as the PHP data belonging to a PHP session_id().<br/>
+    Status : Completed javascript code, now needs revamped generalizedDatabaseAPI written and called, and db businesslogic PHP code.</div></li>
 
     <li class="todoList"><div>(2025) Start doing daily testruns of all apps and features.</div></li>
 
