@@ -1682,7 +1682,7 @@ na.site = {
             var i = parseInt(j);
             if (
                 na.site.globals.themesDBkeys[i].display===false
-                || !na.site.globals.themesDBkeys[i].has_write_permission
+                //|| !na.site.globals.themesDBkeys[i].has_write_permission // TOTAL NONSENSE FOR INITIALIZING SITES WITH NO CUSTOM THEME SET YET (SO RIGHT AFTER A FIRST INSTALLATION OF NICERAPP)
             ) continue;
 
             var
