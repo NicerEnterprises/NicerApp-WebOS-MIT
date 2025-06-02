@@ -1276,10 +1276,10 @@ class NicerAppWebOS {
                 };
 
 
-                if (true || $doSetSpecificity) {
+                if ($doSetSpecificity) {
                     $r .= '$(document).ready(function() {'.PHP_EOL;
                     //$r .= "\tna.m.waitForCondition('HTML BODY : document.ready -> na.site.setSpecificity', na.m.HTMLidle, na.site.setSpecificity, 50);".PHP_EOL;
-                    $r .= "\tna.site.setSpecificity();".PHP_EOL;
+                    //$r .= "\tna.site.setSpecificity();".PHP_EOL;
                     $r .= "});".PHP_EOL;
                 }
                 $r .= '</script>'.PHP_EOL;

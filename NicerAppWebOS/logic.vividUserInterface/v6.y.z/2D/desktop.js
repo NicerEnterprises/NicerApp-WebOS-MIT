@@ -709,9 +709,9 @@ na.desktop = na.d = {
         var dd = $.extend({}, desktopDefinition);
 
         var p = { t : t, ld2 : {}, idxPath : '', idxPath2 : '/0' };
-    debugger;
+//debugger;
         na.m.walkArray (dd, dd, null, t.parseOptions_walkValue, false, p);
-
+//debugger;
         var
         dd2 = t.arrayUnique ([].concat(dd )),
         dd3 = [{}];

@@ -13,6 +13,9 @@
             <ul>
                 <li><a href="https://x.com/ReneVeerma64021/status/1925490227042263247" target="extLinkXdotCom-ReneVeerma64021-1a" class="nomod noPushState" style="color:white;">Patients to the world : Psychiatrists and their staff are all scum of the Earth!..</a></li>
                 <li><a href="https://x.com/ReneVeerma64021/status/1925498388373492185" target="extLinkXdotCom-ReneVeerma64021-1solution" class="nomod noPushState" style="color:white;">Rene AJM Veerman to the world : But they'll stop being that when they finally learn THIS trick! :-)</a></li>
+
+                <li><a href="/Geopolitical-2025-06-02" target="extLinkXdotCom-ReneVeerma64021-1solution" class="nomod noPushState" style="color:white;">Rene AJM Veerman to the world : How to peacefully party in an increasingly dictatorial world.</a></li>
+
             </ul>
             </span>
 

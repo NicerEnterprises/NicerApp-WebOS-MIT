@@ -16,6 +16,9 @@ na.m = {
 		cloneObject : {
 			circulars : []
 		},
+        walkArray : {
+            circulars : []
+        },
 		cloneObjectAsync : {
 			commands : []
 		}
@@ -585,7 +588,7 @@ na.m = {
         return label in na.m.settings.waitForCondition;
     },
 
-    walkArray : function (rt, a, keyCallback, valueCallback, callKeyForValues, callbackParams, k, level, path, cd) {
+    walkArray : function (rt, a, keyCallback, valueCallback, callKeyForValues, callbackParams, k, level, path, cmd) {
     /*
      * LICENSE : https://opensource.org/license/mit
      * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
@@ -596,41 +599,68 @@ na.m = {
         if (typeof a !== 'object') {
             //debugger;
         } else {
-            if (!cd) {
+            //debugger;
+            /*
+            if (
+                typeof cmd!=='object'
+                || typeof cmd.idx !== 'number'
+            ) {
+                var cmd = {
+                    rt : rt,
+                    a : a,
+                    refs : []
+                };
+                na.m.settings.walkArray.circulars.push (cmd);
+                cmd.idx = na.m.settings.walkArray.circulars.length - 1;
+            };*/
+            //if (!cd) {
                 var
                 cd = {
                     type : 'key',
                     path : path,
                     level : level,
                     root : rt,
-                    refs : [a],
                     at : a,
                     k : k,
                     v : v,
-                    params : callbackParams
+                    params : callbackParams//,
+                    //cmd : cmd
                 };
-            } else {
+            //} else {
 
-            }
+            //}
             for (var k in a) {
-                if (!cd.refs.includes(a[k])) {
+                //if (!cmd.refs.includes(a[k])) {
                     var
                     v = a[k];
-                    if (typeof v == 'object') cd.refs.push (v);
+                    cd.at = a;
+                    cd.k = k;
+                    cd.v = v;
+                    /*
+                    if (typeof v == 'object') {
+                        if (cmd.refs.includes(v)) continue; else cmd.refs.push (v);
+                    };
+                    */
                     //if (typeof v=='object' && v!==null && typeof v.length=='number') continue;
                     if (typeof keyCallback=='function' && (callKeyForValues || typeof v==='object')) keyCallback (cd);
                     if (typeof v==='object') {
                         cd.type = 'value';
+                        let v1 = cd.v;
+                        cd.v = a[k];
                         if (typeof valueCallback=='function') valueCallback(cd);
+                        cd.v = v1;
 
-                        na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k, cd);
+                        na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k);//, cmd);
                     } else {
                         cd.type = 'value';
+                        let v1 = cd.v;
+                        cd.v = a[k];
                         if (typeof valueCallback=='function') valueCallback(cd);
+                        cd.v = v1;
                     }
-                }
+                //}
             }
-            if (typeof a == 'object') cd.refs.push(a);
+            //if (typeof a == 'object') cmd.refs.push(a);
         }
     },
 

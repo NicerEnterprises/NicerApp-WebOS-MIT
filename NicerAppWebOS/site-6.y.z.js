@@ -155,7 +155,7 @@ na.site = {
         var t = this;
         t.s = t.settings;
 
-        if (navigator && navigator.connection) {
+        if (navigator.connection) {
             console.log(`Effective network type: ${navigator.connection.effectiveType}`);
             console.log(`Downlink Speed: ${navigator.connection.downlink}Mb/s`);
             console.log(`Round Trip Time: ${navigator.connection.rtt}ms`);
@@ -729,6 +729,7 @@ na.site = {
 
 
         $('.vividButton4, .vividButton, .vividButton_icon_50x50_siteTop, .vividButton_icon_50x50').each(function(idx,el){
+            if (el.id=='btnLockSpecificity') debugger;
             if (!na.site.settings.buttons['#'+el.id]) na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button(el);
         });
 
@@ -754,29 +755,6 @@ na.site = {
             +'.todoList_l2 > li > pre '
         );
     },
-
-    bindTodoListAnimations : function (selector) {
-    /*
-     * LICENSE : https://opensource.org/license/mit
-     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
-     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
-     */
-        $(selector).each(function(idx,el) {
-            $(el).bind('mouseover', function(evt) {
-                $(evt.currentTarget).removeClass('in-active').addClass('active');
-            });
-            $(el).bind('mouseout', function(evt) {
-                $(evt.currentTarget).removeClass('active').addClass('in-active');
-                var f1 = function (evt2) {
-                    $(evt2.currentTarget).removeClass('in-active');
-                    evt2.currentTarget.removeEventListener('animationend', f1);
-                };
-                evt.currentTarget.addEventListener('animationend', f1);
-            });
-        });
-
-    },
-
 
     initializeScriptsForApps : function (ec, eventIdx, eventParams, f) {
     /*
@@ -1235,8 +1213,6 @@ na.site = {
      */
 
         return false;
-
-        /*
         // LEGACY JS-ONLY COLOR GRADIENT HORIZONTAL ANIMATIONS (PRE-CSS3) FOLLOWS:
 
         if (!na.site.globals.useVividTexts) return false;
@@ -1310,7 +1286,6 @@ na.site = {
                 });
             };
         }, 500);
-        */
     },
 
     closeAll_2D_apps : function() {
@@ -1699,11 +1674,12 @@ na.site = {
         for (var i in na.site.globals.themesDBkeys) {
             if (
                 na.site.globals.themesDBkeys[i].display===false
-                || !na.site.globals.themesDBkeys[i].has_write_permission
+                //|| !na.site.globals.themesDBkeys[i].has_write_permission // TOTAL NONSENSE FOR INITIALIZING SITES WITH NO CUSTOM THEME SET YET (SO RIGHT AFTER A FIRST INSTALLATION OF NICERAPP)
             ) continue;
             var l = i;
         }
-        for (var i in na.site.globals.themesDBkeys) {
+        for (var j in na.site.globals.themesDBkeys) {
+            var i = parseInt(j);
             if (
                 na.site.globals.themesDBkeys[i].display===false
                 || !na.site.globals.themesDBkeys[i].has_write_permission
@@ -1719,6 +1695,9 @@ na.site = {
 
             //if (!na.site.globals.themesDBkeys[i].hasWritePermission) $(divEl).addClass('disabled');
 
+            /*
+             * TODO : URGENT : Upgrade vividButton4.2 to vividButton4.3
+            debugger;
             var
             b = na.site.components.buttons['#btnLockSpecificity'],
             b1 = b.icon_svg.settings.buttons['#btnLockSpecificity'],
@@ -1735,7 +1714,12 @@ na.site = {
                         )
                         : i == l
             );
-
+            */
+            var selectMe = (
+                        na.site.globals.themeSpecificityName === na.site.globals.themesDBkeys[i].specificityName
+                        || na.site.globals.specificityName === na.site.globals.themesDBkeys[i].specificityName
+                    );
+debugger;
             if (selectMe) {
                 //debugger;
                 $(divEl).addClass('selected');
@@ -1750,7 +1734,7 @@ na.site = {
             $('.na_themes_dropdown__specificity > .vividDropDownBox_selector > .vividScrollpane').append($(divEl).clone(true,true));
         };
 
-        na.te.s.selectedThemeName = na.site.globals.themeName;
+        na.te.settings.selectedThemeName = na.site.globals.themeName;
         for (var themeName in na.site.globals.themes) {
             var theme = na.site.globals.themes[themeName];
             for (var i in na.site.globals.themesDBkeys) {
@@ -1805,13 +1789,13 @@ na.site = {
         //$('#siteToolbarThemeEditor .vividScrollpane').not('.vividDropDownBox_selected').css({ overflow : 'visible' });
 
         //if (!na.m.desktopIdle()) {
-            na.te.s.c.selectedThemeName = na.site.globals.themeName;
+            na.te.settings.current.selectedThemeName = na.site.globals.themeName;
             //$('.themeItem').each(function(idx,ti) {
             $('.themeItem').removeClass('onfocus');
 
 /*
                 $(ti).removeClass('onfocus');
-                if ($(ti).val()==na.te.s.c.selectedThemeName) {
+                if ($(ti).val()==na.te.settings.current.selectedThemeName) {
                     $(ti).addClass('onfocus');
                 }
 */
@@ -1943,12 +1927,21 @@ na.site = {
             }
             na.site.loadTheme_doGetPageSpecificSettings (function() {
 
-                na.site.loadTheme_do (callback, specificityName, theme, loadBackground);
+                na.m.waitForCondition('na.te.settings.current.specificity?', function () {
+                    return na.te.settings.current.specificity;
+                }, function () {
+                    na.site.loadTheme_do (callback, specificityName, theme, loadBackground);
+                }, 20);
 
             }, doSwitchSpecificities, includeClientOnlyThemes, specificityName, theme, ct, stickToCurrentSpecificity);
 
         } else {
-            na.site.loadTheme_do (callback, specificityName, theme, loadBackground);
+            na.m.waitForCondition('na.te.settings.current.specificity?', function () {
+                return na.te.settings.current.specificity;
+            }, function () {
+                na.site.loadTheme_do (callback, specificityName, theme, loadBackground);
+            }, 20);
+
         };
     },
     loadTheme_initializeExtras : function () {
@@ -1988,7 +1981,6 @@ na.site = {
         if (typeof includeClientOnlyThemes=='undefined') includeClientOnlyThemes = true;
         if (typeof stickToCurrentSpecificity=='undefined') stickToCurrentSpecificity = true;
 
-    debugger;
         var
         state = History.getState(),
         url = state.url.replace(document.location.origin,'').replace('/view/', ''),
@@ -2001,7 +1993,7 @@ na.site = {
                 viewID : na.m.base64_encode_url(JSON.stringify(na.site.globals.app)),// url2
                 includeClientOnlyThemes : includeClientOnlyThemes || na.site.globals.specificityName.match(' client')?'true':'false',
                 stickToCurrentSpecificity : stickToCurrentSpecificity,
-                specificityName : na.te.s.selectedThemeName,
+                specificityName : na.site.globals.specificityName,
                 c : na.m.changedDateTime_current()
             },
             success : function (data2, ts2, xhr2) {
@@ -2022,7 +2014,7 @@ na.site = {
                     } else {
                         if (theme) na.site.globals.themeName = theme;
                     }
-                    na.site.setSpecificity(true);
+                    na.setSpecificity(true);
                 }
                 setTimeout(function () {
                     if (typeof callback=='function') callback(true);
@@ -2268,7 +2260,7 @@ na.site = {
         }, ms);
 
         if (dat.textBackgroundOpacity) {
-            na.te.s.c.textBackgroundOpacity = dat.textBackgroundOpacity;
+            na.te.settings.current.textBackgroundOpacity = dat.textBackgroundOpacity;
             $('#btnOptions_menu input.sliderOpacityRange').val(dat.textBackgroundOpacity * 100);
             /*
             $('li span, p, h1, h2, h3').css({
@@ -2425,7 +2417,7 @@ na.site = {
         u = na.site.components.url,
         apps = na.site.globals.app;
 
-        if (!na.te.s.c.forDialogID && !na.te.s.c.forElements) na.te.onload();
+        if (!na.te.settings.current.forDialogID && !na.te.settings.current.forElements) na.te.onload();
 
         //if (!theme) theme = na.site.globals.themeName;
         na.site.components.running_saveTheme = true;
