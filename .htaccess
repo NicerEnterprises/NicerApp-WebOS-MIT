@@ -706,6 +706,19 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_METHOD} ^(GET)$
 RewriteCond %{HTTP:X-Requested-With} XMLHttpRequest
+RewriteRule ^filePhoenix$ /view-content/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjoiZmlsZVBob2VuaXgifX0 [N]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_METHOD} ^(GET)$
+RewriteRule ^filePhoenix$ /view/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjoiZmlsZVBob2VuaXgifX0 [N]
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_METHOD} ^(GET)$
+RewriteCond %{HTTP:X-Requested-With} XMLHttpRequest
 RewriteRule ^analytics$ /view-content/eyJcL05pY2VyQXBwV2ViT1NcL2FwcHNcL05pY2VyQXBwV2ViT1NcL2FwcGxpY2F0aW9uc1wvMkRcL2FuYWx5dGljcyI6eyJzZW9WYWx1ZSI6ImFuYWx5dGljcyJ9fQ [N]
 
 RewriteCond %{REQUEST_FILENAME} !-f

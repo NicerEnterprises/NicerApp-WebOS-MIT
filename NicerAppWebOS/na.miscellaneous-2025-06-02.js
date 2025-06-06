@@ -600,6 +600,7 @@ na.m = {
             //debugger;
         } else {
             //debugger;
+            /*
             if (
                 typeof cmd!=='object'
                 || typeof cmd.idx !== 'number'
@@ -611,30 +612,35 @@ na.m = {
                 };
                 na.m.settings.walkArray.circulars.push (cmd);
                 cmd.idx = na.m.settings.walkArray.circulars.length - 1;
-            };
-            if (!cd) {
+            };*/
+            //if (!cd) {
                 var
                 cd = {
                     type : 'key',
                     path : path,
                     level : level,
                     root : rt,
-                    a : a,
-                    params : callbackParams,
-                    cmd : cmd
+                    at : a,
+                    k : k,
+                    v : v,
+                    params : callbackParams//,
+                    //cmd : cmd
                 };
+            //} else {
 
-            };
+            //}
             for (var k in a) {
-                if (k=='conditions') debugger;
-                if (!cmd.refs.includes(a[k])) {
-                    var v = a[k];
+                //if (!cmd.refs.includes(a[k])) {
+                    var
+                    v = a[k];
                     cd.at = a;
                     cd.k = k;
                     cd.v = v;
+                    /*
                     if (typeof v == 'object') {
                         if (cmd.refs.includes(v)) continue; else cmd.refs.push (v);
                     };
+                    */
                     //if (typeof v=='object' && v!==null && typeof v.length=='number') continue;
                     if (typeof keyCallback=='function' && (callKeyForValues || typeof v==='object')) keyCallback (cd);
                     if (typeof v==='object') {
@@ -644,8 +650,7 @@ na.m = {
                         if (typeof valueCallback=='function') valueCallback(cd);
                         cd.v = v1;
 
-
-                        na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k, cmd);
+                        na.m.walkArray (rt, a[k], keyCallback, valueCallback, callKeyForValues, callbackParams, k, level+1, path+'/'+k);//, cmd);
                     } else {
                         cd.type = 'value';
                         let v1 = cd.v;
@@ -653,9 +658,9 @@ na.m = {
                         if (typeof valueCallback=='function') valueCallback(cd);
                         cd.v = v1;
                     }
-                }
+                //}
             }
-            if (typeof a == 'object') cmd.refs.push(a);
+            //if (typeof a == 'object') cmd.refs.push(a);
         }
     },
 

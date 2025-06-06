@@ -103,9 +103,9 @@ function safeLoadJSONfile($filePath, $mustExist=true, $flush=true) {
             echo '<pre style="color:yellow;background:rgba(0,0,50,0.5);border-radius:10px;padding:8px;">';
             echo $textData;
         }
-        if ($debug)
-            file_put_contents ($filePath.'_output.txt', $textData);
-        elseif (file_exists($filePath.'_output.txt'))
+        if ($debug) {
+            // // file_put_contents ($filePath.'_output.txt', $textData);
+        } else if (file_exists($filePath.'_output.txt'))
             unlink ($filePath.'_output.txt');
 
         $jsonData = json_decode ($textData, true);
@@ -114,6 +114,7 @@ function safeLoadJSONfile($filePath, $mustExist=true, $flush=true) {
             echo '</pre>';
         }
     } catch (Exception $e) { }
+
 
     //exit();
     //echo '<pre style="color:blue">'; var_dump ($textData); echo '</pre>';
@@ -2026,8 +2027,18 @@ function negotiateOptions () {
     return $r;
 }
 
-function naWebOS_output_debug_info ($di, $mi) {
+function naWebOS_output_debug_info ($cmd=null) {
+    if (is_null($cmd)) return false;
+
+    $di = $cmd['di'];
+    $classOuterDiv = $cmd['{"HTML_className":"naWebOS-debug-outer-DIV"}'];
+    $classFieldName = $cmd['{"HTML_className":"naWebOS-field-name"}'];
+    $classFieldValue = $cmd['{"HTML_className":"naWebOS-field-value"}'];
+    $classLineRemaining = $cmd['{"HTML_className":"naWebOS-debug-lineRemaining"}'];
+    $valueLinesRemaining = $cmd['{"value":"linesRemaining"}'];
+
     global $naDebugAll;
+    $naDebugAll = true;
     if ($naDebugAll) {
         $keyCount = 0;
         $valueCount = 0;
@@ -2041,15 +2052,14 @@ function naWebOS_output_debug_info ($di, $mi) {
             'valueCount' => &$valueCount,
         );
         $callKeyForValues = false;
+        $k1 = $di['execString'];
         walkArray ( $di, /*'processBackgroundFile_key'*/null, 'processDI_value', $callKeyForValues, $params );
 
         echo PHP_EOL.PHP_EOL;
-            echo '<div class="naWebOS-debug-outer-DIV">';
-                echo '<h1 class="naWebOS-debug-line naWebOS-debug-line-key">'.PHP_EOL;
-                echo
-                    "\t".'<span class="naWebOS-field-name">'.$k1.'</span> = <span class="naWebOS-field-value naWebOS-value">'
-                    .json_encode($di,JSON_PRETTY_PRINT).'</span>'.PHP_EOL;
-                echo '</h1>'.PHP_EOL;
+            echo '<div class="'.$classOuterDiv.'">';
+                echo '<h1 class="naWebOS-debug-line naWebOS-debug-line-key">'.'<span class="'.$classFieldName.'">'.$k1.'</span></h1>'.PHP_EOL;
+                echo '<pre class="'.$classFieldValue.' naWebOS-value">'; var_dump ($di['output']); echo '</pre><br/>'.PHP_EOL;
+                echo '<div class="'.$classLineRemaining.'">'.$valueLinesRemaining.'</div>';
             echo '</div>'.PHP_EOL;
         echo PHP_EOL.PHP_EOL;
     }

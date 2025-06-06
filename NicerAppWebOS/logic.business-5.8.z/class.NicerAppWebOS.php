@@ -2206,7 +2206,15 @@ class NicerAppWebOS {
     }
 
     public function adjustPath ($fn) {
-        return str_replace('/var/www/'.$this->domainFolder, '', $fn);
+        /*
+        $dbg = [
+            '$this->path' => $this->path,
+            '$this->domain' => $this->domain,
+            '$this->domainFolder' => $this->domainFolder
+        ];
+        echo '<pre>'; var_dump ($dbg); echo '</pre>'; exit();
+        */
+        return str_replace($this->path, '', $fn);
     }
 
 

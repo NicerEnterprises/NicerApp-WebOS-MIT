@@ -329,7 +329,21 @@
             ]
         ],
         
-        
+
+        "traceroute" => [
+            'apps-current' => [
+                'NicerApp-WebOS__pageSettings' => [
+                    "misc" => [
+                       'folder' => '/NicerAppWebOS'
+                    ],
+                    "apps" => [
+                        'filePhoenix' => [
+                            'seoValue' => 'filePhoenix'
+                        ]
+                     ]
+                ]
+            ]
+        ],
         "analytics" => [
             'apps-current' => [
                 'NicerApp-WebOS__pageSettings' => [
@@ -498,6 +512,23 @@
             ]
         ],
 
+
+        "docs__companyGeopolitics" => [
+            'apps-current' => [
+                'NicerApp-WebOS__pageSettings' => [
+                    'misc' => [
+                       'folder' => '/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/NicerAppWebOS'
+                    ],
+                    "apps" => [
+                        'diskText' => [
+                            'file' => '/NicerAppWebOS/documentation/NicerEnterprises--geopolitics.php',
+                            'title' => '/NicerAppWebOS/documentation/NicerEnterprises--goepolitics.title.php',
+                            'seoValue' =>  'geopolitics'
+                        ]
+                     ]
+                ]
+            ]
+        ],
 
         "docs__companyGeopolitics" => [
             'apps-current' => [

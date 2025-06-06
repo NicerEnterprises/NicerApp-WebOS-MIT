@@ -63,7 +63,7 @@ class vividUserInterface_2D_button {
         $('img[srcPreload]',$(t.el).parent()).each(function(idx,el4) {
             $(el4).attr('src', $(el4).attr('srcPreload')).removeAttr('srcPreload');
         });        
-
+if (el.el.id='btnLockSpecificity') debugger;
         if ($(el).is('.vividButton4')) {
             t.icon_svg = new naVividButton_icon_svg (this.el, this);
         } else  if (createHTML) {

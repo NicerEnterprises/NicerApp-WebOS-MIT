@@ -42,6 +42,14 @@
                 <li><a href="https://www.usmessageboard.com/threads/male-lonliness-epidemic.1162128/post-36762341" target="extLinkUSMBdotCom-antiLoneliness-1a" class="nomod noPushState" style="color:white;">Problem Description and proposed solution.</a></li>
             </ul>
             </span>
+
+            <span style="margin:10px;">
+            <h2>The new frontline in the war on drugs is.... The Netherlands (where Tobacco is scheduled for complete prohibition in 2040 which is already noticeable in the streets and especially hospitals and trainstations - eerily reminiscent of how Jews were treated by Hitler in the 1930s).</h2>
+            <ul>
+                <li><a href="https://x.com/ReneVeerma64021/status/1929765693181788625" target="extLinkXdotCom-theFrontlineInTheWarOnDrugs-1a" class="nomod noPushState" style="color:white;">Problem Description and proposed solution.</a></li>
+            </ul>
+            </span>
+
             <!--
             <h2>Geopolitical Emergency #N: ???</h2>
             <ul>
