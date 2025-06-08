@@ -17,6 +17,7 @@ na.background = na.bg = {
                 try {
                     t.data = JSON.parse(data);
 
+                    /*
 //debugger;
                     //settings.naSite.globals.domain =nicer.app-5.8.0-alpha001c'; // TODO : get this fixed in .../NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php::TODO 1
                     //t.next ('#siteBackground', 'landscape', null, false, function() {
@@ -40,7 +41,7 @@ na.background = na.bg = {
                         };
                         $.ajax(ac2);
                     //});
-
+                    */
                 } catch (err) {
                     t.data = false;
                     t.recursive = false;

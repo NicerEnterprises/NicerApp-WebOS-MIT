@@ -154,6 +154,7 @@ na.site = {
     initialize : function (desktopDefinition) {
         var t = this;
         t.s = t.settings;
+        t.s.c = t.settings.current;
 
         if (navigator.connection) {
             console.log(`Effective network type: ${navigator.connection.effectiveType}`);
@@ -248,8 +249,10 @@ na.site = {
         //}, 5);
 
 
-        na.site.transformLinks ($('#siteContent')[0]);
+        t.transformLinks ($('#siteContent')[0]);
 		History.Adapter.bind(window,'statechange', na.site.stateChange); // use HTML5 History API if available:
+
+        t.s.c.booted = true;
 
         //console.log (this);
         return this;
@@ -754,6 +757,28 @@ na.site = {
             +'.todoList_l2 > li > div, '
             +'.todoList_l2 > li > pre '
         );
+    },
+
+    bindTodoListAnimations : function (selector) {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+        $(selector).each(function(idx,el) {
+            $(el).bind('mouseover', function(evt) {
+                $(evt.currentTarget).removeClass('in-active').addClass('active');
+            });
+            $(el).bind('mouseout', function(evt) {
+                $(evt.currentTarget).removeClass('active').addClass('in-active');
+                var f1 = function (evt2) {
+                    $(evt2.currentTarget).removeClass('in-active');
+                    evt2.currentTarget.removeEventListener('animationend', f1);
+                };
+                evt.currentTarget.addEventListener('animationend', f1);
+            });
+        });
+
     },
 
     initializeScriptsForApps : function (ec, eventIdx, eventParams, f) {
@@ -1354,51 +1379,51 @@ na.site = {
             && typeof na.apps.loaded[na.site.settings.app].preResize == 'function'
         ) na.apps.loaded[na.site.settings.app].preResize ( {} );
 
-        na.desktop.resize(function (div, calculationResults, sectionIdx, section, divOrderIdx) {
-            if (!settings) settings = {};
-            if (!settings.finalized) {
-                settings.finalized = true;
+        na.desktop.resize(
+            function (div, calculationResults, sectionIdx, section, divOrderIdx) {
+                if (!settings) settings = {};
+                if (!settings.finalized) {
+                    settings.finalized = true;
 
-                na.site.settings.siteInitialized = true;
+                    na.site.settings.siteInitialized = true;
 
-                na.site.reloadMenu();
+                    na.site.reloadMenu();
 
-                na.site.onresize_doContent(settings);
+                    na.site.onresize_doContent(settings);
 
 
 
-                if (typeof settings=='object' && typeof settings.callback=='function') {
+                    if (typeof settings=='object' && typeof settings.callback=='function') {
 
-                    var cb2 = function (settings) {
-                        settings.callback = settings.callback_naSiteOnresize;
-                        delete settings.callback_naSiteOnresize;
-                        if (
-                            (typeof settings=='object' && settings.reloadMenu===true)
-                        ) na.site.reloadMenu(settings);
-                        else if (typeof settings=='object' && typeof settings.callback=='function') settings.callback();
-                    }
+                        var cb2 = function (settings) {
+                            settings.callback = settings.callback_naSiteOnresize;
+                            delete settings.callback_naSiteOnresize;
+                            if (
+                                (typeof settings=='object' && settings.reloadMenu===true)
+                            ) na.site.reloadMenu(settings);
+                            else if (typeof settings=='object' && typeof settings.callback=='function') settings.callback();
+                        }
 
-                    var cb = settings.callback;
-                    settings.callback_naSiteOnresize = cb;
-                    settings.callback = function() {
-                        na.site.settings.numAppsResizing = 0;
-                        na.site.settings.numAppsResized = 0;
-                        na.site.settings.appsResizing = {};
-                        cb2(settings);
-                    };
-                } else
-                    settings.callback = function() {
-                        na.site.settings.numAppsResizing = 0;
-                        na.site.settings.numAppsResized = 0;
-                        na.site.settings.appsResizing = {};
-                        //cb2(settings);
-                    };
+                        var cb = settings.callback;
+                        settings.callback_naSiteOnresize = cb;
+                        settings.callback = function() {
+                            na.site.settings.numAppsResizing = 0;
+                            na.site.settings.numAppsResized = 0;
+                            na.site.settings.appsResizing = {};
+                            cb2(settings);
+                        };
+                    } else
+                        settings.callback = function() {
+                            na.site.settings.numAppsResizing = 0;
+                            na.site.settings.numAppsResized = 0;
+                            na.site.settings.appsResizing = {};
+                            //cb2(settings);
+                        };
 
-                na.site.resizeApps(settings.callback);
+                    na.site.resizeApps(settings.callback);
+                }
             }
-        });
-
-
+        );
     },
 
 

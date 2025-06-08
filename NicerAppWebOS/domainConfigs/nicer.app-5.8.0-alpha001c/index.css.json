@@ -3,5 +3,6 @@
     "/NicerAppWebOS/3rd-party/jQuery/spectrum/dist/spectrum.css",
     "/NicerAppWebOS/domainConfigs/{$domain}/index.css",
     "/NicerAppWebOS/domainConfigs/{$domain}/index.dark.css",
+    "/NicerAppWebOS/domainConfigs/{$domain}/index.textDecorations.dark.css",
     "/NicerAppWebOS/domainConfigs/{$domain}/errors.css"
 ]

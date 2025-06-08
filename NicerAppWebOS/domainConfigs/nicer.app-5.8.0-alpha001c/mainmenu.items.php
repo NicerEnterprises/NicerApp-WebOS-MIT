@@ -338,7 +338,7 @@
                     ],
                     "apps" => [
                         'filePhoenix' => [
-                            'seoValue' => 'filePhoenix'
+                            'seoValue' => ['filePhoenix', 'FilePhoenix']
                         ]
                      ]
                 ]

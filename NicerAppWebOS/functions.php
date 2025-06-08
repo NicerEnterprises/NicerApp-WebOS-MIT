@@ -103,9 +103,9 @@ function safeLoadJSONfile($filePath, $mustExist=true, $flush=true) {
             echo '<pre style="color:yellow;background:rgba(0,0,50,0.5);border-radius:10px;padding:8px;">';
             echo $textData;
         }
-        if ($debug) {
-            // // file_put_contents ($filePath.'_output.txt', $textData);
-        } else if (file_exists($filePath.'_output.txt'))
+        if ($debug)
+            file_put_contents ($filePath.'_output.txt', $textData);
+        elseif (file_exists($filePath.'_output.txt'))
             unlink ($filePath.'_output.txt');
 
         $jsonData = json_decode ($textData, true);
@@ -114,7 +114,6 @@ function safeLoadJSONfile($filePath, $mustExist=true, $flush=true) {
             echo '</pre>';
         }
     } catch (Exception $e) { }
-
 
     //exit();
     //echo '<pre style="color:blue">'; var_dump ($textData); echo '</pre>';
@@ -680,10 +679,22 @@ function ascii2hex($ascii) {
 
 
 function base64_encode_url($string) {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+
     return str_replace(['+','/','='], ['-','_',''], base64_encode($string));
 }
 
 function base64_decode_url($string) {
+    /*
+     * LICENSE : https://opensource.org/license/mit
+     * (C) +-2020AD to 2025AD (possibly later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+     * (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+     */
+
     return base64_decode(str_replace(['-','_'], ['+','/'], $string));
 }
 
@@ -2027,6 +2038,49 @@ function negotiateOptions () {
     return $r;
 }
 
+function naWebOS_output_debug_parseColor($cmd, $colorname) {
+    $intermediate = '{"color":"'.$colorname.'"}';
+    $color = $cmd[$intermediate];
+    //ob_end_clean(); echo $color; die();
+    return $color;
+}
+function naWebOS_output_debug_command ($cmd=null) {
+    if (is_null($cmd)) return false;
+
+    $di = $cmd['di'];
+    $classOuterDiv = $cmd['{"HTML_className":"naWebOS-debug-outer-DIV"}'];
+    $classFieldName = $cmd['{"HTML_className":"naWebOS-field-name"}'];
+    $classFieldValue = $cmd['{"HTML_className":"naWebOS-field-value"}'];
+    $classLineRemaining = $cmd['{"HTML_className":"naWebOS-debug-lineRemaining"}'];
+    $valueLinesRemaining = $cmd['{"value":"linesRemaining"}'];
+    $colorHostnamectl = $cmd['{"color":"hostnamectl"}'];
+    $colorTracerouteVersion = $cmd['{"color":"tracerouteVersion"}'];
+    $colorTracerouteResults = $cmd['{"color":"tracerouteResults"}'];
+    $colorTracerouteResultLine = $cmd['{"color":"tracerouteResultLine"}'];
+    $selectedColor_outerDiv = $cmd['{"colorSelection_outerDiv":"determinedInUpwardFunction"}'];
+    if (strpos($selectedColor_outerDiv,',')!==-1) {
+        $p = explode(',',$selectedColor_outerDiv);
+        $c = [];
+        foreach ($p as $k=>$v) {
+            $vp = explode(':',$v);
+            if (is_int($vp[0])) $c[intval($vp[0])] = naWebOS_output_debug_parseColor($cmd, $v[1]);
+            if ($vp[0]=='N') $c['N'] = naWebOS_output_debug_parseColor($cmd, $v[1]);
+
+        }
+    }
+    $k1 = $di['matches'][1][0];
+    $divID = $di['idx'];
+
+    $r = '<div id="lineCommand_'.$divID.'" class="vdToolbar vividDialog '.$classOuterDiv.'" style="position:relative;display:inline-block;height:content-height;width:content-width;'.naWebOS_output_debug_parseColor($cmd, ($i>0?$c['N']:$c[$i])).'">';
+    $r .= "\t".'<div class="vividDialogBackground1"></div>';
+    $r .= "\t".'<div class="vividDialogContent vividScrollpane" style="overflow:visible;overflow-y:auto;">';
+    $r .= "\t\t".'<h1 class="naWebOS-debug-line naWebOS-debug-line-key"><span class="'.$classFieldName.'">'.$k1.'></span></h1>';
+    $r .= "\t\t".'<pre class="'.$classFieldValue.' naWebOS-value">'.json_encode($di, JSON_PRETTY_PRINT).'</pre><br/>';
+    $r .= '</div></div>'.PHP_EOL.PHP_EOL;
+    return $r;
+}
+
+
 function naWebOS_output_debug_info ($cmd=null) {
     if (is_null($cmd)) return false;
 
@@ -2036,33 +2090,48 @@ function naWebOS_output_debug_info ($cmd=null) {
     $classFieldValue = $cmd['{"HTML_className":"naWebOS-field-value"}'];
     $classLineRemaining = $cmd['{"HTML_className":"naWebOS-debug-lineRemaining"}'];
     $valueLinesRemaining = $cmd['{"value":"linesRemaining"}'];
-
-    global $naDebugAll;
-    $naDebugAll = true;
-    if ($naDebugAll) {
-        $keyCount = 0;
-        $valueCount = 0;
-        $params = array (
-            'root' => $di,
-            'webRoot' => $webRoot,
-            'recursive' => true,
-            'a' => &$di,
-            'prevLevel' => 0,
-            'keyCount' => &$keyCount,
-            'valueCount' => &$valueCount,
-        );
-        $callKeyForValues = false;
-        $k1 = $di['execString'];
-        walkArray ( $di, /*'processBackgroundFile_key'*/null, 'processDI_value', $callKeyForValues, $params );
-
-        echo PHP_EOL.PHP_EOL;
-            echo '<div class="'.$classOuterDiv.'">';
-                echo '<h1 class="naWebOS-debug-line naWebOS-debug-line-key">'.'<span class="'.$classFieldName.'">'.$k1.'</span></h1>'.PHP_EOL;
-                echo '<pre class="'.$classFieldValue.' naWebOS-value">'; var_dump ($di['output']); echo '</pre><br/>'.PHP_EOL;
-                echo '<div class="'.$classLineRemaining.'">'.$valueLinesRemaining.'</div>';
-            echo '</div>'.PHP_EOL;
-        echo PHP_EOL.PHP_EOL;
+    $colorHostnamectl = $cmd['{"color":"hostnamectl"}'];
+    $colorTracerouteVersion = $cmd['{"color":"tracerouteVersion"}'];
+    $colorTracerouteResults = $cmd['{"color":"tracerouteResults"}'];
+    $colorTracerouteResultLine = $cmd['{"color":"tracerouteResultLine"}'];
+    $selectedColor_outerDiv = $cmd['{"colorSelection_outerDiv":"determinedInUpwardFunction"}'];
+    //echo $selectedColor_outerDiv.'<br/>';
+    if (strpos($selectedColor_outerDiv,',')!==false) {
+        $p = explode(',',$selectedColor_outerDiv);
+        $c = [];
+        foreach ($p as $k=>$v) {
+            $vp = explode(':',$v);
+            if (is_numeric($vp[0])) $c[intval($vp[0])] = naWebOS_output_debug_parseColor($cmd, $v[1]);
+            if ($vp[0]=='N') $c['N'] = naWebOS_output_debug_parseColor($cmd, $v[1]);
+        }
     }
+
+    /*
+    $keyCount = 0;
+    $valueCount = 0;
+    $params = array (
+        'root' => $di,
+        'webRoot' => $webRoot,
+        'recursive' => true,
+        'a' => &$di,
+        'prevLevel' => 0,
+        'keyCount' => &$keyCount,
+        'valueCount' => &$valueCount,
+    );
+    $callKeyForValues = false;*/
+    $k1 = $di['matches'][1][0];
+    $divID = $di['idx'];
+    $i = $di['idx'];
+    if (!array_key_exists('idx2',$di)) $di['idx2'] = -1;
+    $j = ++$di['idx2'];
+
+    $r = '<div id="lineInfo_'.$i.'_'.$j.'" class="vdToolbar vividDialog '.$classOuterDiv.'" style="position:relative;display:inline-block;height:content-height;width:content-width;'.naWebOS_output_debug_parseColor($cmd, ($i>0?$c['N']:$c[$i])).'">';
+    $r .= "\t".'<div class="vividDialogBackground1"></div>';
+    $r .= "\t".'<div class="vividDialogContent vividScrollpane" style="overflow:visible;overflow-y:auto;">';
+    $r .= "\t\t".'<h1 class="naWebOS-debug-line naWebOS-debug-line-key"><span class="'.$classFieldName.'">'.$k1.'></span></h1>';
+    $r .= "\t\t".'<pre class="'.$classFieldValue.' naWebOS-value">'.json_encode($di, JSON_PRETTY_PRINT).'</pre><br/>';
+    $r .= '</div></div>'.PHP_EOL.PHP_EOL;
+    return $r;
 }
 
 function processDI_value ($cd) {

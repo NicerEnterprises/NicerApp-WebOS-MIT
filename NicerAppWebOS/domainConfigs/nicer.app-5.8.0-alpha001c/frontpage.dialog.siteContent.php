@@ -5,13 +5,13 @@
     require_once ($naWebOS->basePath.'/NicerAppWebOS/domainConfigs/'.$naWebOS->domainFolder.'/pageHeader.php');
 ?>
     <script type="text/javascript">
-        ///delete na.site.settings.current.app;
-        /*setTimeout(function() {
+        delete na.site.settings.current.app;
+        setTimeout(function() {
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarLeft');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarRight');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarTop');
             na.desktop.resize();
-        }, 100);*/
+        }, 100);
     </script>
 
     <div style="width:40%;color:black;background:rgba(250, 233, 52,0.35);font-size:120%;margin:10px;font-weight:bold;padding:8px;border-radius:10px;text-shadow:0px 0px 3px rgba(255,0,0,0.7);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.666), 2px 2px 2px rgba(0,0,0,0.7);">
@@ -21,7 +21,7 @@
     </blockquote>
     <meta name="description" content="Take a video or (tiled) background of any resolution, and project information onto that using any weblanguage you want. Written in a style simple enough for children to learn from.">
     <p style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge yellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 2px rgba(255,255,255,0.555), 3px 3px 3px 5px rgba(0,0,0,0.7);">
-    This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px; color:lime;">5th major version (5.8.0-alpha001c to be exact)</span></a> of this software.
+    This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS-2025AD" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px; color:lime;">5th major version (2025AD 5.8.0-alpha001c to be exact)</span></a> of this software.
     </p>
     <p style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge yellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 2px rgba(255,255,255,0.555), 3px 3px 3px 5px rgba(0,0,0,0.7);">
     You should disable your VPN (if you can), or at least for this website. VPNs significantly reduce loading speed for websites like these, rich in graphics and client-side user-interface code.
@@ -69,19 +69,18 @@
 
     <h2 class="contentSectionTitle1" ><span class="contentSectionTitle1_span">Alpha</span></h2>
     <a href="/wiki/frontpage" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Wikipedia.org view</span></h3></a><br/>
-    <a href="/filePhoenix" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">NicerEnterprises FilePhoenix</span></h3></a><br/>
 
     <h2 class="contentSectionTitle1" ><span class="contentSectionTitle1_span">Demos</span></h2>
     <a href="<?php echo $naURLs['3Dcube'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">3D demo : cube</span></h3></a>
     <a href="<?php echo $naURLs['3Dmodels'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">3D demo : loading of models (slow to start up)</span></h3></a>
     <a href="<?php echo $naURLs['backgroundsBrowser'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">3D file explorer</span></h3></a>
 
-    
+    <h2 class="contentSectionTitle1"><span class="contentSectionTitle1_span">Administrative features</span></h2>
+    <a href="/filePhoenix" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">NicerEnterprises FilePhoenix</span></h3></a><br/>
 <?php 
     global $naLAN; 
     if ($naLAN) { 
 ?>
-    <h2 class="contentSectionTitle1"><span class="contentSectionTitle1_span">Administrative features</span></h2>
 
     <a href="<?php echo $naURLs['analytics'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Analytics</span></h3></a>
 
@@ -107,8 +106,8 @@
         <p><a class="noPushState" href="https://GitHub.com" target="naGitHubContractorDeal">GitHub.com</a> : 3% of my total yearly revenue, whatever size my (x.com/ReneVeerma4021) companies reach.</p>
         -->
 
-        <p style="background:none;"><a href="https:/facebook.com/rene.veerman.90">https://facebook.com/rene.veerman.90</a></p>
         <p style="background:none;"><a href="https://x.com/ReneVeerma64021">https://x.com/ReneVeerma64021</a>.</p>
+        <p style="background:none;"><a href="https:/facebook.com/rene.veerman.90">https://facebook.com/rene.veerman.90</a></p>
         <p style="background:none;"><a href="https://youtube.com/@cheetahKungFu">https://youtube.com/@cheetahKungFu</a> a free video Youtube address where a free video tutorial can be found on the latest top-notch martial-arts training methods and techniques, with excellent music as backdrop for "the self-defense moves".</p>
 
         <p style="background:none;">

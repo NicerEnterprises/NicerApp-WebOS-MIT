@@ -168,11 +168,9 @@ na.desktop = na.d = {
 
         if (!na.d.s.visibleDivs.includes('#siteTaskbar')) na.d.s.visibleDivs.push('#siteTaskbar');
         //na.d.s.visibleDivs.push('#siteToolbarThemeEditor');
-        if (!na.d.s.visibleDivs.includes('#siteContent'))
-        na.d.s.visibleDivs.push('#siteContent');
+        if (!na.d.s.visibleDivs.includes('#siteContent')) na.d.s.visibleDivs.push('#siteContent');
 
         //var cr = $.extend(true, {}, na.desktop.settings.negotiateOptions );
-        debugger;
         var cr = JSON.parse(JSON.stringify(na.desktop.settings.negotiateOptions));
         while (JSON.stringify(cr).match('conditions')) {
             var cr = t.parseOptions(t, cr);
@@ -203,6 +201,7 @@ na.desktop = na.d = {
                 if (sectionKeys[j]===sectionID) var sectionIdx = j;
             };
 
+            if (!na.site.s.c.booted)
             for (var divID in na.d.g.defaultPos) {
                 $(divID).css(na.d.g.defaultPos[divID]);
             }
@@ -450,18 +449,55 @@ na.desktop = na.d = {
                                         easing : 'swing',
                                         complete : function() {
                                             na.d.s.animatingDivs[divID] = false;
-                                            na.d.masterCallback(callback, $(divID)[0], calculationResults, sectionIdx, section, i)
+                                            na.d.masterCallback(callback, $(divID)[0], calculationResults, sectionIdx, section, i);
+                                            if (!na.site.s.c.booted)
+                                                if (na.d.s.animate) {
+                                                    $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
+                                                } else {
+                                                    na.d.s.animatingDivs[divID] = false;
+                                                    $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
+                                                }
                                         }
                                 };
-                                if (na.d.s.animate) {
-                                    $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
-                                } else {
-                                    na.d.s.animatingDivs[divID] = false;
-                                    $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
-                                }
+
+                                /*
+                                if (na.site.s.c.booted)
+                                    if (na.d.s.animate) {
+                                        $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
+                                    } else {
+                                        na.d.s.animatingDivs[divID] = false;
+                                        $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
+                                    }*/
+
                             } else {
                                 // for mobile phones, use plain $(...).css() calls, for desktops, use $(...).animate() calls,
                                 // and don't forget to call the callback functions of course
+                                var options = {
+                                        queue : true,
+                                        duration : na.d.g.animationSpeed,
+                                        easing : 'swing',
+                                        complete : function() {
+                                            na.d.s.animatingDivs[divID] = false;
+                                            na.d.masterCallback(callback, $(divID)[0], calculationResults, sectionIdx, section, i);
+                                            /*
+                                            if (!na.site.s.c.booted)
+                                                if (na.d.s.animate) {
+                                                    $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
+                                                } else {
+                                                    na.d.s.animatingDivs[divID] = false;
+                                                    $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
+                                                }*/
+                                        }
+                                };
+                                /*
+                                if (na.site.s.c.booted)
+                                    if (na.d.s.animate) {
+                                        $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
+                                    } else {
+                                        na.d.s.animatingDivs[divID] = false;
+                                        $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
+                                    }*/
+
                                 if (divID=='#siteContent') {
                                     if (na.d.s.animate) {
                                         $(divID).css ({
@@ -473,11 +509,18 @@ na.desktop = na.d = {
                                             height : divs[divID].height,
                                             opacity : 1
                                         }, {
-                                            queue : false,
+                                            queue : true,
                                             duration : na.d.g.animationSpeed,
                                             complete : function () {
                                                 na.d.s.animatingDivs[divID] = false;
                                                 na.d.masterCallback(callback, $(divID)[0], calculationResults, sectionIdx, section, i);
+                                                /*if (!na.site.s.c.booted)
+                                                    if (na.d.s.animate) {
+                                                        $(divID).stop(true,true,false).animate(na.d.g.defaultPos[divID],options);
+                                                    } else {
+                                                        na.d.s.animatingDivs[divID] = false;
+                                                        $(divID).stop(true,true,false).css(na.d.g.defaultPos[divID]);
+                                                    }*/
                                             }
                                         });
                                         if (na.site.settings.na3D)
@@ -508,7 +551,7 @@ na.desktop = na.d = {
                                             height : divs[divID].height,
                                             opacity : 1
                                         }, {
-                                        queue : false,
+                                            queue : true,
                                             duration : na.d.g.animationSpeed,
                                             easing : 'swing',
                                             progress : function () {
@@ -556,7 +599,7 @@ na.desktop = na.d = {
                                         width : divs[divID].width,
                                         height : divs[divID].height
                                     }, options = {
-                                        queue : false,
+                                        queue : true,
                                         duration : na.d.g.animationSpeed,
                                         easing : 'swing',
                                         progress : function () {

@@ -1,21 +1,6 @@
 :root {
   --mainDelay : 0.25s;
 }
-body {
-  color : white;
-}
-p { padding : 5px; }
-a.backdropped {
-  background : rgba(0,0,0,0.555);
-  padding : 5px;
-  margin : 4px;
-  border-radius : 8px;
-  line-height : 1.2em;
-  vertical-align : inherit;
-  display : inline-block;
-  text-wrap : nowrap;
-}
-a:hover text { fill: #0095DD; pointer-events: all;}
 
 #siteBackground {
   background : url(/NicerAppWebOS/siteMedia/backgrounds/tiled/grey/seamless_texture_of_ice.jpg) repeat;
@@ -106,7 +91,6 @@ a:hover text { fill: #0095DD; pointer-events: all;}
   padding : 10px;
   top : calc(50% - 25px);
   left : calc(50% - 25px);
-  color : white;
   width : calc(50px);
   height : calc(50px);
   z-index : 1000;
@@ -401,7 +385,6 @@ a:hover text { fill: #0095DD; pointer-events: all;}
     padding : 4px;
 }
 .vividButton {
-    color : white;
     border : 2px ridge rgba(255,255,255,0.7);
     border-radius : 14px;
     padding : 4px;
@@ -413,7 +396,6 @@ a:hover text { fill: #0095DD; pointer-events: all;}
     background-image: linear-gradient(bottom, rgba(0,0,0,0.57) 25%, rgba(40,40,40,0.57) 81%);
 }
 .vividButton {
-    color : white;
     border-radius : 14px;
     padding : 4px;
     margin : 3px;
@@ -439,10 +421,6 @@ a:hover text { fill: #0095DD; pointer-events: all;}
     margin : 3px;
     z-index : 1;
     pointer-events : none;
-}
-.vividButton a, .vividButton.selected a, .vividButtonSelected a {
-  color : lime;
-  text-decoration : none;
 }
 .vividButton:before {
     content: "";
@@ -608,110 +586,6 @@ a:hover text { fill: #0095DD; pointer-events: all;}
 
 
 
-@keyframes move-bg {
-  to {
-    background-position: var(--bg-size) 0;
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .boujee-text {
-  animation: move-bg 8s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  }
-  @keyframes move-bg {
-    to {
-      background-position: var(--bg-size) 0;
-    }
-  }
-}
-
-
-
-
-.contentSectionTitle1_span, .animatedText_orangeYellow, .naPageTitle {
-  --bg-size: 400%;
-  --color-one-orangeYellow: orange;
-  --color-two-orangeYellow: yellow;
-  background: linear-gradient(
-                315deg,
-                var(--color-one-orangeYellow),
-                var(--color-two-orangeYellow),
-                var(--color-one-orangeYellow)
-              ) 0 0 / var(--bg-size) 100%;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: move-bg 8s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 3px 3px 2px rgba(0,0,0,0.4), 0px 0px 3px rgba(255,255,255,0.35);
-  font-weight : bold;
-  position : relative;
-}
-.contentSectionTitle2_span, .animatedText_blue, .naExternalLink {
-  --bg-size: 400%;
-  --color-one-blue: #005070;
-  --color-two-blue: #0077FF;
-  background: linear-gradient(
-                315deg,
-                var(--color-one-blue),
-                var(--color-two-blue),
-                var(--color-one-blue)
-              ) 0 0 / var(--bg-size) 100%;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: move-bg 8s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 0px 0px 2px rgba(255,255,255,0.3), 3px 3px 2px rgba(0,0,0,0.5);
-  position : relative;
-}
-.contentSectionTitle3_span, .animatedText_green, .naInternalLink {
-  --bg-size: 400%;
-  --color-one-green: #007050;
-  --color-two-green: #00FF77;
-  background: linear-gradient(
-                315deg,
-                var(--color-one-green),
-                var(--color-two-green),
-                var(--color-one-green)
-              ) 0 0 / var(--bg-size) 100%;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: move-bg 8s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 0px 0px 3px rgba(255,255,255,0.4), 3px 3px 3px rgba(0,0,0,0.8);
-  position : relative;
-}
-.contentSection1_span, .animatedText_ivory, .naText {
-  --bg-size: 400%;
-  --color-one-ivory: ivory;
-  --color-two-ivory: pink;
-  background: linear-gradient(
-                315deg,
-                var(--color-one-ivory),
-                var(--color-two-ivory),
-                var(--color-one-ivory)
-              ) 0 0 / var(--bg-size) 100%;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: move-bg 8s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 0px 0px 3px rgba(255,255,255,0.4), 3px 3px 3px rgba(0,0,0,0.8);
-  position : relative;
-}
-
-
-.preDirsList {
-  color : lime;
-  background : rgba(0,0,78,0.555);
-  border-radius : 5px;
-  margin : 5px;
-  padding : 5px;
-}
-.preFilesList {
-  color : white;
-  background : rgba(0,0,250,0.555);
-  border-radius : 5px;
-  margin : 5px;
-  padding : 5px;
-}
 
 
 .vividButton_icon_50x50_text {
@@ -853,6 +727,8 @@ select[multiple] {
   margin-top: 2rem;
 }
 /* END thanks https://freefrontend.com/css-select-boxes/ and https://codepen.io/5t3ph/pen/MWyyYNz */
+
+
 #specificitySettings {
   display: flex;
   flex-flow: row wrap;
@@ -1046,8 +922,6 @@ label {
 }
 
 
-
-
 #site3D_label {
     background : rgba(0,0,50,0.5);
     box-shadow : inset 2px 2px 1px 1px rgba(255,255,255,0.5), 4px 4px 3px 2px rgba(0,0,0,0.5);
@@ -1149,68 +1023,11 @@ label {
     width : 130px;
 }
 
+#siteToolbarThemeEditor {
+  left : -400px;
+}
 
 
-
-
-
-.contentSectionTitle3_a {
-  text-decoration : none;
-}
-.contentSectionTitle3_a h3 {
-    color : transparent;
-}
-.contentSectionTitle3_a span {
-  --bg-size: 400%;
-  --color-n-lime : lime;
-  --color-np1-cyan : cyan;
-  background: linear-gradient(
-                135deg,
-                var(--color-n-lime),
-                var(--color-np1-cyan),
-                var(--color-n-lime)
-              ) 0 0 / var(--bg-size) 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: move-bg 5s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 2px 2px 2px rgba(0,0,0,0.55);
-  position : relative;
-}
-.contentSectionTitle3_a:visited span {
-  --bg-size: 400%;
-  --color-one-grey : #BBB;
-  --color-two-white : #FFFFFF;
-  background: linear-gradient(
-                315deg,
-                var(--color-one-grey),
-                var(--color-two-white),
-                var(--color-one-grey)
-              ) 0 0 / var(--bg-size) 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: move-bg 5s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 2px 2px 2px rgba(0,0,0,0.55);
-  position : relative;
-}
-.contentSectionTitle3_a:hover span {
-  --bg-size: 400%;
-  --color-one-lime : lime;
-  --color-two-yellow : yellow;
-  background: linear-gradient(
-                90deg,
-                var(--color-one-lime),
-                var(--color-two-yellow),
-                var(--color-one-lime)
-              ) 0 0 / var(--bg-size) 100%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: move-bg 5s infinite cubic-bezier(0.11, 0, 0.5, 0);
-  text-shadow : 2px 2px 2px rgba(0,0,0,0.55);
-  position : relative;
-}
 
 
 

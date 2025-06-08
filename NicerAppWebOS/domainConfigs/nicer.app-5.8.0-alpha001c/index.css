@@ -6,6 +6,13 @@ body {
 .flexLinebreak {
   width : 100%;
 }
+.linkContainer {
+    display : flex;
+    justify-content : left;
+    align-items : center;
+    width : 80%;
+    left : 10%;
+}
 
 #siteBackground {
   position : absolute;

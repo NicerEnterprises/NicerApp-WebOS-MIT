@@ -235,7 +235,7 @@ import { naLogo } from '/NicerAppWebOS/na.canvasLogo-4.y.z.js?f=u';
     <div id="siteLoginLogout" class="vividDialogPopup">
         <div id="siteLoginLogout_background" class="vividDialogPopup_background"></div>
     </div>
-    </
+
         <div id="siteRegistration" class="vividDialogPopup vividScrollpane">
         <div id="siteRegistrationContainer">
             <form id="siteRegistrationForm" name="siteRegistrationForm" action="/register.php" method="POST">
