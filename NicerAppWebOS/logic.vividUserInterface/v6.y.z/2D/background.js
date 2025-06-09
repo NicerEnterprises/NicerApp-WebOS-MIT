@@ -148,7 +148,7 @@ na.background = na.bg = {
             var url = hits[Math.floor(Math.random() * Math.floor(hits.length))];
         };
         na.m.log (20, fncn+' : url='+url, true);
-debugger;
+//debugger;
         t.settings.div = div;
 
         var
@@ -163,7 +163,7 @@ debugger;
                 bgDiv = $(div+'_bg')[0],
                 bgDiv2 = $(div+'_bg2')[0];
                 if (!bgl) debugger;
-debugger;
+//debugger;
 
                 if (url.match('tiled')) {
                     $(bgf).add(bgl).fadeOut('slow');

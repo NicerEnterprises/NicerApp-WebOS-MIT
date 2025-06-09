@@ -1,5 +1,13 @@
 if (typeof na!=='object') { var NicerApp_WebOS = nicerapp = na = {}; }
 na.desktop = na.d = {
+
+    settings : { // Do not touch any of these startup values here. use na.d.initialize() instead!
+        visibleDivs : [ '#siteContent', '#siteTaskbar' ],
+        animating : true
+
+
+    },
+
     initialize (settings) {
         var t = this;
         t.g = {
@@ -821,3 +829,4 @@ na.desktop = na.d = {
         return a;
     }
 }
+na.d.s = na.d.settings;

@@ -6,7 +6,7 @@
 ?>
     <script type="text/javascript">
         delete na.site.settings.current.app;
-        setTimeout(function() {
+        na.m.waitForCondition ('frontPage.dialog.siteContent.php : htmlIdle?', na.m.HTMLidle, function() {
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarLeft');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarRight');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarTop');
@@ -17,7 +17,8 @@
     <div style="width:40%;color:black;background:rgba(250, 233, 52,0.35);font-size:120%;margin:10px;font-weight:bold;padding:8px;border-radius:10px;text-shadow:0px 0px 3px rgba(255,0,0,0.7);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.666), 2px 2px 2px rgba(0,0,0,0.7);">
     <blockquote style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge brightyellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 4px rgba(255,255,255,0.555), 3px 3px 5px 2px rgba(0,0,0,0.7);">
     Take a video or (tiled) background of any resolution, and project information onto that using any weblanguage you want.<br/>
-    Written in a style simple enough for children to learn from.
+    Written in a style simple enough for children to learn from.<br/>
+    Best viewed in Chrome, Chromium based browsers or FireFox or Edge.
     </blockquote>
     <meta name="description" content="Take a video or (tiled) background of any resolution, and project information onto that using any weblanguage you want. Written in a style simple enough for children to learn from.">
     <p style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge yellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 2px rgba(255,255,255,0.555), 3px 3px 3px 5px rgba(0,0,0,0.7);">
@@ -41,6 +42,13 @@
         <div style="width:40%;margin:10px;padding:8px;color:070707;text-shadow:2px 2px 4px 3px rgba(0,0,0,0.75),0px 0px 5px 4px rgba(0,0,0,0.85);background:rgba(0,0,0,0.45);border-radius:5px;">
             <p>
             If I don't respect Copyright Law(s) for a while, or don't indefinitely until a fear generating situation somewhere, -anywhere-, in the world changes for the betterment of all in that region/locality or those regions/localities, then <a href="/geopolitics" style="color:lime;">I'll explain myself as best I can right here</a>.
+            </p>
+
+            <p>
+            Fear can be deadly. It can lead to distractions while in traffic, and/or (severe) sleep-deprivation.<br/>
+            Even the poorest deserve to be free from fear at all times.<br/>
+            MAKE COPYRIGHT LAWS RESPECT THAT, OR I'M STARTING THE TRUE-EQUALITY-PARTY.NL.<br/>
+            SOON.
             </p>
 
             <p>

@@ -172,6 +172,9 @@ na.site = {
         na.background.initialize({naSite : t});
         na.backgrounds = na.background;
 
+        na.m.waitForCondition ('na.site.initialize : HTMLidle()? so we can do na.startUIvisuals()?', na.m.HTMLidle, na.site.startUIvisuals, 200)
+
+
 
         $('#btnShowStartMenu').mouseenter (function(evt) {
             var evt2 = $.extend( {}, evt);
@@ -1744,7 +1747,6 @@ na.site = {
                         na.site.globals.themeSpecificityName === na.site.globals.themesDBkeys[i].specificityName
                         || na.site.globals.specificityName === na.site.globals.themesDBkeys[i].specificityName
                     );
-debugger;
             if (selectMe) {
                 //debugger;
                 $(divEl).addClass('selected');
@@ -2544,7 +2546,9 @@ debugger;
                 data : themeData,
                 success : function (data, ts, xhr) {
                     if (data.match('status : Failed')) {
-                        na.site.ajaxFail('na.saveTheme() : Could not save settings. Please login again.');
+                        //na.site.ajaxFail('na.saveTheme() : Could not save settings. Please login again.');
+
+
         /*.fadeIn('normal', 'swing', function () {
                             setTimeout (function() {
                                 $('#siteLoginFailed').fadeOut('normal', 'swing');

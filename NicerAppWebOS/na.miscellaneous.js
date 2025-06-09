@@ -1489,6 +1489,7 @@ na.m = {
 			typeof na === 'object'
 			&& typeof na.site === 'object'
             && !na.desktop.settings.animating
+            && typeof na.desktop.settings.negotiateOptions == 'object'
 		);
         if (!r && ctx && ctx.debugMe) debugger;
         return r;
