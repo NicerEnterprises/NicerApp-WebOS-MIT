@@ -172,23 +172,104 @@ na.site = {
         na.background.initialize({naSite : t});
         na.backgrounds = na.background;
 
-        na.m.waitForCondition ('na.site.initialize : HTMLidle()? so we can do na.startUIvisuals()?', na.m.HTMLidle, na.site.startUIvisuals, 200)
+        na.m.waitForCondition (
+            'na.site.initialize : desktopIdle()? so we can do na.startUIvisuals()?',
+            na.m.desktopIdle, function() {
+            t.g = t.globals = $.extend (t.g, naGlobals);
+            na.te = new naThemeEditor();
+                t.reloadMenu({callback:function() {
+                    t.ui = {
+                        vb : new vividUserInterface_2D_button_v4()
+                    };
+                    na.m.waitForCondition ('site.6.y.z.js::initialize()::t.reloadMenu (callback::) : na.m.desktopIdle? + 500ms?', na.desktopIdle, function() {
+                        setTimeout (function() {
+                            na.te.onload('siteContent');
+                            t.setSpecificity();
+                            t.loadTheme();
+
+                            t.startTooltips();
+                            $('.vividDialog').css ({
+                                overflow : 'hidden'
+                            });
+                            $('.vividDialog > .vividDialogContent').fadeIn('normal');
+                            $('.lds-facebook').fadeOut('normal');
+
+
+                            window.onresize  = function(evt) {
+                                $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
+                                    width : $(window).width(),
+                                    height : $(window).height()
+                                });
+                                //debugger;
+                                    //na.site.onresize ({ reloadMenu : true });
+                                na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
+                            };
+
+                        }, 3000);
+                    });
+
+                }});
+
+
+                na.site.startUIvisuals();
+
+                setTimeout (function() {
+                    $('#btnShowStartMenu').mouseenter (function(evt) {
+                        var evt2 = $.extend( {}, evt);
+                        evt2.currentTarget = $('#siteMenu__0')[0];
+                        na.site.components.menus['#siteMenu'].currentEl = evt2.currentTarget;
+                        na.site.components.menus['#siteMenu'].onmouseover (evt2);
+                    });
+                    c.taskbar = new vividUserInterface_2D_dialog({
+                        naSite : t,
+                        el : $('#siteTaskbar')
+                    });
+                    $('.vividButton4, .vividButton_icon_50x50').each(function(idx,el) {
+                        c.buttons['#'+el.id] = new vividUserInterface_2D_button ({ naSite : t, el : el });
+                    });
+                    $('.vividDialog').each(function(idx,el) {
+                        var d = new vividUserInterface_2D_dialog ({ naSite : t, el : $(el) });
+                        switch (el.id) {
+                            case 'siteTaskbar' : c.taskbar = d; break;
+                            case 'siteSettingsMenu' : c.settingsMenu = d; break;
+                            default : if ($('#'+el.id+' > .vividDialogContent').html().trim()!=='{$div_'+el.id+'}') { c.dialogs['#'+el.id] = d;  }break;
+                        }
+                    });
+                    $('#btnSettings').hover (function() {
+                        var menu = na.site.components.menus['#siteMenu'];
+                        menu.hideAll( menu, $('#siteMenu__panel__0')[0], 50 );
+                        $('#siteSettingsMenu').removeClass('hidden').addClass('shown');
+                    }, function () {
+                        c.settingsMenu.hide({ naSite : t, checkHeldUp : '#siteSettingsMenu' });
+                        //$('#siteSettingsMenu').removeClass('shown').addClass('hidden');
+                    });
+                    $('#siteSettingsMenu').hover(function() {
+                        t.settings.heldUp['#siteSettingsMenu'] = true;
+                    }, function(evt) {
+                        t.settings.heldUp['#siteSettingsMenu'] = false;
+                        c.settingsMenu.hide({ naSite : t, checkHeldUp : '#siteSettingsMenu' });
+                    });
+
+                    //na.desktop.resize();
+                    na.desktop.resize(na.site.onload_phase2, true);
+
+                }, 2500);
+            }, 200
+        );
 
 
 
+        /*
         $('#btnShowStartMenu').mouseenter (function(evt) {
             var evt2 = $.extend( {}, evt);
             evt2.currentTarget = $('#siteMenu__0')[0];
             na.site.components.menus['#siteMenu'].currentEl = evt2.currentTarget;
             na.site.components.menus['#siteMenu'].onmouseover (evt2);
         });
-
-
-        /*
         c.taskbar = new vividUserInterface_2D_dialog({
             naSite : t,
             el : $('#siteTaskbar')
-        });*/
+        });
         $('.vividButton4, .vividButton_icon_50x50').each(function(idx,el) {
             c.buttons['#'+el.id] = new vividUserInterface_2D_button ({ naSite : t, el : el });
         });
@@ -214,6 +295,7 @@ na.site = {
             t.settings.heldUp['#siteSettingsMenu'] = false;
             c.settingsMenu.hide({ naSite : t, checkHeldUp : '#siteSettingsMenu' });
         });
+        */
 
         document.addEventListener ('keyup', function (e) {
             e.preventDefault();
@@ -229,25 +311,6 @@ na.site = {
         setInterval (t.updateSiteDatetime, 1000);
         t.updateSiteDatetime();
         //setTimeout (function() {
-            t.g = t.globals = $.extend (t.g, naGlobals);
-            na.te = new naThemeEditor();
-            t.reloadMenu({callback:function() {
-                t.ui = {
-                    vb : new vividUserInterface_2D_button_v4()
-                };
-                setTimeout (function() {
-                    na.te.onload('siteContent');
-                    t.setSpecificity();
-                    t.loadTheme();
-                }, 20);
-                t.startTooltips();
-                $('.vividDialog').css ({
-                    overflow : 'hidden'
-                });
-                $('.vividDialog > .vividDialogContent').fadeIn('normal');
-                $('.lds-facebook').fadeOut('normal');
-
-            }});
             //debugger;
         //}, 5);
 
@@ -259,6 +322,453 @@ na.site = {
 
         //console.log (this);
         return this;
+    },
+
+    reloadMenu : function (settings) {
+        // only drastically slows things down
+        //na.desktop.resize(null, false);
+        //na.site.onresize ({ reloadMenu:false });
+
+
+        //na.m.waitForCondition ('na.site.reloadMenu() : na.m.HTMLidle() && !na.site.settings.current.startingApps?', function() {
+        na.m.waitForCondition ('na.site.reloadMenu() : na.m.HTMLidle()?', function() {
+            var r =
+                na.m.HTMLidle()
+                //&& !na.site.settings.current.startingApps;
+            return r;
+        }, function() {
+            var
+            callback3x = (settings ? settings.callback : null),
+            callback2b = function () {
+                na.m.log (210, '<UL> & <LI> DATA LOADED FOR #siteMenu', false);
+                na.m.log (210, 'STARTING TO RE-INITIALIZE #siteMenu', false);
+
+                setTimeout (function() {
+                    $('#siteMenu').css({zIndex:800*1000});
+                    na.site.settings.menus['#siteMenu'] = new naVividMenu($('#siteMenu')[0], function(menu) {
+                        na.m.log (210, 'DONE RE-INITIALIZING #siteMenu', false);
+                        var topLevelItemCount = $('.vividMenu_mainUL > li', menu).length;
+                        //debugger;
+
+                        if (settings) settings.naVividMenu_menuInitialized = menu;
+                        if (typeof callback3x=='function') callback3x (settings);
+                    });
+                }, 50);
+            };
+
+            na.site.reloadMenu_reOrganise (callback2b);
+            na.site.renderAllCustomHeadingsAndLinks();
+        }, 50);
+    },
+
+    onresize : function(settings) {
+            $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
+                width : $(window).width(),
+                height : $(window).height()
+            });
+        //$('#siteBackground img.bg_first').fadeIn(2000);
+
+        // fix attempts (all failed) for [apple bug 1] orientation change bug on iphone 6
+        $('body')[0].scrollLeft = 0;//	$('body')[0].style.position = 'relative';
+        $('body')[0].scrollTop = 0;//	$('body')[0].style.position = 'relative';
+
+        $('html')[0].scrollLeft = 0;
+        $('html')[0].scrollTop = 0;
+        $('html')[0].style.display = 'none';
+        $('html')[0].style.display = 'block';
+
+        if (typeof settings=='object' && settings.possiblyChangeBackground) {
+            var oldBSK = na.site.globals.backgroundSearchKey;
+            if (oldBSK==='' || oldBSK=='landscape' || oldBSK=='portrait') {
+                if ( parseFloat($(window).width()) > parseFloat($(window).height()) )
+                    na.site.globals.backgroundSearchKey = 'landscape';
+                else
+                    na.site.globals.backgroundSearchKey = 'portrait';
+            }
+            if (oldBSK !== '' && oldBSK != na.site.globals.backgroundSearchKey)
+                na.backgrounds.next (
+                    '#siteBackground',
+                    na.site.globals.backgroundSearchKey,
+                    null,
+                    false
+                );
+        };
+
+        if (
+            na.apps.loaded[na.site.settings.current.app]
+            && typeof na.apps.loaded[na.site.settings.current.app].preResize == 'function'
+        ) na.apps.loaded[na.site.settings.current.app].preResize ( {} );
+
+        na.desktop.resize(function (div, calculationResults, sectionIdx, section, divOrderIdx) {
+            if (!settings) settings = {};
+            if (!settings.finalized) {
+                settings.finalized = true;
+
+                na.site.settings.current.siteInitialized = true;
+
+                na.site.reloadMenu();
+
+                na.site.onresize_doContent(settings);
+
+
+
+                if (typeof settings=='object' && typeof settings.callback=='function') {
+
+                    var cb2 = function (settings) {
+                        settings.callback = settings.callback_naSiteOnresize;
+                        delete settings.callback_naSiteOnresize;
+                        if (
+                            (typeof settings=='object' && settings.reloadMenu===true)
+                        ) na.site.reloadMenu(settings);
+                        else if (typeof settings=='object' && typeof settings.callback=='function') settings.callback();
+                    }
+
+                    var cb = settings.callback;
+                    settings.callback_naSiteOnresize = cb;
+                    settings.callback = function() {
+                        na.site.settings.current.numAppsResizing = 0;
+                        na.site.settings.current.numAppsResized = 0;
+                        na.site.settings.current.appsResizing = {};
+                        cb2(settings);
+                    };
+                } else
+                    settings.callback = function() {
+                        na.site.settings.current.numAppsResizing = 0;
+                        na.site.settings.current.numAppsResized = 0;
+                        na.site.settings.current.appsResizing = {};
+                        //cb2(settings);
+                    };
+
+                na.site.resizeApps(settings.callback);
+            }
+        });
+
+
+    },
+
+    onresize_doContent : function (settings) {
+        //debugger;
+        startLogo('neCompanyLogo', 'countryOfOriginColors');
+        return false;
+        /*
+        if ($(window).width() < na.site.globals.reallySmallDeviceWidth) {
+            na.site.settings.current.fontSize_siteContent = $('#siteContent').css('fontSize');
+            na.site.settings.current.fontSize_siteStatusbar = $('#siteStatusbar').css('fontSize');
+            $('#siteContent, #siteStatusbar').css ({ fontSize : '70%' });
+            $('#siteStatusbar').css({height:'5.5rem'});
+            $('#siteStatusbar .vividButton').css({width : 40});
+            $('#siteStatusbar td:nth-child(2)').css({width:55});
+            $('#tdFor_neCompanyLogo').css ({ width : 80, height : 80 });
+            $('#tableFor_neCompanyLogo').css ({ width : 80, height : 80 });
+            $('#divFor_neCompanyLogo').css ({ width : 70, height : 70, marginLeft : 0 });
+            $('#mainCSS').html('.vividMenu_item td { font-size : 11px; }; #siteStatus td { font-weight : bold };');
+            $('html, body, p, span, ul, ol, li, div').not('.vt, .vividButton, .vividMenu_item, .subMenu, .contentMenu').css({fontSize:'0.7rem'});
+            na.site.settings.current.menuFontSize = '11px';
+            //$('.vividMenu .vividButton').css({ width : 100, height : 10 });
+            $('#neCompanyLogo').attr('width',70).attr('height',70);
+            $('.td_spacer').css ({ height : 100 });
+            if ($('#headerSite').length===1) {
+                $('#headerSite').css ({ height:100, padding : 5, paddingLeft : 5 });
+                $('#headerSite, #headerSite h1').css({ fontSize : '1rem' });
+                $('#headerSite h2, #headerSite h3').not('.subMenu, .contentMenu').css ({ fontSize : '0.7rem' });
+                var w = 200;//$('#siteContent .vividDialogContent').width() - $('#headerSite').offset().left;
+                $('#headerSiteDiv').css ({ height : 80, width : w, paddingTop : 10 });
+                $('#headerSiteDiv div').css ({ height : 0, width : w });
+                $('.contentSectionTitle1').css({fontSize:'1em'});
+            }
+            $('#newsApp_title, #newsApp_info, #newsApp_timer').css({fontSize:'0.7rem'});
+        } else if ($(window).width() < na.site.globals.smallDeviceWidth) {
+            if (na.site.settings.current.fontSize_siteContent) {
+                $('#siteContent').css ({ fontSize : na.site.settings.current.fontSize_siteContent });
+                $('#siteStatusbar').css ({ fontSize : na.site.settings.current.fontSize_siteStatusbar });
+            };
+            $('#siteStatusbar').css({height:'4.5rem'});
+            $('#siteStatusbar .vividButton').css({width : 100});
+            $('#siteStatusbar td:nth-child(2)').css({width:105});
+            $('#mainCSS').html('.vividMenu_item td { font-size : 14px; }; #siteStatus td { font-weight : bold };');
+            na.site.settings.current.menuFontSize = '14px';
+            //$('.vividMenu .vividButton').css({ width : 135, height : 14 });
+            $('#tdFor_neCompanyLogo').css ({ width : 200, height : 200 });
+            $('#tableFor_neCompanyLogo').css ({ width : 200, height : 200 });
+            $('#divFor_neCompanyLogo').css ({ width : 200, height : 200});
+            $('#datetime').css({marginLeft:40,marginTop:20});
+            $('#neCompanyLogo').attr('width',200).attr('height',200);
+            $('html, body, p, span, ul, ol, li, div').not('.vt, .vividButton, .vividMenu_item, .subMenu, .contentMenu').css({fontSize:'0.85rem'});
+            $('.td_spacer').css ({ height : 100 });
+            if ($('#headerSite').length===1) {
+                $('#headerSite').css ({ height : 100, padding : 5, paddingLeft : 5 });
+                $('#headerSite, #headerSite h1').css({ fontSize : '1rem' });
+                $('#headerSite h2, #headerSite h3').css ({ fontSize : '0.8rem' });
+                $('#newsApp_title, #newsApp_info, #newsApp_timer').css({fontSize:'0.8rem'});
+                var w = 250;//$('#siteContent .vividDialogContent').width() - $('#headerSite').offset().left;
+                $('#headerSiteDiv').css ({ height : 200, width : w, paddingTop : 20 });
+                $('#headerSiteDiv div').css ({ height : 0, width : w });
+                $('.contentSectionTitle1').css({fontSize:'1.5em'});
+            }
+            $('#newsApp_title, #newsApp_info, #newsApp_timer').css({fontSize:'0.85rem'});
+        } else {
+            if (na.site.settings.current.fontSize_siteContent) {
+                $('#siteContent').css ({ fontSize : na.site.settings.current.fontSize_siteContent });
+                $('#siteStatusbar').css ({ fontSize : na.site.settings.current.fontSize_siteStatusbar });
+            };
+            $('#siteStatusbar').css({height:'4.5rem'});
+            $('#siteStatusbar .vividButton').css({width : 220});
+            $('#siteStatusbar td:nth-child(2)').css({width:225});
+            $('#mainCSS').html('.vividMenu_item td { font-size : 14px; }; #siteStatus td { font-weight : bold };');
+            na.site.settings.current.menuFontSize = '14px';
+            //$('.vividMenu .vividButton').css({ width : 220, height : 20 });
+            $('#tdFor_neCompanyLogo').css ({ width : 200, height : 200 });
+            $('#tableFor_neCompanyLogo').css ({ width : 200, height : 200 });
+            $('#divFor_neCompanyLogo').css ({ width : 200, height : 200 });
+            $('#datetime').css({marginLeft:40,marginTop:20});
+            $('#neCompanyLogo').attr('width',200).attr('height',200);
+            $('html, body, p, span, ul, ol, li, div').not('.vt, .vividButton, .vividMenu_item, .subMenu, .contentMenu').css({fontSize:'1rem'});
+            $('.td_spacer').css ({ height : 100 });
+            if ($('#headerSite').length===1) {
+                $('#headerSite').css ({ height : 220, padding : 5, paddingLeft : 5 });
+                $('#headerSite, #headerSite h1').css({ fontSize : '1.4rem' });
+                $('#headerSite h2, #headerSite h3').css ({ fontSize : '1rem' });
+                $('#newsApp_title, #newsApp_info, #newsApp_timer').css({fontSize:'1.15rem'});
+                var w = 250;//$('#siteContent .vividDialogContent').width() - $('#headerSite').offset().left;
+                $('#headerSiteDiv').css ({ height : 200, width : w, paddingTop : 20 });
+                $('#headerSiteDiv div').css ({ height : 0, width : w });
+                $('.contentSectionTitle1').css({fontSize:'2em'});
+            }
+            $('#newsApp_title, #newsApp_info, #newsApp_timer').css({fontSize:'1rem'});
+        };
+
+        startLogo('neCompanyLogo', 'countryOfOriginColors');
+        */
+    },
+
+    reloadMenu_reOrganise : function(callback4a) {
+
+        if (!$('#siteMenu_vbChecker')[0]) $('#siteMenu').append('<div id="siteMenu_vbChecker" class="vividButton vividButton_text vividMenu_item" theme="'+$('#siteMenu').attr('theme')+'" style="opacity:0.0001;position:absolute;">abc XYZ</div>');
+
+        var
+        fncn = 'na.site.reloadMenu_forTheFirstTime(callback)',
+        menuItemWidth = $('#siteMenu_vbChecker').outerWidth(),
+        numRootItems = $('#siteMenu').width() / menuItemWidth,
+        nri = Math.floor(numRootItems) > 2 ? Math.floor(numRootItems) : 1,
+        mlp = '<li class="contentMenu"><a class="contentMenu" href="-contentMenu-">-contentMenu-</a></li>',
+        contentMenu = $('#app_mainmenu li')[0] ? '<li class="contentMenu_populated">'+$('#app_mainmenu li')[0].innerHTML+'</li>' : '';
+
+        var
+        widest = { rootItems : 0, layout : null },
+        hit = { rootItems : 0, layout : null };
+
+        $('.vividMenu_layout').each (function(idx,layout) {
+            var
+            iw = parseInt($(layout).attr('itemsLevel1'));
+
+            if (iw > widest.rootItems) widest = { rootItems : iw, layout : layout };
+            if (iw === nri) hit = { rootItems : iw, layout : layout };
+        });
+        if (!hit.layout) hit = widest;
+
+        var
+        menu = $('#siteMenu'),
+        items = $('.vividMenu_mainUL', menu),
+        segs = $('.vividMenu_segments', menu);
+        $('.vividMenu_item', menu).remove();
+
+        items.html(hit.layout.innerHTML);
+        $('.subMenu, .vividMenu_subMenuPanel', items).each(function (idx, subMenu) {
+            var
+            smID = '#subMenu__'+$(subMenu).attr('subMenuID');
+            //smID = '.subMenu[submenuid="'+$(subMenu).attr('subMenuID')+'"]'; // only to be used when experiencing DNS problems
+            items.html (
+                items[0].innerHTML.replace( subMenu.outerHTML, $(smID)[0].outerHTML )
+            );
+        });
+
+        var
+        menu = items[0].innerHTML,
+        p1 = menu.indexOf(mlp),
+        mt = menu.substr(0,p1) + contentMenu + menu.substr(p1+mlp.length);
+
+        items[0].innerHTML = mt;
+        var il1 = parseInt($('#siteMenu ul').attr('itemslevel1'));
+        //if (mt.indexOf('-contentMenu-')===-1) $('#siteMenu ul').attr('itemslevel1', ''+(il1-1));
+        //debugger;
+
+        na.site.transformLinks ($('#siteMenu_items')[0]);
+        if (typeof callback4a=='function') callback4a ( menu );
+    },
+
+    changeBackground : function () {
+        na.m.log (50, 'next background : '+na.site.globals.backgroundSearchKey);
+        na.backgrounds.next ('#siteBackground', na.site.globals.backgroundSearchKey, null, true);
+    },
+
+    error : function (errorHTML) {
+        // detailed (internal) status information in HTML should also be passed to *this* function.
+        na.site.setStatusMsg (errorHTML);
+        //na.site.displayErrorWindow(errorHTML); -> uses a different input data format these days.
+    },
+
+    fail : function (msg, xhr, ajaxOptions, errorFunction) {
+        //for na.site.setStatusMsg()
+        //var html = '<table class="tableFail" style="width:100%;height:100%;"><tr><td style="font-size:1.5em">'
+                //+'<span class="statusFail_nonGlow">'+msg+'</span>'
+                //+ '</td><td style="width:105px;"><div class="vividButton" theme="dark" style="position:relative;color:white;width:100px;" onclick="na.site.setStatusMsg(na.site.settings.defaultStatusMsg);">Ok</div></td></table>';
+        na.site.error(msg);
+        na.m.log (3, 'na.site.fail() : msg='+msg);
+        na.analytics.logMetaEvent ('na.site.fail() : msg='+msg);
+
+        if (typeof errorFunction=='function') errorFunction();
+    },
+    ajaxFail : function (location, url, xhr, ajaxOptions, thrownError) {
+        var
+        msg = 'AJAX error ('+location+') : '+thrownError+':<br/>url = '+url;
+
+        if (location=='na.site.testDBconnection()' && thrownError=='Internal Server Error') {
+            msg = 'Database cookie expired. Please log in again.';
+            na.site.displayLogin();
+        }
+
+        var
+        html = '<table class="tableFail" style="width:99%;"><tr><td style="font-size:1em">'
+                +'<span class="statusFail">'+msg+'</span>'
+                + '</td><td style="width:105px;"><div class="vividButton" theme="dark" style="position:relative;color:white;width:100px;" onclick="na.site.setStatusMsg(na.site.settings.defaultStatusMsg);">Ok</div></td></table>';
+        //var msg2 = '<span style="display:table-cell;vertical-align:middle;background:rgba(255,255,255,0.45);color:red;borderRadius:10">'+msg+'</span>';
+
+
+        na.site.setStatusMsg(html, true);
+        na.m.log (3, 'na.site.ajaxFail() : msg='+msg);
+        na.analytics.logMetaEvent ('na.site.ajaxFail() : msg='+msg);
+    },
+    success : function (msg) {
+        var html = '<table class="tableSuccess" style="width:99%;"><tr><td style="font-size:1em">'
+                +'<span class="statusSuccess">'+msg+'</span>'
+                + '</td><td style="width:105px;"><div class="vividButton" theme="dark" style="position:relative;color:white;width:100px;" onclick="na.site.setStatusMsg(na.site.settings.defaultStatusMsg);">Ok</div></td></table>';
+        //var msg2 = '<span style="display:table-cell;vertical-align:middle;background:rgba(255,255,255,0.45);color:red;borderRadius:10">'+msg+'</span>';
+        na.site.setStatusMsg(html, true);
+        na.m.log (3, 'na.site.success() : msg='+msg);
+        na.analytics.logMetaEvent ('na.site.success() : msg='+msg);
+    },
+    setStatusMsg : function (msg, resize, showMilliseconds, fade) {
+        if (resize===undefined) resize = true;
+        //debugger;
+
+        //if (!resize) na.site.settings.current.cancelAllResizeCommands = true;
+        if (!showMilliseconds) showMilliseconds = 10 * 1000;
+        na.site.settings.current.desktopIdle = false;
+        if (fade)
+        $('#siteStatusbar .vividDialogContent').stop(true,true).animate({opacity:0.0001},'fast', function () {
+            na.site.setStatusMsg_do (msg, resize, showMilliseconds);
+        });
+        else na.site.setStatusMsg_do (msg, resize, showMilliseconds);
+    },
+
+    setStatusMsg_do : function (msg,resize,showMilliseconds) {
+        $('#siteStatusbar .vividDialogContent').html(msg).delay(50).css({display:'block',margin:0}).stop(true,true).animate({opacity:1},'fast');
+        $('#siteStatusbar').animate({height:'auto'}, {
+            speed : 'fast',
+            progress : function (evt) {
+                $(window).trigger('resize');
+            }
+        });
+
+        na.m.waitForCondition(
+            'na.site.setStatusMsg(msg,resize,showMilliseconds) : na.m.HTMLidle()?', na.m.HTMLidle,
+            function() {
+                if (resize) {
+                    na.site.settings.current.statusbarVisible = na.desktop.settings.visibleDivs.includes('#siteStatusbar');
+                    if (!na.site.settings.current.statusbarVisible) na.desktop.settings.visibleDivs.push('#siteStatusbar');
+                    $(window).trigger('resize');
+                };
+
+                if (
+                    msg !== na.site.settings.defaultStatusMsg
+                    && typeof showMilliseconds=='number'
+                ) {
+                    clearTimeout (na.site.settings.current.timeoutRevertStatusbarMsg);
+                    na.site.settings.current.timeoutRevertStatusbarMsg = setTimeout (function () {
+                        na.site.setStatusMsg (na.site.settings.defaultStatusMsg, false);
+                        if (!na.site.settings.current.statusbarVisible) na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs,'#siteStatusbar');
+                        if (resize) setTimeout(function() {
+                            $(window).trigger('resize');
+                        }, 1000);
+                    }, showMilliseconds);
+                }
+            }, 200
+        );
+    },
+
+    onclick_displayErrors : function (event) {
+        var
+        msg = '',
+        dat = na.site.settings.current.errors;
+        for (var i=0; i < dat.session.length; i++) {
+            msg += dat.session[i];
+        };
+
+        dat.php.sort (function (a,b) {
+            return b.t - a.t; // newest entries listed at the top please
+        });
+        for (var i=0; i<dat.php.length; i++) {
+            var dit = dat.php[i];
+            for (var j=0; j<dit.entries.length; j++) {
+                var dit2 = dit.entries[j];
+                for (var k in dit2) {
+                    var dit3 = dit2[k];
+                    msg += dit3.html;
+                }
+            }
+        };
+
+        var show = typeof msg==='string' && msg !== '';
+
+        msg =
+            msg
+            .replace(/\\n/g, '<br/>')
+            .replace(/\\"/g, '"')
+            .replace(/\\\//g, '/');
+        $('#siteErrors_msg').html(msg);
+
+        if (show) {
+            if (!na.desktop.settings.visibleDivs.includes('#siteErrors'))
+                na.desktop.settings.visibleDivs.push ('#siteErrors');
+            na.desktop.settings.visibleDivs.remove ('#siteContent');
+            na.desktop.settings.visibleDivs.remove ('#siteStatusbar');
+            //$('#siteErrors').css({opacity:1,display:'none'}).fadeIn('normal', function() {
+                /*  $('#siteErrors').css({
+                    width : $(window).width()-20,
+                    height : $(window).height()-20,
+                    left : 10,
+                    top : 10
+                });
+                $('#tabPagesLog_content').css({
+                    height : $(window).height()-102,
+                    width : $(window).width()-46
+                });*/
+            //});
+        } else {
+            //na.site.setStatusMsg ('<div class="naNoErrors">No errors found since you last reloaded this page (F5). There may be errors listed in the operating system logs. You may need to sprinkle the suspected code with extra debugger statements that send an E_NOTICE to PHP\'s trigger_error() function.</div>', true, 10 * 1000);
+            na.desktop.settings.visibleDivs.remove ('#siteErrors');
+            if (!na.desktop.settings.visibleDivs.includes('#siteContent'))
+                na.desktop.settings.visibleDivs.push ('#siteContent');
+            /*if (!na.desktop.settings.visibleDivs.includes('#siteStatusbar'))
+                na.desktop.settings.visibleDivs.push ('#siteStatusbar');*/
+            //$('#siteErrors').css({opacity:1,display:'block'}).fadeOut('normal');
+        };
+        //setTimeout (na.desktop.resize, 2500);
+        na.desktop.resize(function () {
+            $('#tabPagesLog_content').css({
+                height : $('#siteErrors').height()
+                    - $('#siteErrors .vividTabPage_header').height()
+            });
+        });
+
+    },
+
+
+    delayedReloadMenu : function () {
+        if (na.site.settings.timeoutWindowResize) clearTimeout(na.site.settings.timeoutWindowResize);
+        na.site.settings.timeoutWindowResize = setTimeout (function() {
+            na.site.onresize({reloadMenu : true, possiblyChangeBackground:true});
+        }, 500);
     },
 
     loadModule : function (url, appName, jsClassName, jsVarName) {
@@ -726,18 +1236,31 @@ na.site = {
         });
         $('#siteContent > .vividDialogContent').css({scale:1});
 
-        $('.vividMenu'/*, vdc[0]*/).each(function(idx,el){
-            if (el.id!=='siteMenu') {
-                if (!na.site.settings.menus) na.site.settings.menus = {};
-                if (!na.site.settings.menus['#'+el.id]) na.site.settings.menus['#'+el.id] = new naVividMenu(el)
-            }
-        });
-
 
         $('.vividButton4, .vividButton, .vividButton_icon_50x50_siteTop, .vividButton_icon_50x50').each(function(idx,el){
-            if (el.id=='btnLockSpecificity') debugger;
+            if (el.id=='btnShowStartMenu') debugger;
             if (!na.site.settings.buttons['#'+el.id]) na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button(el);
         });
+
+        if ( !$('#btnShowStartMenu')[0].naInitializedAlreadyHere ) {
+            $('#btnShowStartMenu').mouseenter (function(evt) { // in honor of the coding language 'Python', a language like Ruby, which I'll one day use for the installation scripts of NicerAppWebOS.
+                var evt2 = $.extend( {}, evt);
+                evt2.currentTarget = $('#siteMenu__0')[0];
+                na.site.components.menus['#siteMenu'].currentEl = evt2.currentTarget;
+                na.site.components.menus['#siteMenu'].onmouseover (evt2);
+            });
+        }
+
+
+        $('.vividMenu'/*, vdc[0]*/).each(function(idx,el){
+            //if (el.id!=='siteMenu') {
+                if (!na.site.settings.menus) na.site.settings.menus = {};
+                debugger;
+                if (el.id=='siteMenu') debugger;
+                if (!na.site.settings.menus['#'+el.id]) na.site.settings.menus['#'+el.id] = new naVividMenu(el)
+            //}
+        });
+
 
         /* i have no idea anymore what this is supposed to do! ;)
         var sel = document.querySelectorAll('.contentSectionTitle3_a');
@@ -1241,8 +1764,9 @@ na.site = {
      */
 
         return false;
-        // LEGACY JS-ONLY COLOR GRADIENT HORIZONTAL ANIMATIONS (PRE-CSS3) FOLLOWS:
 
+        // LEGACY JS-ONLY COLOR GRADIENT HORIZONTAL ANIMATIONS (PRE-CSS3) FOLLOWS:
+        /*
         if (!na.site.globals.useVividTexts) return false;
         if (jQuery('#pageTitle')[0]) {
             if (!$('#pageTitle')[0].el) {
@@ -1314,6 +1838,7 @@ na.site = {
                 });
             };
         }, 500);
+        */
     },
 
     closeAll_2D_apps : function() {

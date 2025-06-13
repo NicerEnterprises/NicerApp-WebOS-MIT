@@ -12,9 +12,9 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
 <ol class="todoList">
     <li class="todoList"><div>(2025) Write a forums/posts + replies/posts API for this WebOS, for the v5.8.z branch.</div></li>
 
-    <li class="todoList"><div>(2025) Write a notification API for this WebOS, for the v5 and v6 branch.</div></li>
+    <li class="todoList"><div>(2025) Write a notification API for this WebOS, for the v5.8.z branch.</div></li>
 
-    <li class="todoList"><div>(2025) Write an in-app tutorial API for this WebOS, for the v5 and v6 branch, in one go.</div></li>
+    <li class="todoList"><div>(2025) Write an in-app tutorial API for this WebOS, for the v5.8.z branch, in one go.</div></li>
 
     <li class="todoList"><div>(2025) Get na.m.log() to log per datetimeRangeBegin.milliseconds to datetimeRangeEnd.milliseconds into a database on the server, for use in /view/logs as the PHP data belonging to a PHP session_id().<br/>
     Status : Completed javascript code, now needs revamped generalizedDatabaseAPI written and called, and db businesslogic PHP code.</div></li>
@@ -125,8 +125,10 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
     <li class="todoList"><div>Add MySQL and PostgreSQL to the list of supported database architectures (via .../NicerAppWebOS/3rd-party/adodb5), currently only couchdb is supported.<br/>
     </div></li>
 
+    <li class="todoList"><div>(2025) Write a forums/posts + replies/posts API for this WebOS, for the v5.8.z branch.</div></li>
 
 </ol>
+<!-- no longer necessary here in v5.8.z, the following is now done in .../NicerWebAppOS/site-6.y.z.js::startUIvisuals() :
 <script type="text/javascript">
     na.site.bindTodoListAnimations (
         '.todoList > li, '
@@ -142,3 +144,4 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
         +'.todoList_l2 > lI > pre '
     );
 </script>
+-->

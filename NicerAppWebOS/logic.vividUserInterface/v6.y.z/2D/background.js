@@ -1,5 +1,11 @@
 if (typeof na!=='object') { var NicerApp_WebOS = nicerapp = na = {}; }
 na.background = na.bg = {
+/*
+* LICENSE : https://opensource.org/license/mit
+* (C) +-2004AD to 2025AD (quite possibly much later, see https://nicer.app/NicerAppWebOS/version.json or https://github.com/NicerEnterprises/NicerApp-WebOS/blob/main/NicerAppWebOS/version.json)
+* (C) 2025 "Rene A.J.M. Veerman" <rene.veerman.netherlands@gmail.com>
+*/
+
     settings : {},
 
     initialize (settings) {

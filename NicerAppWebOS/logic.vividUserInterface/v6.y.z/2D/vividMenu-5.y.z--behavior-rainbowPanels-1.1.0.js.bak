@@ -1080,6 +1080,10 @@ class naVividMenu__behavior_rainbowPanels {
         evt = event,
         el = event.currentTarget,
         myKids = t.children[el.parent?el.parent.el.id:el.idx];
+        if (!el.it) {
+            na.m.log (1, '.../logic.vividUserInterface/v6.y.z/2D/vividMenu-5.y.z--behavior-rainbowPanels-1.1.0.js::onMouseOver (event) : #'+el.id+' RETURNED FALSE. RESULT : MELTDOWN! :P');
+            return false;
+        }
 
         if (!t.timeout_onmouseover) t.timeout_onmouseover = {};
         if (t.timeout_onmouseover[el.it.idx]) clearTimeout (t.timeout_onmouseover[el.it.idx]);
@@ -1160,7 +1164,7 @@ class naVividMenu__behavior_rainbowPanels {
         this.onmouseout_do(event, toHide);
         return true;
 
-
+        /*
         var t = this, el = event.currentTarget;
         if (!t.timeout_onmouseout) t.timeout_onmouseout = {};
 
@@ -1177,12 +1181,17 @@ class naVividMenu__behavior_rainbowPanels {
                 }
             }
         }, 250, t, event);
+        */
     }
 
     onmouseout_do (event, toHide) {
         var
         t = this,
         el = event.currentTarget;
+        if (!el.it) {
+            na.m.log (1, '.../logic.vividUserInterface/v6.y.z/2D/vividMenu-5.y.z--behavior-rainbowPanels-1.1.0.js::onMouseOver (event) : RETURNED FALSE. RESULT : MELTDOWN! :P');
+            return false;
+        }
 
         var
         t = this,

@@ -706,12 +706,25 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_METHOD} ^(GET)$
 RewriteCond %{HTTP:X-Requested-With} XMLHttpRequest
-RewriteRule ^filePhoenix$ /view-content/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjoiZmlsZVBob2VuaXgifX0 [N]
+RewriteRule ^filePhoenix$ /view-content/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjpbImZpbGVQaG9lbml4IiwiRmlsZVBob2VuaXgiXX19 [N]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_METHOD} ^(GET)$
-RewriteRule ^filePhoenix$ /view/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjoiZmlsZVBob2VuaXgifX0 [N]
+RewriteRule ^filePhoenix$ /view/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjpbImZpbGVQaG9lbml4IiwiRmlsZVBob2VuaXgiXX19 [N]
+
+
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_METHOD} ^(GET)$
+RewriteCond %{HTTP:X-Requested-With} XMLHttpRequest
+RewriteRule ^FilePhoenix$ /view-content/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjpbImZpbGVQaG9lbml4IiwiRmlsZVBob2VuaXgiXX19 [N]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_METHOD} ^(GET)$
+RewriteRule ^FilePhoenix$ /view/eyJcL05pY2VyQXBwV2ViT1NcL2ZpbGVQaG9lbml4Ijp7InNlb1ZhbHVlIjpbImZpbGVQaG9lbml4IiwiRmlsZVBob2VuaXgiXX19 [N]
 
 
 

@@ -66,7 +66,7 @@ class vividUserInterface_2D_button {
 //if (el.el.id='btnLockSpecificity') debugger;
         if ($(el).is('.vividButton4')) {
             t.icon_svg = new naVividButton_icon_svg (this.el, this);
-        } else  if (createHTML) {
+        } else {
             t.el.this = t;
             t.theme = $(this.el).attr('theme');
             t.type = $(this.el).is('.vividButton_icon_50x50, .vividButton_icon_50x50_siteTop, .vividButton_icon_100x100') ? 'icon' : 'text';
@@ -77,19 +77,18 @@ class vividUserInterface_2D_button {
             if ($el.is('.vividButton_icon_100x100')) t.suffix = '_100x100';
             t.iconComponents = '.vividButton_icon_borderCSS'+t.suffix+', .vividButton_icon_imgBorder'+t.suffix+', .vividButton_icon_imgTile'+t.suffix+', .vividButton_icon_imgButtonIconBG'+t.suffix+', .vividButton_icon_imgButtonIcon'+t.suffix + ', .vividButton_icon_imgButtonIcon'+t.suffix+'_sup1'+ ', .vividButton_icon_imgButtonIcon'+t.suffix+'_sup2';
             t.icon = new naVividButton_icon(this.el, this);
-            
+
             t.w = $(this.el).is('.vividButton_icon_100x100')
-                ? 100 
+                ? 100
                 : $(this.el).is('.vividButton_icon_50x50, .vividButton_icon_50x50_siteTop')
                     ? 50
-                    : $(this.el).width(); 
+                    : $(this.el).width();
             t.h = $(this.el).is('.vividButton_icon_100x100')
-                ? 100 
+                ? 100
                 : $(this.el).is('.vividButton_icon_50x50, .vividButton_icon_50x50_siteTop')
                     ? 50
-                    : $(this.el).height(); 
-        } else {
-            t.icon = new naVividButton_icon(this.el, this);
+                    : $(this.el).height();
+
         };
         //if (t.suffix && t.suffix=='_100x100') debugger;
         //if (t.el.id=='btnViewResult') debugger;

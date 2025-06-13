@@ -6,11 +6,11 @@
 ?>
     <script type="text/javascript">
         delete na.site.settings.current.app;
-        na.m.waitForCondition ('frontPage.dialog.siteContent.php : htmlIdle?', na.m.HTMLidle, function() {
+        na.m.waitForCondition ('frontPage.dialog.siteContent.php : desktopIdle?', na.m.desktopIdle, function() {
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarLeft');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarRight');
             na.d.s.visibleDivs = arrayRemove (na.d.s.visibleDivs, '#siteToolbarTop');
-            na.desktop.resize();
+            //na.desktop.resize();
         }, 100);
     </script>
 
@@ -47,6 +47,10 @@
             <p>
             Fear can be deadly. It can lead to distractions while in traffic, and/or (severe) sleep-deprivation.<br/>
             Even the poorest deserve to be free from fear at all times.<br/>
+            <!--
+            I have officially decided NOT to become a politician or even cast any votes on any election days ever again anywhere.
+            THAT'S my current voter status. I'm a non-voter.
+            -->
             MAKE COPYRIGHT LAWS RESPECT THAT, OR I'M STARTING THE TRUE-EQUALITY-PARTY.NL.<br/>
             SOON.
             </p>
@@ -106,29 +110,7 @@
         Copyrighted (C) and All Rights Reserved (R) 2002-2025 and owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
         </p>
 
-        <!-- proposed NicerAppWebOS/LICENSE.html revenue sharing suggestions, SUGGESTIONS at this time only according to me, Rene AJM Veerman, The Owner of this Software :
-        <h2 class="contentSectionTitle1"><p class="contentSectionTitle1_span">NicerEnterprises Contractor Revenue Sharing Promises</p></h2>
-        <p><a class="noPushState" href="https://jQuery.com" target="naJQueryContractorDeal">jQuery.com</a> : 1% of my total yearly revenue, whatever size my (x.com/ReneVeerma4021) companies reach.</p>
-        <p><a class="noPushState" href="https://TinyMCE.com" target="naJTinyMCEContractorDeal">TinyMCE.com</a> : 1% of my total yearly revenue, whatever size my (x.com/ReneVeerma4021) companies reach.</p>
-        <p><a class="noPushState" href="https://YouTube.com" target="naJQueryContractorDeal">YouTube.com</a> : 3% of my total yearly revenue, whatever size my (x.com/ReneVeerma4021) companies reach.</p>
-        <p><a class="noPushState" href="https://GitHub.com" target="naGitHubContractorDeal">GitHub.com</a> : 3% of my total yearly revenue, whatever size my (x.com/ReneVeerma4021) companies reach.</p>
-        -->
-
         <p style="background:none;"><a href="https://x.com/ReneVeerma64021">https://x.com/ReneVeerma64021</a>.</p>
-        <p style="background:none;"><a href="https:/facebook.com/rene.veerman.90">https://facebook.com/rene.veerman.90</a></p>
-        <p style="background:none;"><a href="https://youtube.com/@cheetahKungFu">https://youtube.com/@cheetahKungFu</a> a free video Youtube address where a free video tutorial can be found on the latest top-notch martial-arts training methods and techniques, with excellent music as backdrop for "the self-defense moves".</p>
-
-        <p style="background:none;">
-            <h2>Home Addresses and Telephone number for NicerEnterprises:</h2>
-            <ul>
-                <li>
-                "Rene 'Peacefan' A.J.M. Veerman" &lt;rene.veerman.netherlands@gmail.com&gt;<br/>
-                Marnixkade 23-2, 1015XP Amsterdam, Netherlands<br/>
-                +31 6 23 99 16 59<br/>
-                </li>
-            </ul>
-        </p>
-
     </div>
 
 

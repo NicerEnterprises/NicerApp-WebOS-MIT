@@ -74,7 +74,7 @@ class naThemeEditor {
             }, 1000);
         });
 
-
+        /* REPLACED BY new RegExp(/.*clamp.* /) CSS font-size value.
         na.desktop.registerProgress ('[ThemeEditor]', function() {
             var
             itEl = $('#textFontFamily')[0],
@@ -101,7 +101,7 @@ class naThemeEditor {
                     t.getDimensions (t, itEl2, false),
                     false
                 );
-            }*/
+            }* /
         });
         na.desktop.registerCallback ('[ThemeEditor]', '#siteToolbarThemeEditor', function() {
             var
@@ -127,8 +127,8 @@ class naThemeEditor {
                     t.getDimensions (t, itEl2, false)
                 );
             }
-            */
-        });
+            * /
+        });*/
 
         /*
         var
@@ -487,11 +487,12 @@ class naThemeEditor {
         }
 
         var s = na.te.s.c.specificity;
-        if (!s || (!s.role && !s.user)) {
-            na.site.components.buttons['#btnDeleteSpecificity'].disable();
-        } else {
-            na.site.components.buttons['#btnDeleteSpecificity'].enable();
-        }
+        if (na.site.components.buttons['#btnDeleteSpecificity'])
+            if (!s || (!s.role && !s.user)) {
+                na.site.components.buttons['#btnDeleteSpecificity'].disable();
+            } else {
+                na.site.components.buttons['#btnDeleteSpecificity'].enable();
+            }
         
         $('#btnViewResult .vividButton_icon_borderCSS_50x50').css({
             boxShadow : '0px 0px 0px 0px rgba(0,0,0,0)'
