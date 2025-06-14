@@ -16,10 +16,12 @@ class naVividMenu__behavior_defaultColors {
                 //  that is set to become THE datastructure language
                 //  for nicer.app-5.8.z-* branches of this repository.
                 /*
-                 .../NicerAppWebOS/scripts.maintenance# ./setPermissions.sh
+                    ( ReadMe.MD : .../NicerAppWebOS/scripts.maintenance# ./setPermissions.sh )
+                    ( is : ) root@anyMachine:/var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001c/NicerAppWebOS/scripts.maintenance# ./setPermissions.sh
                     --- ..
                     END OF ./setPermissions.sh
-                root@anyMachine:/var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001c/NicerAppWebOS/scripts.maintenance# ./ga.sh "small bugfixes, huge discovery for na5.8.z webOS final data format : case insensitive keynames with underscore strategy instead of CSS dash strategy for data key names"
+
+                    root@anyMachine:/var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001c/NicerAppWebOS/scripts.maintenance# ./ga.sh "small bugfixes, huge discovery for na5.8.z webOS final data format : case insensitive keynames with underscore strategy instead of CSS dash strategy for data key names"
                 */
 
                 na_dataType : 'vividMenu_themeDefinitions',
