@@ -24,15 +24,15 @@ class vividUserInterface_2D_button {
         if (typeof cmd == 'object') {
             var
             el = cmd.el || el,
-            html = cmd.html || '',
-            parent = cmd.parent || '',
+            html = cmd.html || $('a span', el).html(),
+            parent = cmd.parent || el.parentNode,
             createHTML = cmd.createHTML || false,
             idx = cmd.idx || 0;
         } else {
             var
             el = el,
-            html = '',
-            parent = '',
+            html = $('a span', el).html(),
+            parent = el.parentNode,
             createHTML = false,
             idx = 0;
         }

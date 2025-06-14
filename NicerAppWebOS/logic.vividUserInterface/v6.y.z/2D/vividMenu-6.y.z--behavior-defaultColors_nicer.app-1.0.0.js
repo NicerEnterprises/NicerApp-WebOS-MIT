@@ -10,9 +10,13 @@ class naVividMenu__behavior_defaultColors {
             // add only a copy of the 'themeDefinitions' constructor function parameter data please, not just some javascript memory pointer.
             // only with a *copy* of the data, you're protected against Javascript code eval() threats!
         else
-            t.themeDefinitions = { // in reality still preloaded from index.css.json for now
-                naDataType : 'vividMenu_themeDefinitions',
-                naCSS : {
+            t.themeDefinitions = {
+                // in reality still preloaded from index.css.json for now
+                // keys are case-insensitive in this entire data-format,
+                //  that is set to become THE datastructure language
+                //  for nicer.app-5.8.z-* branches of this repository.
+                na_dataType : 'vividMenu_themeDefinitions',
+                na_browserLanguage_CSS : {
                     relativeURL : '/NicerAppWebOS/domainConfigs/nicer.app-5.8.0-alpha001c/vividMenu-6.y.z_domain-nicer.app_defaultColors.css'
                 }
             };

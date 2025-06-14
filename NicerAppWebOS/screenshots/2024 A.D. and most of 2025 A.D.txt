@@ -3,7 +3,7 @@ I choose to build this in the Chrome Browser, but to stick close to W3C standard
 
 video of musicPlayer with 3D file index, early 2024 after finally solving most of the navigation-switching bugs, leaving only the rest of the user-interface bugs to fix :
 
-https://youtube.com/@ReneAJMVeerman
+https://youtube.com/@ReneAJMVeerman or https://youtube.com/@Gavan-NL
 
 screenshots 2025 : https://drive.google.com/drive/folders/1MDzSVE9DLIn-6tbg7rOlC8HvWUn2PRNe?usp=sharing
 
