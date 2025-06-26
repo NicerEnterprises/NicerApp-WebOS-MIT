@@ -82,12 +82,12 @@ class vividUserInterface_2D_button {
                 ? 100
                 : $(this.el).is('.vividButton_icon_50x50, .vividButton_icon_50x50_siteTop')
                     ? 50
-                    : $(this.el).width();
+                    : 100;//$(this.el).width();
             t.h = $(this.el).is('.vividButton_icon_100x100')
                 ? 100
                 : $(this.el).is('.vividButton_icon_50x50, .vividButton_icon_50x50_siteTop')
                     ? 50
-                    : $(this.el).height();
+                    : 100;//$(this.el).height();
 
         };
         //if (t.suffix && t.suffix=='_100x100') debugger;

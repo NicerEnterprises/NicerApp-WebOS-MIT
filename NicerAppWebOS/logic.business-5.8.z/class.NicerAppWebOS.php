@@ -21,7 +21,19 @@ class NicerAppWebOS {
         $p2 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
         $this->path = $p2;
         $this->domainFolder = str_replace($p1.DIRECTORY_SEPARATOR,'', $p2);
-        $this->domain = explode('-', $this->domainFolder)[0];
+
+        $p3 = $this->domain = explode('-', $this->domainFolder);
+        // TODO : Document this in .../README.md
+        $this->domain = $p3[0];
+        $this->webFolder = $p3[0].$p3[1];
+        /*
+        $dbg = [
+            $this->path,
+            $this->domainFolder,
+            $this->domain
+        ];
+        echo '<pre>'; var_dump ($dbg); exit();
+        */
 
         $rp_domain = $this->path.'/NicerAppWebOS/domainConfigs/'.$this->domainFolder;
         $this->cssFiles = [
@@ -76,11 +88,11 @@ class NicerAppWebOS {
         $titleFile = $rp_domain.'/index.title.php';
 
         if ($this->browserDebug) {
-            $cssLinks = $this->getConcatenatedLinks ($this->cssFiles);
             $javascriptLinks = $this->getConcatenatedLinks ($this->javascriptFiles);
+            $cssLinks = $this->getConcatenatedLinks ($this->cssFiles);
         } else {
-            $cssLinks = $this->getLinks ($this->cssFiles);
             $javascriptLinks = $this->getLinks ($this->javascriptFiles);
+            $cssLinks = $this->getLinks ($this->cssFiles);
         }
 
         $content = $this->getContent();
@@ -442,7 +454,6 @@ class NicerAppWebOS {
                                     $divID = str_replace('app.dialog.', '', basename($contentFile['realPath']));
                                     $divID = str_replace('.php', '', $divID);
                                     //echo $divID.'<br/>';
-                                    if ($divID=='siteContent') // TODO : fix again (2025-04/05)
                                     $ret[$divID] = execPHP ($contentFile['realPath']);
                                 }
                             }
@@ -733,6 +744,7 @@ class NicerAppWebOS {
 
     public function getLinks ($files) {
         $lines = '';
+        //echo '<pre>'; var_dump ($files); die();
         foreach ($files as $idx => $fileRec) {
             if (array_key_exists('indexFile', $fileRec)) {
                 $indexFilepath = $fileRec['indexFile'];
@@ -772,10 +784,14 @@ class NicerAppWebOS {
                     $replace = array ($url, date('Ymd_His', filemtime($this->path.'/'.$file)));
                     $lines .= str_replace ($search, $replace, $lineSrc);
                 } else {
-                    trigger_error ('file "'.$this->path.'/'.$file.'" is missing (oFile='.$oFile.'), referenced from <span class="naCMS_getLinksFileRec">'.json_encode($fileRec).'</span>.', E_USER_NOTICE);
+                    $errMsg = '<p>File "'.$this->path.$file.'" is missing (oFile='.$oFile.'), referenced from <span class="naCMS_getLinksFileRec">'.json_encode($fileRec).'</span>.</p>';
+                    echo $errMsg;
+                    trigger_error ($errMsg, E_USER_NOTICE);
                 }
             }
         }
+        //echo '<pre>'; var_dump ($files2); die();
+        //echo '<pre>'; var_dump ($lines); die();
         return $lines;
     }
 

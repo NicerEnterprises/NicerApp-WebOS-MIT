@@ -1,8 +1,19 @@
 {
-    "copyright" : "Copyright (C) and All Rights Reserved (R) 2002-2025 \"Rene A.J.M. Veerman\" <rene.veerman.netherlands@gmail.com>",
-    "version" : "5.8.0-alpha001c",
+    "whatsThis" : "NicerApp WebOS v5.8.0-alpha001d",
+    "copyright" : "Copyright (C) and All Rights Reserved (R) 2002-2025 \"Rene A.J.M. Veerman\" [rene.veerman.netherlands@gmail.com]",
+    "version" : "5.8.0-alpha001d",
     "majorVersion" : {
         "firstCreated" : "2002 around January if i'm not mistaken.",
         "lastModified" : "2025-05-28(Wednesday) +-02:00 CEST (AMS Amsterdam.NL Summertime timezone)."
-    }
+    },
+    "supportedBrowsers" : [
+        {
+            "Google Chrome" : {
+                "Windows" : {
+                }
+            }
+        }
+
+    ]
+
 }

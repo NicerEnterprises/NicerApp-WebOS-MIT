@@ -1,0 +1,15 @@
+{
+    "phpServers" : [
+        {
+            "rootPath" : "/var/www/nicer.app-5.8.z/",
+            "relativePathUnderRootPath" : "nicer.app-5.8.0-alpha001d/",
+            "debug" : {
+                "ajax_backgrounds.php" : false,
+                "ajax_backgrounds_recursive.php" : false
+            }
+        }
+    ],
+    "useSimpleArtStyle" : false,
+    "primaryDatabaseEngine" : "couchdb",
+    "usingThisFileAlready" : "notQuiteYet-sorry"
+}

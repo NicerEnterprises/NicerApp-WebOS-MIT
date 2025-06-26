@@ -31,7 +31,13 @@ NicerApp WebOS from Nicer Enterprises
         //  dirname(__FILE__).'/PHPserverConfigs/hostname.DOMAIN_TLD/settings.JSON
         //  using techniques from .../NicerAppWebOS/logic.filePhoenix
         $settingsFilePath = dirname(__FILE__).'/domainConfigs/'.$dcFolderName.'/settings.json';
-
+        if (false) {
+            echo $settingsFilePath;
+            ob_flush();
+            ob_end_flush();
+            ob_clean();
+            ob_start();
+        }
 
 
         $naSettings = json_decode(file_get_contents($settingsFilePath), true);
@@ -201,10 +207,10 @@ NicerApp WebOS from Nicer Enterprises
 
         if (!$naBot) {
             $na_error_log_filepath_html =
-                '/var/www/'.$naWebOS->domainFolder.'/NicerAppWebOS/siteLogs/'
+                $naWebOS->path.'/NicerAppWebOS/siteLogs/'
                 .$date./*'-'.$appName.*/'-'.$naIP.($naBot?'-BOT':'').'.html';
             $na_error_log_filepath_txt =
-                '/var/www/'.$naWebOS->domainFolder.'/NicerAppWebOS/siteLogs/'
+                $naWebOS->path.'/NicerAppWebOS/siteLogs/'
                 .$date./*'-'.$appName.*/'-'.$naIP.($naBot?'-BOT':'').'.txt';
         } else {
             $na_error_log_filepath_html = null;
@@ -240,10 +246,10 @@ NicerApp WebOS from Nicer Enterprises
         //echo $date.'<br/>'; exit();
 
         $na_error_log_filepath_html =
-            '/var/www/'.$naWebOS->domainFolder.'/NicerAppWebOS/siteLogs/'
+            $naWebOS->path.'/NicerAppWebOS/siteLogs/'
             .$date.'-'.$naIP.'-db_init.html';
         $na_error_log_filepath_txt =
-            '/var/www/'.$naWebOS->domainFolder.'/NicerAppWebOS/siteLogs/'
+            $naWebOS->path.'/NicerAppWebOS/siteLogs/'
             .$date.'-'.$naIP.'-db_init.txt';
 
         $_SESSION['dbgNum'] = 0;

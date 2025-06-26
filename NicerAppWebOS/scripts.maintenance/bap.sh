@@ -1,6 +1,6 @@
 #!/bin/bash
 # bap.sh = backup and publish.sh
-DATE=$(date +'%Y-%m-%d_%H:%M:%S')
+DATE=$(date +'%Y-%m-%d-%a_%H-%M-%S_%Z')
 set -x # echo on
 source ./do_upgrade_globals_manufacturer.sh
 

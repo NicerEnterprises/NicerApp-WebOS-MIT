@@ -243,4 +243,24 @@ $naWebOS->dbsAdmin->createUsers($users, $groupsFinal);
 
 $naWebOS->dbsAdmin->createDatabases ($dbs);
 $naWebOS->dbsAdmin->resetDatabases ($dbsReset);
+
+
+$xec = 'php "'.dirname(__FILE__).'/scripts.maintenance/htaccess.build.php"';
+exec ($xec, $output, $result);
+$dbg = [
+    '$xec' => $xec,
+    '$result' => $result,
+    '$output' => $output
+];
+echo '<pre>'; var_dump($dbg); echo '</pre>';
+
+$xec = 'php "'.dirname(__FILE__).'/scripts.maintenance/htaccess.build-views.php"';
+exec ($xec, $output, $result);
+$dbg = [
+    '$xec' => $xec,
+    '$result' => $result,
+    '$output' => $output
+];
+echo '<pre>'; var_dump($dbg); echo '</pre>';
+
 ?>

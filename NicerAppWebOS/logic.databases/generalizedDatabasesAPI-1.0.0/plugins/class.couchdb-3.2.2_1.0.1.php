@@ -303,6 +303,7 @@ class class_NicerAppWebOS_database_API_couchdb_3_2 {
         $userName = 'Guest';
         $roles = [ 'Guests' ];
         $uid = 'org.couchdb.user:'.$this->translate_plainUserName_to_couchdbUserName($userName);
+        global $naWebOS;
         $dn = $this->dataSetName_domainName($naWebOS->domainFolder);
 
         $this->cdb->setDatabase('_users',true);
@@ -316,6 +317,8 @@ class class_NicerAppWebOS_database_API_couchdb_3_2 {
                 'roles' => $roles, // a CouchDB 'role' is a SQL 'group'.
                 'type' => "user"
             );
+            $got = true;
+            try { $call = $this->cdb->get($uid); } catch (Exception $e) { $got = false; }
             if ($got) $rec['_rev'] = $call->body->_rev;
             $call = $this->cdb->post ($rec);
             if ($call->body->ok) echo (!$got?'Created ':'Updated ').$this->translate_plainUserName_to_couchdbUserName($userName).' user document in database _users.<br/>'; else echo '<span style="color:red">Could not '.(!$got?'create ':'update ').$this->translate_plainUserName_to_couchdbUserName($userName).' user document in database _users.</span><br/>';

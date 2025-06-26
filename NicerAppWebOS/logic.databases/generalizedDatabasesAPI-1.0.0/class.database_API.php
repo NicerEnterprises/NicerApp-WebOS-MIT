@@ -287,7 +287,7 @@ class class_NicerAppWebOS_database_API {
                     : 'is not in the jurisdiction of this call.'
                 );
 
-                $html .= '<div class="dbTableName">table <span class="'.$className.'">'.$dbName.'</span> '.$detail.'</div>'.PHP_EOL;
+                $html .= '<div class="couchdbDatabase   Name">Database <span class="'.$className.'">'.$dbName.'</span> '.$detail.'</div>'.PHP_EOL;
             }
 
 

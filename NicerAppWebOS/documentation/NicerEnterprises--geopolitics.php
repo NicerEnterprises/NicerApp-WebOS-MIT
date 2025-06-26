@@ -4,7 +4,7 @@
             <ul>
                 <li><a href="https://x.com/ReneVeerma64021/status/1925009356489109563" target="extLinkXdotCom-ReneVeerma64021-2a" class="nomod noPushState" style="color:white;">Problem Description, proposed solutions, taunting by trolls leading to real solution proposal (initiated and ended by yours truly, Rene AJM Veerman)</a></li>
                 <li><a href="https://www.usmessageboard.com/threads/can-donald-j-trump-really-end-the-war-in-ukraine-once-re-elected.1107515/post-36758684" target="extLinkUSMBdotCom-2a" class="nomod noPushState" style="color:white;">Overall problem Description, real solution proposal (by Rene AJM Veerman)</a></li>
-
+                <li><a href="https://www.usmessageboard.com/threads/could-saddam-hussain-with-his-invasion-of-kuwait-have-triggered-the-9-11-attacks-and-basically-all-terrorist-activity-after-that.1166271/" target="exLinkUSMBdotCom-3a" class="nomod noPushState" style="color:white;">Softening position : The Muslim empires have been hardening themselves for decades or even centuries as well, and are using the same tactic as what I accuse the Americans of right here</a>.</li>
             </ul>
             </span>
 

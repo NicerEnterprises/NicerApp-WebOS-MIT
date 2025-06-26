@@ -1410,8 +1410,8 @@ $debug = false;
     $dbg = array (
         'ptt' => $pathToTest,
         'i' => $i,
-        'dirs' => $directories//,
-         //'backtrace' => debug_backtrace()
+        'dirs' => $directories,
+         'backtrace' => debug_backtrace()
     );
 
     if ( ($i < count($directories)) ) {

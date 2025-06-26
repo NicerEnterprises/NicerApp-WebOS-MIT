@@ -1,5 +1,16 @@
 if (!na) var na = nicerapp = NicerApp_WebOS = {};
 
+const stringifyCircularJSON = obj => {
+  const seen = new WeakSet();
+  return JSON.stringify(obj, (k, v) => {
+    if (v !== null && typeof v === 'object') {
+      if (seen.has(v)) return;
+      seen.add(v);
+    }
+    return v;
+  });
+};
+
 na.apps = {
     loaded : {}
 };
@@ -1359,7 +1370,7 @@ na.m = {
                     );
 
                     if (txt !== '') txt += '\n';
-                    txt += '#'+ecEventIdx+' : f='+JSON.stringify(f, null, 4);
+                    txt += '#'+ecEventIdx+' : f='+stringifyCircularJSON(f, null, 4);
                     fc++;
                 }
             }
