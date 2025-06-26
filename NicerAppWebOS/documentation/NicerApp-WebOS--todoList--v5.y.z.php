@@ -10,7 +10,8 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
 </p>
 
 <ol class="todoList">
-    <li class="todoList"><div>(2025) Merge the 5.7.z branch with the 6.y.z branch into the 5.8.z branch because v5 is as high as I want to go before switching to marketing names or year-of-release numbers (probably the latter).</div></li>
+    <li class="todoList"><div>(2025 to Dec 2027 at most) Merge the 5.7.z branch with the 6.y.z branch into the 5.8.z branch because v5 is as high as I want to go before switching to marketing names or year-of-release numbers (probably the latter).<br/>
+    <a href="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png" class="nomod noPushState"><img src="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png"/></a></div></li>
 
     <li class="todoList"><div>(2025) Write a forums/posts + replies/posts API for this WebOS, for the v5.8.z branch.</div></li>
 
