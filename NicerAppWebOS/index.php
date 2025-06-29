@@ -6,8 +6,8 @@
 
     $siteCurrentlyDown = false;
     $debugMe = false;
-
-    if (false /*$siteCurrentlyDown*/) {
+/*
+    if (false /*$siteCurrentlyDown* /) {
         $debugMe = true;
 ?>
 <div id="siteContent_indexFooter1" class="naVividDialogContent_footer__1">
@@ -27,7 +27,7 @@
     $useRememberMe = true;
     
 
-    echo $naWebOS->getSite();
+    //echo $naWebOS->getSite();
     
     if ($debugMe) {
         echo '<pre style="color:lime;">'.json_encode($naWebOS->about, JSON_PRETTY_PRINT).'</pre>';
@@ -40,8 +40,9 @@
         //exit();
     }
 } else {
+    */
     echo $naWebOS->getSite();
-}
+//}
 ?>
 <!--
 -->

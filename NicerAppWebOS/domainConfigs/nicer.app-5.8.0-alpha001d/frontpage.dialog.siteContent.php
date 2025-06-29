@@ -23,7 +23,7 @@
     </blockquote>
     <meta name="description" content="Take a video or (tiled) background of any resolution, and project information onto that using any weblanguage you want. Written in a style simple enough for children to learn from.">
     <p style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge yellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 2px rgba(255,255,255,0.555), 3px 3px 3px 5px rgba(0,0,0,0.7);">
-    This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS-2025AD" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px; color:lime;">5th major version (2025AD 5.8.0-alpha001d to be exact)</span></a> of this software.
+    This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS-MIT" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px; color:lime;">5th major version, 5.8.0-alpha001d to be exact</span></a> of this software.
     </p>
     <p style="font-size:x-large;color:yellow;text-shadow:0px 0px 3px rgba(0,0,0,0.7),-2px -2px 2px rgba(0,0,0,0.663),4px 4px 3px rgba(0,0,0,0.8);  margin:15px;padding:8px;border:3px ridge yellow; border-radius:5px;background:rgba(0,0,0,0.4);box-shadow:0px 0px 5px 2px rgba(255,255,255,0.555), 3px 3px 3px 5px rgba(0,0,0,0.7);">
     You should disable your VPN (if you can), or at least for this website. VPNs significantly reduce loading speed for websites like these, rich in graphics and client-side user-interface code.
@@ -132,6 +132,7 @@
     </div>
 
 
+    <!-- Less of a problem these days (2025-06-27 23:17CEST AMS Amsterdam.NL timezone)
     <h1 class="contentSectionTitle1" style="width:40%;padding:8px;color:070707;text-shadow:2px 2px 3px rgba(0,0,0,0.75),0px 0px 4px rgba(0,0,0,0.85); background:rgba(0,0,0,0.45);border-radius:5px;"><p class="contentSectionTitle1_span">Cyberwar Violence Events done against NicerEnterprises over it's <a href="/geopolitics" class="nomod noPushState" target="naGeoPolitics" color="lime">GeoPolitical Activities</a>.</p></h1>
     <div style="width:40%;color:black;background:rgba(250, 233, 52,0.35);font-size:120%;margin:10px;font-weight:bold;padding:8px;border-radius:10px;text-shadow:0px 0px 3px rgba(255,0,0,0.7);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.666), 2px 2px 2px rgba(0,0,0,0.7);">
         <p style="background:none;">
@@ -147,6 +148,6 @@
             </ul>
         </p>
     </div>
-
+    -->
 
 

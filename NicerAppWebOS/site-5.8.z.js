@@ -237,21 +237,23 @@ na.site = {
                 */
 
                         setTimeout (function() {
-                            na.te.onload('siteContent');
-                            t.setSpecificity();
-                            debugger;
-                            t.loadTheme();
-
-                            t.startTooltips();
                             $('.vividDialog').css ({
                                 overflow : 'hidden'
                             });
+                            if (document.location.href.match('/wiki/')) {
+                                $('#siteContent > .vividDialogContent > div').css({background:'none'});
+                                $('#bodyContent div, #bodyContent a, .mw-header, .vector-pinned-container').css({background:'none'});
+                                $('#bodyContent li').css({color:'yellow', lineHeight:'calc(1em + 10px)'});
+                                $('.vector-appearance, .vector-column-end').css({display:'none'});
+                            };
                             $('.vividDialog > .vividDialogContent').fadeIn('normal');
                             $('.lds-facebook').fadeOut('normal');
 
-                            setInterval (function() {
-                                na.background.next ('#siteBackground');
-                            }, 5 * 60 * 1000)
+                            t.startTooltips();
+
+                            na.te.onload('siteContent');
+                            t.setSpecificity();
+                            t.loadTheme();
 
                             window.onresize  = function(evt) {
                                 $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
@@ -926,8 +928,6 @@ na.site = {
         //na.desktop.settings.visibleDivs = na.desktop.globals.visibleDivs;
         //na.desktop.resize();
 
-        event.preventDefault();
-
    // debugger;
         if (!url.match(/\/view\//) && url.indexOf('/')===0) {
             debugger;
@@ -935,6 +935,8 @@ na.site = {
         } else if (url.indexOf('/')===-1) {
             History.pushState (null, '', document.location.origin+'/view/'+url);
         } else debugger;
+
+        event.preventDefault();
     },
 
 	stateChange : function(evt){
@@ -1393,6 +1395,8 @@ na.site = {
         if (sel) for (let i = 0; i < sel.length; i++) { var sel2 = sel[i]; sel2.addEventListener('click',na.m.handleGalleryLinkClick); }
         */
 
+
+        /*
         $('p, h1, h2, h3').addClass('todoList');
 
         na.site.bindTodoListAnimations (
@@ -1409,6 +1413,7 @@ na.site = {
             +'.todoList_l2 > li > div, '
             +'.todoList_l2 > li > pre '
         );
+        */
     },
 
     bindTodoListAnimations : function (selector) {
@@ -1511,7 +1516,12 @@ na.site = {
 
                     var vdc = $('#'+divID2+' .vividDialogContent');
                     if (dat[divID2]) {
-                        vdc.html(dat[divID2]).fadeIn('normal').delay(100);
+                        vdc.html(dat[divID2]).fadeIn('normal');
+                        if (na.site.settings.url.match('/wiki/')) {
+                            $('#siteContent > .vividDialogContent > div').css({background:'none'});
+                            $('#bodyContent div').css({background:'none'});
+                            $('#bodyContent li').css({color:'yellow'});
+                        };
                         na.m.log (22,fncn+' : "'+divID2+'" filled with HTML.', false);
                         na.site.transformLinks($('#'+divID2)[0]);
                         na.site.renderAllCustomHeadingsAndLinks();
@@ -2313,7 +2323,7 @@ na.site = {
                 && el.id!=='btnLoginLogout'
             ) */{
                 try {
-                    var html = $($(el).attr('title'));
+                    var html = $(el).attr('title');
                 } catch (error) {
                     var html = $(el).attr('title');
                 }
@@ -3099,7 +3109,8 @@ na.site = {
         u = na.site.components.url,
         apps = na.site.globals.app;
 
-        if (!na.te.settings.current.forDialogID && !na.te.settings.current.forElements) na.te.onload();
+        //if (!na.te.settings.current.forDialogID && !na.te.settings.current.forElements)
+            na.te.onload('siteContent');
 
         //if (!theme) theme = na.site.globals.themeName;
         na.site.components.running_saveTheme = true;

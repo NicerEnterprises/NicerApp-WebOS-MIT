@@ -4,12 +4,12 @@
 ?>
 
 <h1 class="contentSectionTitle2"><span class="contentSectionTitle2_span">NicerApp WebOS Development Direction</span></h1><br/><br/>
-<p>
+<p style="width:30%">
 I can not open up this to-do list for "jobs" done by other people yet, simply because the code is still in Alpha Phase. an initial test-phase.<br/>
 But eventually yes, this WebOS will be a truly open market (at the technical and company levels).<br/>
 </p>
 
-<ol class="todoList">
+<ol class="todoList" style="width:30%; width:content-width;">
     <li class="todoList"><div>(2025 to Dec 2027 at most) Merge the 5.7.z branch with the 6.y.z branch into the 5.8.z branch because v5 is as high as I want to go before switching to marketing names or year-of-release numbers (probably the latter).<br/>
     <a href="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png" class="nomod noPushState"><img src="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png"/></a></div></li>
 

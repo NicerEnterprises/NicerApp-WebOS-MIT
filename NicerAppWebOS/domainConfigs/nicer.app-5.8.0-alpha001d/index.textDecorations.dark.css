@@ -5,13 +5,20 @@ body {
   font-size : large;
 }
 p { padding : 5px; }
-a.backdropped {
+div span, div a, div p {
+  color : yellow;
   background : rgba(0,0,0,0.555);
   padding : 5px;
   margin : 4px;
   border-radius : 8px;
-  line-height : 1.2em;
+}
+a.backdropped {
+  background : rgba(0,0,0,0.555);
+  padding : 5px;
+  margin : 5px;
+  border-radius : 8px;
   vertical-align : inherit;
+  line-height : calc(1em + 10px);
   display : inline-block;
   text-wrap : nowrap;
 }
@@ -19,12 +26,12 @@ li { margin : 10px; }
 a { color : skyblue; padding : 3px; margin : 4px; background : rgba(0,0,0,0.7); border-radius:5px; }
 a:visited { color : rgba(50,150,50,1); }
 a:hover { color: #0095DD; pointer-events: all;}
-a.contentSectionTitle3_a { position : relative; display : flex; justify-content : left; align-items : center; width : fit-content; padding : 5px; }
-h1.contentSectionTitle1 { position : relative; display : flex; justify-content : left; align-items : center; width : fit-content; padding : 5px; }
+a.contentSectionTitle3_a { justify-content : left; align-items : center; width : fit-content; padding : 5px; }
+h1.contentSectionTitle1 { justify-content : left; align-items : center; width : fit-content; padding : 5px; }
 .contentSectionTitle1_span, .animatedText_orangeYellow, .naPageTitle { color : yellow; }
-h2.contentSectionTitle2 { position : relative; display : flex; justify-content : left; align-items : center; width : fit-content; padding : 5px; }
+h2.contentSectionTitle2 { justify-content : left; align-items : center; width : fit-content; padding : 5px; }
 .contentSectionTitle2_span, .animatedText_blue, .naExternalLink { color : #0077FF; }
-h3.contentSectionTitle3 { position : relative; display : flex; justify-content : left; align-items : center; width:fit-content; padding : 5px; }
+h3.contentSectionTitle3 { justify-content : left; align-items : center; width:fit-content; padding : 5px; }
 .contentSectionTitle3_span, .animatedText_green, .naInternalLink { color : #00FF77; }
 
 .vividButton a, .vividButton.selected a, .vividButtonSelected a {

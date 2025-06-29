@@ -699,6 +699,7 @@ function base64_decode_url($string) {
 }
 
 function execPHP ($file, $flush=true) {
+    if (is_array($file)) $file = $file['realPath'];
     if ($flush) {
         ob_flush(); // NOT WISE AT ALL (nested calls to execPHP() will crash JSON decoding in the browser due to HTML inserted in AJAX response before the JSON data.
         $c = '';
