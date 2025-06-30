@@ -1,6 +1,6 @@
 //na.m.waitForCondition ( 'na.m.desktopInitialized()', na.m.WebOSidle, function () {
         
-na.analytics.logMetaEvent ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer : init-stage-1');
+//na.analytics.logMetaEvent ('/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer : init-stage-1');
 
 delete na.mp;
 na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer'] = na.musicPlayer = na.mp = {
@@ -33,7 +33,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer'] 
             '#siteContent' : {
                 onload : function (settings) {
                     na.site.settings.current.app = '/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer';
-                    na.analytics.logMetaEvent ("na.musicPlayer.onload() called.");
+                    //na.analytics.logMetaEvent ("na.musicPlayer.onload() called.");
 
                     $('#siteContent > .vividDialogContent').css({ overflow : 'hidden', direction:'ltr'});
                 /*na.m.waitForCondition ('DOM ready', function() {
@@ -198,7 +198,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer'] 
 			}
 		};
 		$.ajax(ajaxCommand);
-        na.analytics.logMetaEvent ('appEvent : musicPlayer : selectMP3() file='+file);
+        //na.analytics.logMetaEvent ('appEvent : musicPlayer : selectMP3() file='+file);
 	},
     
     updateDescriptionDiv : function (id, file, html) {

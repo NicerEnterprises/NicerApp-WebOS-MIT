@@ -48,37 +48,6 @@ import { naLogo } from '/NicerAppWebOS/na.canvasLogo-4.y.z.js?f=u';
         <div class="vividDialogContent vividScrollpane" style="display:inline-block;position:relative;">
             {$div_siteContent}
             <div id="siteContent" class="vividDialog_hideOnPageStart" style="left:10px;width:calc(100% - 20px);">
-                <h1>Site currently down for <a href="https://askubuntu.com/questions/1551000/kubuntu-24-04-2lts-nginx-apache2-php-8-3-all-timeout-settings-correct">maintenance</a>.</h1>
-                <p><a href="https://x.com/ReneVeerma64021">Life under re-arrangement too, folks</a>.</p>
-                <p>it will take maybe a few days to make some structural changes to the code on nicer.app, said.by and zoned.at<p>
-                <style>
-                    pre {
-                        display : inline-block;
-                        position : relative;
-
-                        vertical-align : inherit;
-                        text-wrap : initial;
-                        word-break : auto-phrase;
-                        line-break : after;
-
-                        page-break-after: always; /* CSS 2.1 syntax */
-                        break-after: always; /* CSS 3 syntax */
-                        wrap-after: flex; /* New proposed syntax */
-
-                        margin : 10px;
-                        padding : 5px;
-                        border-radius : 7px;
-                        background : rgba(0,0,50,0.7);
-                        text-shadow : 0px 0px 7px rgba(255,255,255,0.9995), 2px 2px 4px rgba(0,0,0,0.8);
-                    }
-                </style>
-                <?php
-                    echo '<pre style="color:lime;">'.json_encode($naWebOS->about, JSON_PRETTY_PRINT).'</pre>';
-                    echo '<pre style="color:skyblue;">'.$naWebOS->basePath.'</pre>';
-                    echo '<pre style="color:red;">'.$naWebOS->domainFolder.'</pre>';
-                    echo '<pre style="color:brown;">'.json_decode(json_encode($_GET),JSON_PRETTY_PRINT).'</pre>';
-                    echo '<pre style="color:black;">'.json_decode(json_encode($_POST),JSON_PRETTY_PRINT).'</pre>';
-                ?>
             </div>
         </div>
     </div>

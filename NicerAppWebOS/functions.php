@@ -1,5 +1,5 @@
 <?php
-//require_once(dirname(__FILE__).'/boot.php');
+require_once(dirname(__FILE__).'/boot.php');
 //require_once(dirname(__FILE__).'/3rd-party/vendor/autoload.php');
 //use Birke\Rememberme\Authenticator;
 //use Birke\Rememberme\Storage\FileStorage;
@@ -1555,6 +1555,8 @@ another example:
                         $pass = true;
                         //echo $path.$file.'<br/>';
                         $ft = filetype($path.$file);
+                        //var_dump($path.$file);
+                        //if ($ft=='dir') { var_dump ($ft); die(); }
 
                         if (!in_array ($ft, $fileTypesFilter)) $pass = false;
                         if ($debug) { echo '<pre style="color:red">'; var_dump ($ft); var_dump($fileTypesFilter); echo '</pre>'; };
@@ -1567,8 +1569,9 @@ another example:
                             var_dump ($excludeFolders); echo PHP_EOL;
                             var_dump ($pass); echo PHP_EOL;
                         }
+                        if ($debug) { echo '#p0='; var_dump ($pass); echo PHP_EOL; }
                         if ($pass/* && !$recursive*/) $pass = preg_match ($fileSpecRE, $filepath) === 1 || $recursive;
-                        if ($debug) { echo '#p1='; var_dump ($pass); echo PHP_EOL; }
+                        if ($debug) { echo '#p1a='; var_dump (preg_match ($fileSpecRE, $filepath)); echo '#p1b='; var_dump($fileSpecRE); echo '#p1c=';var_dump ($filepath); echo '#p1d='; var_dump ($pass); echo '<br/>'.PHP_EOL; }
                         if ($pass && !is_null($excludeFolders) && $excludeFolders!=='') $pass = preg_match ($excludeFolders, $filepath) === 0 || $recursive;
                         if ($debug) { echo '#p2='; var_dump ($pass); echo PHP_EOL; }
                         if ($debug) echo '</pre>';
@@ -1619,16 +1622,17 @@ another example:
 
                         if (false && $debug) { echo 'preg_match($excludeFolders, $filepath.$r)='; var_dump(preg_match($excludeFolders, $filepath.$r)); echo '<br/>'.PHP_EOL; }
 
+                        //if (    (true && $ft=='dir') || $debug) {
                         if ($debug) {
                             $dbg = [
-                            //'bt' => debug_backtrace(),
-                            'filepath' => $filepath,
-                            'fp' => $path.$file,
-                            'frp' => $realPath.$file,
-                            'r' => $recursive,
-                            'ft' => $ft,
-                            'pass' => $pass,
-                            'c' => (is_null($depth) || $level < $depth)
+                                //'bt' => debug_backtrace(),
+                                'filepath' => $filepath,
+                                'fp' => $path.$file,
+                                'frp' => $realPath.$file,
+                                'r' => $recursive,
+                                'ft' => $ft,
+                                'pass' => $pass,
+                                'c' => (is_null($depth) || $level < $depth)
                             ];
                             echo '<pre style="color:white;background:brown;border-radius:5px;padding:5px;">'; echo json_encode ($dbg,JSON_PRETTY_PRINT); echo '</pre>';
                         }
@@ -1636,12 +1640,15 @@ another example:
                         if (
                             $recursive
                             && $ft=="dir"
-                            //&& $pass
+                            && $pass
+
+                            /*
                             && (
                                 is_null($depth)
-                                || $level<$depth
+                                || $level<=$depth
                             )
-                            //&& preg_match($excludeFolders, $filepath.$r)===1
+                              && preg_match($excludeFolders, $filepath.$r)===1
+                            */
                         ) {
                             $subdir = @getFilePathList ($filepath,$recursive, $fileSpecRE, $excludeFolders,
                                 $fileTypesFilter, $depth, $level+1, $returnRecursive, $debug, $ownerFilter, $fileSizeMin, $fileSizeMax,
@@ -1661,41 +1668,43 @@ another example:
                                         $result['folders'][basename($filepath.$r)] = $subdir;
                                     }
                                 }
-                        } else {
-                            if ($pass==true || $recursive) {
-                                //htmlOut ("PASSED");
-
-                                $ev = "\$r = $listCall";
-                                //htmlDump ($ev);
-                                if (!empty($listCall)) eval ($ev);
-                                $idx = count ($result);
-                                if (!empty($r)) $r = " - [listCall=$r]";
-                                /*if (!$returnRecursive) {
-                                    $result[$idx] = $filepath.$r;
-                                } else {
-                                    $result[$idx] = basename($filepath.$r);
-                                }*/
-                                //if (!array_key_exists('files',$result)) $result['files'] = [];
-                                //$result['files'][basename($filepath)] = $filepath;//DON'T! str_replace($pathStart,'',$filepath);
-                                global $naWebOS;
-                                if (in_array ($ft, $fileTypesFilter))
-                                if (!$returnRecursive) {
-                                    $result[$idx] = [
-                                        'path' => $filepath.$r,
-                                        'realPath' => $realPath.basename($filepath),
-                                        'webPath' => str_replace('/var/www/'.$naWebOS->domainFolder,'',$filepath)
-                                    ];
-                                } else {
-                                    if (!array_key_exists('files',$result)) $result['files'] = [];
-                                    $result['files'][basename($filepath)] = [
-                                        'path' => $filepath,
-                                        'realPath' => $realPath.basename($filepath),
-                                        'webPath' => str_replace('/var/www/'.$naWebOS->domainFolder,'',$filepath)
-                                    ];
-                                }
-                            }
-
                         }
+
+                        if ($pass==true || $recursive) {
+                            //htmlOut ("PASSED");
+
+                            $ev = "\$r = $listCall";
+                            //htmlDump ($ev);
+                            if (!empty($listCall)) eval ($ev);
+                            $idx = count ($result);
+                            if (!empty($r)) $r = " - [listCall=$r]";
+                            /*if (!$returnRecursive) {
+                                $result[$idx] = $filepath.$r;
+                            } else {
+                                $result[$idx] = basename($filepath.$r);
+                            }*/
+                            //if (!array_key_exists('files',$result)) $result['files'] = [];
+                            //$result['files'][basename($filepath)] = $filepath;//DON'T! str_replace($pathStart,'',$filepath);
+                            global $naWebOS;
+                            if (in_array ($ft, $fileTypesFilter))
+                            if (!$returnRecursive) {
+                                $result[$idx] = [
+                                    'path' => $filepath.$r,
+                                    'realPath' => $realPath.basename($filepath),
+                                    'webPath' => str_replace($naWebOS->webFolder.'/','',$filepath)
+                                ];
+                                //echo '<pre style="color:white;background:blue;padding:5px;margin:10px;border-radius:8px;">';var_dump($naWebOS->webFolder);  var_dump($result[$idx]);echo '</pre>';
+                            } else {
+                                if (!array_key_exists('files',$result)) $result['files'] = [];
+                                $result['files'][basename($filepath)] = [
+                                    'path' => $filepath,
+                                    'realPath' => $realPath.basename($filepath),
+                                    'webPath' => str_replace($naWebOS->webFolder.'/','',$filepath)
+                                ];
+                                //echo '<pre style="color:blue;background:navy;padding:5px;margin:10px;border-radius:8px;">'; var_dump($naWebOS->webFolder); var_dump($result['files'][basename($filepath)]);echo '</pre>';
+                            }
+                        }
+
                     } // !dot-files ('.' && '..', current & parent path on OS commandline)
                 } //!preg_match($excludeFolders, $path)
 			}

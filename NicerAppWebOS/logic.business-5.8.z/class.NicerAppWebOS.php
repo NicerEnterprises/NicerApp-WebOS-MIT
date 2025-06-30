@@ -17,15 +17,19 @@ class NicerAppWebOS {
 
         $this->baseIndentLevel = 1;
 
-        $p1 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
-        $p2 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
-        $this->path = $p2;
-        $this->domainFolder = str_replace($p1.DIRECTORY_SEPARATOR,'', $p2);
+        $p1 = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
+        $p2a = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
+        $p2b = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..');
+        $this->path = $p2b;
+        $this->domainFolder = str_replace($p2a.DIRECTORY_SEPARATOR,'', $p2b);
+        $p2c = str_replace($p2b.DIRECTORY_SEPARATOR,'', $p2a);
+        //var_dump($this->domainFolder); die();
 
-        $p3 = $this->domain = explode('-', $this->domainFolder);
+        $p3 = $this->domain = explode('-', $p2c);
         // TODO : Document this in .../README.md
         $this->domain = $p3[0];
-        $this->webFolder = $p3[0].$p3[1];
+        $this->webFolder = $p2b;
+        //var_dump($this->webFolder); die();
         /*
         $dbg = [
             $this->path,
@@ -133,8 +137,9 @@ class NicerAppWebOS {
         //var_dump($html); exit();
         $html5 = str_replace ($searches, $replaces, $html);
         echo $html5;
+        //echo htmlentities($html5);die();
 
-        //echo '<pre>'; var_dump ($this->about); var_dump($this->path); echo '</pre>';
+        //echo '<pre>'; var_dump ($this->about); var_dump($this->path); echo '</pre>'; die();
     }
 
 
@@ -245,8 +250,9 @@ class NicerAppWebOS {
             ]
         ];
         if (array_key_exists('viewID', $_GET)) {
+        //echo '<pre>'; var_dump ($_GET); var_dump ($_GET['viewID']=='' || $_GET['viewID']=='/'); die();
             if ($_GET['viewID']=='' || $_GET['viewID']=='/') {
-                $view = ['/'=>['page'=>'index']];
+                $this->view = ['/'=>['page'=>'index']];
             } else {
                 $decoded = json_decode(base64_decode_url($_GET['viewID']), true);
                 if (json_last_error()!==0) {
@@ -275,8 +281,10 @@ class NicerAppWebOS {
 
 
     public function getContent ($divID=null, $viewID=null) {
+
         if (!is_null($viewID)) $_GET['viewID'] = $viewID;
         $fncn = $this->cn.'->getContent("'.$divID.'", "'.$viewID.'") $_GET='.json_encode($_GET);
+        //echo '<pre>'; var_dump($fncn); die();
         if (is_null($viewID)) $view = $this->view; else {
             $view = $this->getView($viewID);
         }
@@ -363,9 +371,11 @@ class NicerAppWebOS {
             trigger_error ($msg, E_USER_ERROR);
             return $this->getContent_standardErrorMessage ($msg);
         } else {
+            //echo $viewID;
             if ($viewID==='/') {
                 // output frontpage.dialog.*.php
                 $folder = $this->basePath.'/NicerAppWebOS/domainConfigs/'.$naWebOS->domainFolder.'/';
+                //var_dump ($folder); die();
                 $files = getFilePathList($folder, false, '/frontpage.dialog.*\.php/', null, array('file'), 1, 1, true)['files'];
                 if ($debug) { echo '<p style="color:yellow;background:red;margin:10px;padding:5px;border-radius:10px;">'.$folder.'</p><br/><pre style="color:yellow;background:red;margin:10px;padding:5px;border-radius:10px;">$files='.PHP_EOL; var_dump($files); echo '</pre>'.PHP_EOL.PHP_EOL; };
 
@@ -374,64 +384,50 @@ class NicerAppWebOS {
                     $filename = str_replace ($fileRoot, '', $filepath['realPath']);
                     $dialogID = str_replace ('frontpage.dialog.', '', $filename);
                     $dialogID = str_replace ('.php', '', $dialogID);
-                    $arr = array ( $dialogID => require_return($filepath['realPath']) );
+                    $arr = array ( $dialogID => execPHP($filepath['realPath']) );
                     //echo 't666a'; var_dump ($filepath); echo PHP_EOL;
                     //var_dump ($dialogID); echo PHP_EOL;
                     //$arr = array ( $dialogID => $filepath );
                     $ret = array_merge ($ret, $arr);
-                }
+                };
+                //$xa = json_encode($ret, JSON_PRETTY_PRINT);
+                //$x1 = json_decode($xa, true);
+                //echo'<pre>'; var_dump (htmlentities($xa));die();
 
             } else {
                 // request view settings from database
                 try {
                     $view = is_object($this->view)?(array)$this->view:$this->view;
-                    if ($debug) { echo '<pre style="color:white;background:lime;font-weight:bold;padding:5px;margin:10px;border-radius:10px;">$view='; var_dump ($view); echo '</pre>'; }
+                    if ($debug) { echo '<pre style="color:white;background:lime;font-weight:bold;padding:5px;margin:10px;border-radius:10px;">$view='; var_dump ($view); echo '</pre>'; exit(); }
 
                 } catch (Exception $e2) {
                     echo '<pre style="color:white;background:red;margin:10px;padding:5px;border-radius:10pxp;">'; echo '<b>ERROR : '.$e2->getMessage().'</b>'; echo '<pre style="margin-left:10px;color:white;">debug_backtrace()='; var_dump (debug_backtrace()); echo '</pre><b>$view='; var_dump($view); echo '</b><p style="font-weight:bold;">probable solution : run "php .../NicerAppWebOS/scripts.maintenance/htaccess.build.php and htaccess.build-views.php again"</p>'; exit();
                 }
                 $ret = [ ];// DONT! 'siteContent' => '<pre>'.json_encode($view,JSON_PRETTY_PRINT).'</pre>'];
                 if (is_array($view)) {
-                    if (array_key_exists('misc', $view)) {
-                        $fsid = $view['misc']['folder'];
-                        foreach ($view as $k => $rec) {
-                            if ($k=='misc') continue; else {
-                                $fid = $k;
-                                $rp = $fsid.'/'.$fid;
-                                //var_dump ($rp);
-                            }
-                        }
-                        $view = [ $rp => $rec ];
-                    }
-                    if ($debug) { echo '<pre style="color:purple;background:cyan;">'; var_dump ($view); echo '</pre>'; }
-
-                    //foreach ($view as $appName => $viewApp) break;
-                    //echo '<pre style="color:purple;background:cyan;">'; var_dump ($viewApp); echo '</pre>'; exit();
                     $viewsFolder = '-$viewsFolder NOT FOUND-';
-                    foreach ($view as $k1 => $v1) {
-                        $viewsFolder = $this->basePath.$k1;
+                    foreach ($view as $appFolder => $app) {
+                        //echo '<pre>'; var_dump ($app); die();
+                        if (array_key_exists('webPath',$app)) $viewsFolder = $this->webFolder.'/'.$app['webPath'];
+                        if (array_key_exists('appFolder',$app)) $viewsFolder = $this->webFolder.$app['appFolder'];
+                        if (array_key_exists('appFolder',$view)) $viewsFolder = $this->webFolder.$view['appFolder'];
+                        break;
                     }
-                    if ($debug) { echo '<em>$viewsFolder='.$viewsFolder.'</em>'; }
-
                     //foreach ($view as $viewsFolder => $viewSettings) {
                         if (!file_exists($viewsFolder)) {
                             $msg = 'Folder "'.$viewsFolder.'" does not exist.'.PHP_EOL;
                                 //.'$_SERVER='.json_encode($_SERVER,JSON_PRETTY_PRINT)
                                 //.' $VIEW='.json_encode($view,JSON_PRETTY_PRINT)
                                 //.' BACKTRACE='.json_encode(debug_backtrace(), JSON_PRETTY_PRINT);
-                            if ($debug) {
-                                echo '<pre style="color:red;font-weight:bold">';
-                                var_dump ($msg);
-                                echo '</pre>';
-                            }
+                            echo '<pre style="color:red;font-weight:bold">'; var_dump ($msg); echo '</pre>'; die();
                             trigger_error ($msg, E_USER_WARNING);
                         } else {
                             //dangerous, don't remember why i put this in here atm :
                             //$dbInitPHP = $this->basePath.'/'.$viewsFolder.'/db_init.php';
                             //if (file_exists($dbInitPHP)) execPHP ($dbInitPHP);
 
-                            $files = getFilePathList ($viewsFolder, true, '/app.*/', null, array('file'), 1, 1, true);
-                            if ($debug) { echo '<pre style="font-weight:bolder;color:purple;background:cyan;">'; var_dump ($files); echo '</pre>'; exit(); }
+                            $files = getFilePathList ($viewsFolder, false, '/app\.dialog\..*/', null, array('file'), 1, 1, true);
+                            if ($debug) { echo '<pre style="font-weight:bolder;color:purple;background:cyan;">'; var_dump ($viewsFolder); var_dump ($files); echo '</pre>'; exit(); }
                             if (!array_key_exists('files', $files)) {
                                 $msg = 'HTTP error 404 : no files matching app.* in "'.$viewsFolder.'"';
                                 trigger_error ($msg, E_USER_ERROR);
@@ -448,8 +444,10 @@ class NicerAppWebOS {
                             if (file_exists($desktopDefinitionFile))
                                 $ret['_desktopDefinition'] = require_return ($desktopDefinitionFile);
 
+                            //echo '<pre>'; var_dump($files); die();
+
                             foreach ($files as $idx3 => $contentFile) {
-                                //echo 't666b'; var_dump ($contentFile);
+                                //echo '<pre> t666b'; var_dump ($contentFile);// die();
                                 if (strpos($contentFile['realPath'], 'app.dialog.')!==false) {
                                     $divID = str_replace('app.dialog.', '', basename($contentFile['realPath']));
                                     $divID = str_replace('.php', '', $divID);
@@ -686,7 +684,9 @@ class NicerAppWebOS {
         $view = [
             'findCommand' => $findCommand,
             'call' => $call
-        ];'<pre style="color:blue">$findCommand='.json_encode($findCommand, JSON_PRETTY_PRINT).'</pre><pre style="color:green">$call='.json_encode($call, JSON_PRETTY_PRINT).'</pre>';
+        ];
+
+        // echo'<pre style="color:blue">$findCommand='.json_encode($findCommand, JSON_PRETTY_PRINT).'</pre><pre style="color:green">$call='.json_encode($call, JSON_PRETTY_PRINT).'</pre>';
         //return true;
 
         if (

@@ -1,1 +1,0 @@
-NicerEnterprises Geo-Political Activity

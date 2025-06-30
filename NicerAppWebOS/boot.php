@@ -490,7 +490,13 @@ NicerApp WebOS from Nicer Enterprises
     }
 
     $now = DateTime::createFromFormat('U.u', microtime(true));
-    $s3 = (int)$now->format("u"); // milliseconds after 's2' listed below here.
+    while (!is_bool($now)) {//for testing solution
+        $t = microtime(true);
+        $now = DateTime::createFromFormat('U.u', $t);
+    }
+    if (is_bool($now)) {//the problem
+        $now = DateTime::createFromFormat('U', $t);//the solution
+    }    $s3 = (int)$now->format("u"); // milliseconds after 's2' listed below here.
     $err = [
         'type' => 'New request',
         's1' => (

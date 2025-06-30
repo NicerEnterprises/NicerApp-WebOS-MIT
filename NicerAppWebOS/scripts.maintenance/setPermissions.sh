@@ -28,9 +28,9 @@ cd $ROOT_PATH
 
 echo "SETTING PERMISSIONS BASELINE (this may take a short while)"
 sudo chown -R $NA_MAIN_USER:$NA_MAIN_GROUP /var/www/nicer.app-5.8.z
-sudo chown -R $NA_MAIN_USER:$NA_MAIN_GROUP /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001c
+sudo chown -R $NA_MAIN_USER:$NA_MAIN_GROUP /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d
 sudo chmod 755 /var/www/nicer.app-5.8.z
-sudo chmod 755 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001c
+sudo chmod 755 /var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d
 sudo chown -R $NA_MAIN_USER:$NA_MAIN_GROUP *
 sudo chmod -R $NA_MAIN_PERMISSIONS *
 

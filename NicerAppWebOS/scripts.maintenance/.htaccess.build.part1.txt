@@ -164,6 +164,9 @@ Options +FollowSymLinks
     RewriteRule ^wiki/(.*)$ NicerAppWebOS/logic.AJAX/ajax_get_content.php?app-wikipedia.org=$1 [L]
 
     RewriteCond %{REQUEST_METHOD} ^(GET)$
+    RewriteRule ^wiki/$ NicerAppWebOS/index.php?app-wikipedia.org=frontpage [L]
+
+    RewriteCond %{REQUEST_METHOD} ^(GET)$
     RewriteRule ^wiki/(.*)$ NicerAppWebOS/index.php?app-wikipedia.org=$1 [L]
 
     RewriteCond %{REQUEST_METHOD} ^(GET)$

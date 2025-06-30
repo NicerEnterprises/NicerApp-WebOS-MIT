@@ -4,11 +4,11 @@
     global $naURLs; // from .../NicerAppWebOS/domainConfigs/nicer.app/mainmenu.items.php
     global $na_apps_structure;
     if (false) {
-    echo '<pre style="color:blue;">';
-    var_dump ($na_apps_structure);
-    echo '</pre><pre style="color:purple">';
-    var_dump ($naURLs);
-    echo '</pre>'; exit();
+        echo '<pre style="color:blue;">';
+        var_dump ($na_apps_structure);
+        echo '</pre><pre style="color:purple">';
+        var_dump ($naURLs);
+        echo '</pre>'; exit();
     }
 ?>
     <div class="container" style="display:flex;justify-content:left;align-items:center;">

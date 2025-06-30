@@ -14,8 +14,8 @@
 require_once (realpath(dirname(__FILE__).'/../../../../../..').'/NicerAppWebOS/boot.php');
 global $naWebOS; global $naLAN;
 //echo '<pre>'; var_dump ($naWebOS->view); exit();
-$view = $naWebOS->view["/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer"];
-//var_dump ($view); //exit();
+$view = $naWebOS->view;//["/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer"];
+//var_dump ($naWebOS->view); exit();
 
 if ($view['set']==='index') {
     global $naLAN;
@@ -25,8 +25,6 @@ if ($view['set']==='index') {
     } else {
         require_once(dirname(__FILE__).'/OFFLINE.php');
     }
-    //require_once(dirname(__FILE__).'/frontpage.php'); // temporary only, aivd.nl & vvd.nl!.. FOR EMO SUPPORT OF nato POPULATIONS. SEE MY x.COM ACCOUNT FOR DETAILS
-
 } else {
     global $naLAN;
     global $naSettings_app2D_musicPlayer_respectDutchCopyright;
@@ -37,7 +35,8 @@ if ($view['set']==='index') {
     }
 
 
-    $setPath = dirname(__FILE__).'/music/'.$view['set'];
+    $setPath = $view['folder']['realPath'];//dirname(__FILE__).'/music/'.$view['set'];
+    //echo '<pre>';var_dump($view);exit();
 
     /*
     if (file_exists($setPath.'/regex_filenameFilter.js-regexps.json')) {
@@ -49,10 +48,10 @@ if ($view['set']==='index') {
     */
     //var_dump ($setPath); //exit();
     //var_dump (FILE_FORMATS_mp3s); exit();
-    $files = getFilePathList ($setPath.'/', false, FILE_FORMATS_mp3s, null, array('file'), 1, 1, false);
+    $files = getFilePathList ($setPath, false, FILE_FORMATS_mp3s, null, array('file'), 1, 1, false);
     //var_dump ($files); exit();
     foreach ($files as $idx => $filepath) {
-        $files[$idx] = str_replace(realpath(dirname(__FILE__.'/../..')), '', $files[$idx]);
+        $files[$idx] = str_replace(realpath(dirname(__FILE__.'/../..')), '', $files[$idx]['realPath']);
         $files[$idx] = str_replace('\\\\', '/', $files[$idx]);
         $files[$idx] = str_replace('\\', '/', $files[$idx]);
         /*
@@ -68,7 +67,7 @@ if ($view['set']==='index') {
         }
         */
     }
-    //echo '<pre>'; var_dump ($files); exit();
+    //echo '<pre>ty='; var_dump ($files); exit();
 
 $authorEmail = 'rene.veerman.netherlands@gmail.com';
 $spacer = "\n\t\t\t\t";
@@ -155,7 +154,8 @@ $spacer = "\n\t\t\t\t";
             foreach ($filez2 as $idx=>$fn) {
                 $id = 'mp3Source_'.$idx;
                 echo PHP_EOL;
-                echo "\t\t\t".'<source id="'.$id.'" src="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/music/'.$view['set'].'/'.$filez2[$idx].'" type="audio/mpeg">'.PHP_EOL;
+                $vs = str_replace('_','%20',$view['set']);
+                echo "\t\t\t".'<source id="'.$id.'" src="/NicerAppWebOS/apps/NicerAppWebOS/applications/2D/musicPlayer/music/'.$vs.'/'.$filez2[$idx].'" type="audio/mpeg">'.PHP_EOL;
             }
             ?>
         </audio>

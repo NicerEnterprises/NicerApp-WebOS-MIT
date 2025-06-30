@@ -1,7 +1,8 @@
 <?php
+    require_once(realpath(dirname(__FILE__).'/../../boot.php'));
     global $naWebOS;
     global $naURLs;
-    //echo $naWebOS->basePath.'/NicerAppWebOS/domainConfigs/'.$naWebOS->domainFolder.'/pageHeader.php'; exit();
+    //$src = $naWebOS->basePath.'/NicerAppWebOS/domainConfigs/'.$naWebOS->domainFolder.'/pageHeader.php'; echo $src; var_dump(file_exists($src)); exit();
     require_once ($naWebOS->basePath.'/NicerAppWebOS/domainConfigs/'.$naWebOS->domainFolder.'/pageHeader.php');
 ?>
     <script type="text/javascript">
@@ -71,25 +72,16 @@
         </div>
     <?php } ?>
     
-    <!--
-        TAKEN OFFLINE 2025-06-25 00:20 CEST AMS AMSTERDAM.NL TIMEZONE
-        For reasons not revealed as they are top-secret even to me.
-        Meaning : I do not even know the real reason for this, am not going to guess about it,
-        and will not inquire about it for anyone.
-        IF and WHEN these NATO and/or EU and/or UK orders for me change, then I will gladly bring this app back online.
-        But the fact remains that with the change over from 5.7 to 6.x (renamed as 5.8 now), a *lot* of new bugs appeared in the page loading mechanism, that got upgraded when 6.x was written. These bugs have to be dealt with first, and then there's my hardware upgrades, networking settings (complicated, as it involves cryptography), etc, etc, to get through first.
-
-        <h3 id="h3_news" class="contentSectionTitle3 contentSectionTitle3_darker"><span class="contentSectionTitle3_span_darker">News</span></h3>
-        <ul class="index" style="margin-block-end:33px;">
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_englishNews'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English News</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_englishNews_worldHeadlines'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English News : World Headlines only</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="/business-news" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English Business News</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_nederlandsNieuws'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Nederlands Nieuws</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_nederlandsNieuws_wereldNieuws'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Nederlands Nieuws : Internationale Headlines</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_deutscheNachrichten'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Deutsche Nachrichten</span></a></div></li>
-            <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_arabic'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Arabic Business News (in English)</span></a></div></li>
-        </ul>
-    -->
+    <h3 id="h3_news" class="contentSectionTitle3 contentSectionTitle3_darker"><span class="contentSectionTitle3_span_darker">News</span></h3>
+    <ul class="index" style="margin-block-end:33px;">
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_englishNews'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English News</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_englishNews_worldHeadlines'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English News : World Headlines only</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="/business-news" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">English Business News</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_nederlandsNieuws'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Nederlands Nieuws</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_nederlandsNieuws_wereldNieuws'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Nederlands Nieuws : Internationale Headlines</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_deutscheNachrichten'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Deutsche Nachrichten</span></a></div></li>
+        <li><div class="contentSectionTitle3"><a href="<?php echo $naURLs['newsHeadlines_arabic'];?>" class="contentSectionTitle3_a"><span class="contentSectionTitle3_span backdropped">Arabic Business News (in English)</span></a></div></li>
+    </ul>
     
     <a href="<?php echo $naURLs['tarot'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Tarot cardgame</span></h3></a>
 
@@ -111,43 +103,18 @@
     global $naLAN; 
     if ($naLAN) { 
 ?>
-
     <a href="<?php echo $naURLs['analytics'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Analytics</span></h3></a>
-
     <a href="/view/logs" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Logs</span></h3></a>
-
-    <!--
-    <a href="<?php echo $naURLs['tasks'];?>" class="contentSectionTitle3_a"><h3 class="contentSectionTitle3"><span class="contentSectionTitle3_span">Tasks</span></h3></a>
-    -->
 <?php } ?>
 
     <h1 class="contentSectionTitle1" style="width:40%;padding:8px;color:070707;text-shadow:2px 2px 3px rgba(0,0,0,0.75),0px 0px 4px rgba(0,0,0,0.85); background:rgba(0,0,0,0.45);border-radius:5px;"><p class="contentSectionTitle1_span">NicerEnterprises Company Profile</p></h1>
     <div style="width:40%;color:black;background:rgba(250, 233, 52,0.35);font-size:120%;margin:10px;font-weight:bold;padding:8px;border-radius:10px;text-shadow:0px 0px 3px rgba(255,0,0,0.7);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.666), 2px 2px 2px rgba(0,0,0,0.7);">
         <p style="background:none;">
         <a href="https://nicer.app" target="naHP">https://nicer.app</a>, <a href="https://said.by" target="sbHP">https://said.by</a>, <a href="https://zoned.at" target="zAt">https://zoned.at</a>, <a href="https://github.com/NicerEnterprises" target="githubNicerEnterprises">https://github.com/NicerEnterprises</a>, in addition to ALL of the content listed on and/or hosted by the cloudhosting service companies, online forums and social media accounts that I use (or have ever used), are ENTIRELY
-        Copyrighted (C) and All Rights Reserved (R) 2002-2025 and owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
+        Copyrighted (C) and Owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
         </p>
 
         <p style="background:none;"><a href="https://x.com/ReneVeerma64021">https://x.com/ReneVeerma64021</a>.</p>
     </div>
-
-
-    <!-- Less of a problem these days (2025-06-27 23:17CEST AMS Amsterdam.NL timezone)
-    <h1 class="contentSectionTitle1" style="width:40%;padding:8px;color:070707;text-shadow:2px 2px 3px rgba(0,0,0,0.75),0px 0px 4px rgba(0,0,0,0.85); background:rgba(0,0,0,0.45);border-radius:5px;"><p class="contentSectionTitle1_span">Cyberwar Violence Events done against NicerEnterprises over it's <a href="/geopolitics" class="nomod noPushState" target="naGeoPolitics" color="lime">GeoPolitical Activities</a>.</p></h1>
-    <div style="width:40%;color:black;background:rgba(250, 233, 52,0.35);font-size:120%;margin:10px;font-weight:bold;padding:8px;border-radius:10px;text-shadow:0px 0px 3px rgba(255,0,0,0.7);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.666), 2px 2px 2px rgba(0,0,0,0.7);">
-        <p style="background:none;">
-            <ul>
-                <li>2025-05-27(Tuesday), 03:32CEST : While debugging my own na.site.loadContent() for v5.8.z, I realize now that some of my 'cyberwar problems' in the long distant and lesser distant past have been (at least in part) the result of my own <a href="https://en.wikipedia.org/wiki/Occupational_burnout" target="wikiBurnout" class="nomod noPushState" style="color:white">Occupational burnout</a> medical condition, combined with long stretches of coding work triggering that conditon once again. But I have seen some *very* weird behavior done most likely by intelligence staff that keeps detailed profiles about me because of my geoplitical activism, happen on my webservers over the years, also while sober -I'm not drunk often AT ALL, really!- and not all that sleepdeprived, so the address to the CIA.gov and AIVD.NL was not entirely unjustified I think.<br/>
-                It will stick, stay online, right here on this front page, FOREVER. As a deterrence. :-)</li>
-                </li>
-                <li>2025-05-22(Thursday), 02:00CEST : Cyberwar problems seem to be behind me for now, in part no doubt to adjustments I made in my <a  class="nomod noPushState" target="gp1b" style="color:yellow;" href="https://x.com/ReneVeerma64021/status/1925345469883953408">geopolitical</a> <a class="nomod noPushState" target="gp1b" style="color:yellow;" href="https://www.usmessageboard.com/threads/the-dems-and-republicans-in-league-with-eachother-to-destroy-the-world-on-behalf-of-us-interests-i-think.1161506/post-36742697">"ramblings"</a> ;-)</li>
-                </li>
-                <li>2025-03-19(Wednesday) : Someone is preventing me from re-installing my fastest-hardware machine (parakeet) back home, AND from displaying the 11 to 12-thousand background wallpapers that I can run on / for this website!<br/>
-                I suspect the CIA.GOV or AIVD.NL to be behind this!
-                </li>
-            </ul>
-        </p>
-    </div>
-    -->
 
 

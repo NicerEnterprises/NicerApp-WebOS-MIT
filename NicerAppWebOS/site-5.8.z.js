@@ -250,6 +250,9 @@ na.site = {
                             $('.lds-facebook').fadeOut('normal');
 
                             t.startTooltips();
+                            setTimeout (function(){
+                                na.background.next('#siteBackground');
+                            }, 60 * 1000)
 
                             na.te.onload('siteContent');
                             t.setSpecificity();
@@ -1398,6 +1401,7 @@ na.site = {
 
         /*
         $('p, h1, h2, h3').addClass('todoList');
+        */
 
         na.site.bindTodoListAnimations (
             '.todoList, '
@@ -1413,7 +1417,6 @@ na.site = {
             +'.todoList_l2 > li > div, '
             +'.todoList_l2 > li > pre '
         );
-        */
     },
 
     bindTodoListAnimations : function (selector) {
