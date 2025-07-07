@@ -27,9 +27,10 @@ na.background = na.bg = {
                     // TODO : get this fixed in
                     //          .../NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php
                     //             :://TODO 1
-                    debugger;
+                    //debugger;
                     settings.naSite.globals.domain = 'nicer.app-5.8.0-alpha001d';
 
+                    /*
                     t.next ('#siteBackground', null, null, false, function() {
                         var
                         url2 = '/NicerAppWebOS/domainConfigs/'
@@ -51,6 +52,7 @@ na.background = na.bg = {
                         };
                         $.ajax(ac2);
                     });
+                    */
 
                 } catch (err) {
                     t.data = false;
@@ -69,6 +71,7 @@ na.background = na.bg = {
     next : function (div, search, url, saveTheme, callback, callStack) {
         var t = na.background;
         var fncn = 'na.background.next()';//na.m.myName(t);
+        debugger;
         na.m.waitForCondition (fncn+' : t.data?', function() {
             return t.data;
         }, function() {
@@ -222,7 +225,7 @@ na.background = na.bg = {
 
                             outsideURL = 'https://youtube.com/embed/'+vidID+'?autoplay=1&vq=hd2160&wmode=transparent&enablejsapi=1&html5=1&origin='+document.location.href;
 
-                            $('#siteBackground_iframe').css({display:'block',width:'100%',height:'100%',zIndex:100});
+                            $('#siteBackground_iframe').css({display:'block',width:'100%',height:'100%'});
                             $('#siteBackground_iframe')[0].src = outsideURL;
                             $(bgDiv).add(bgDiv2).add(bgl).add(bgf).css({display:'none'});
 

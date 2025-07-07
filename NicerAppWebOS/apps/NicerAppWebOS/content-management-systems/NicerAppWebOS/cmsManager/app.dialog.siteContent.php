@@ -30,9 +30,9 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 <!--<script src="https://cdn.tiny.cloud/1/89d73yohz5ameo5exzlj9d6kya9vij9mt8f5ipzzqjo0wkw5/tinymce/4/tinymce.min.js" referrerpolicy="origin"></script>-->
 <script type="text/javascript">
     na.m.waitForCondition ('page loaded?', function() {
-        return na.site && na.site.settings.current.onload_phase2__alreadyCalled && na.m.HTMLidle();
+        return na.site && na.m.desktopIdle();
     }, function() {
-        setTimeout(na.site.onload_phase2, 500);
+        na.desktop.settings.visibleDivs.push('#siteToolbarLeft');
     }, 100);
 </script>
 
@@ -69,15 +69,17 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
     </div>
     <iframe id="jQueryFileUpload" class="jQueryFileUpload" src="" style="overflow:hidden;width:100%;height:100%" allowtransparency="true"></iframe>
 </div>
-<div id="document" class="naVividTabPage">
+<div id="document" class="naVividTabPage" style="height:calc(100% - 70px)">
     <div id="document_navBar" class="navbar" style="display:flex">
         <div class="sections">
-            <div class="navbar_section shown">
+            <div class="navbar_section navbarTheme_navy">
                     <img id="btnInsertLink" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnInsertLink.png" onclick="tinymce.activeEditor.execCommand('mceLink');"/>
                     <img id="btnInsertMedia" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnInsertMedia.png" onclick="na.cms.onclick_insertMedia()"/>
                     <img id="btnInsertPageBackground" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnInsertPageBackground.png"/>
+            </div>
+            <div class="navbar_section navbarTheme_navy">
                     <img id="btnPublish" class="navbar_button" src="/NicerAppWebOS/siteMedia/iconPublish.png" onclick="na.cms.onclick_publish(event);"/>
-                    <img id="btnSettingsHeaders" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnSettingsHeaders.png" onclick="na.cms.onclick_editHeaders(event);"/>
+                    <img id="btnSettingsHeaders" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnSettings2a.png" onclick="na.cms.onclick_editHeaders(event);"/>
                     <img id="btnTree" class="navbar_button" src="/NicerAppWebOS/siteMedia/btnTree.png" onclick="na.cms.onclick_btnTree(event);"/>
             </div>
             <div class="navbar_section">
@@ -96,7 +98,6 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
                     <div id="nb_url1_dropdown" class="vividDropDownBox" style="display:inline-block;width:auto;">
                         <div class="vividDropDownBox_selected">on</div>
                         <div class="vividDropDownBox_selector">in</div>
-                        <div class="vividDropDownBox_selector">on</div>
                         <div class="vividDropDownBox_selector">during</div>
                     </div>
                     <!--<label id="url2_label" for="documentTitle">SEO-2, URL-2</label>-->
@@ -109,7 +110,9 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
             </div>
         </div>
     </div>
-    <textarea id="tinymce" onchange="na.cms.saveEditorContent();"></textarea>
+    <div id="tinymce_div" style="height:calc(100% - 70px);">
+        <textarea id="tinymce" onchange="na.cms.saveEditorContent();"></textarea>
+    </div>
 
     <script type="text/javascript">
     //document.addEventListener('DOMContentLoaded', () => {

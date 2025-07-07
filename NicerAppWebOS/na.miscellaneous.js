@@ -525,7 +525,7 @@ na.m = {
 
 			clearTimeout (na.m.settings.waitForCondition[label]);
 			delete na.m.settings.waitForCondition[label];
-			callback();
+			callback(context);
 
             var r = na.m.waitForCondition_report_whatAmIwaitingFor(blacklistedEntries);
             if (r) na.m.log (555, r, false);

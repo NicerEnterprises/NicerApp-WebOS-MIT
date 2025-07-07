@@ -71,7 +71,7 @@ na.desktop = na.d = {
                     opacity : 0.0001
                 },
                 '#siteToolbarLeft' : {
-                    top : $('#siteDateTime').height()+20,
+                    top : 20,
                     left : -420,
                     height : $(window).height()-120,
                     width : !na.m.userDevice.isPhone ? 400 : $(window).width() - 50,

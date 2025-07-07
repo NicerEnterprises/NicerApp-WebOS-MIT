@@ -13,13 +13,14 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
 <div class="lds-facebook"><!-- thanks for allowing CC0 license usage : https://loading.io/css/ --><div></div><div></div><div></div></div> 
 <link rel="stylesheet" href="/NicerAppWebOS/3rd-party/jsTree-3.3.15/dist/themes/default/style.css" /> <!-- has style.min.css -->
 <!--<script type="text/javascript" src="/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/NicerAppWebOS/usersGroupsManager/na.usersGroupsManager.source.js"></script>-->
-<div id="jsTree_navBar">
+<div id="jsTree_navBar" style="height:auto;">
     <div id="btnAddUser_menu" class="vividMenu noInitialShowing" style="display:none;position:absolute;height:100px; z-index:800000" type="vertical">
     <ul id="btnAddUser_menu_ul" class="vividMenu_mainUL" style="display:none;">
         <li><a href="javascript:na.ugm.onclick_btnAddUser(event)" class="noPushState">Add</a></li>
         <li><a href="javascript:na.ugm.onclick_btnRemoveUser(event)" class="noPushState">Remove</a></li>
     </ul>
     </div>
+    <div style="display:flex">
 <?php
     global $naWebOS;
     echo $naWebOS->html_vividButton (
@@ -152,26 +153,34 @@ $ip = (array_key_exists('X-Forwarded-For',apache_request_headers())?apache_reque
         null, null, null
     );
 ?>
+    </div>
 </div>
-<div id="jsTree"></div>
+<div id="jsTree" style="height:calc(100% - 70px);"></div>
 <script type="text/javascript">
-    $(document).ready(function() {
-    //setTimeout (function () {
-        na.desktop.settings.visibleDivs.push('#siteToolbarLeft');
-                $('#btnAddUser_menu').addClass('noInitialShowing');
-                $('#btnAddUser_menu').css({
-                    top : $('#btnAddUser_menu').offset().top + $('#btnAddUser_menu').height() + 10,
-                    left : $('#btnAddUser_menu').offset().left + ($('#btnAddUser_menu').width() * 0.62),
-                    width : $('#btnAddUser_menu').width()
-                });
+    na.desktop.settings.visibleDivs.push('#siteToolbarLeft');
+    na.m.waitForCondition ('#siteToolbarLeft::init() : desktopIdle()?', na.m.desktopIdle, function () {
 
-        $('#siteToolbarLeft .vividButton4, #siteToolbarLeft .vividButton, #siteToolbarLeft .vividButton_icon_50x50').each(function(idx,el){
-            na.site.settings.buttons['#'+el.id] = new naVividButton(el);
+        $('#btnAddUser_menu').addClass('noInitialShowing');
+        $('#btnAddUser_menu').css({
+            top : $('#btnAddUser_menu').offset().top + $('#btnAddUser_menu').height() + 10,
+            left : $('#btnAddUser_menu').offset().left + ($('#btnAddUser_menu').width() * 0.62),
+            width : $('#btnAddUser_menu').width()
         });
 
-        //na.site.onresize();
-        //na.cms.onload();
-    //}, 250);
-    });
+        $('#siteToolbarLeft').css({ width : 370 });
+        $('#siteToolbarLeft .vividButton4, #siteToolbarLeft .vividButton, #siteToolbarLeft .vividButton_icon_50x50').each(function(idx,el){
+            $('img[srcPreload]',el.parentNode).each(function(idx,el4) {
+                $(el4).attr('src', $(el4).attr('srcPreload')).removeAttr('srcPreload');
+            });
+            na.site.settings.buttons['#'+el.id] = new vividUserInterface_2D_button({el:el, parent:el.parentNode});
+        });
+
+        if (typeof $('#jsTree').jstree == 'function')
+        $('#jsTree').css({
+            height : $('#siteToolbarLeft .vividDialogContent').height() - $('#jsTree_navBar').height() - 30
+        });
+
+        na.cms.onload();
+    }, 100);
 </script>
 

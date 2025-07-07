@@ -131,13 +131,8 @@ function getBackgrounds ($root, $webRoot, $recursive=false, $debugMe=false) {
     return $files2;
 }
 function getBackgroundFiles ($root, $fileFormats, $excl, $recursive, $debugMe) {
-    if ($recursive) {
-        $r = getFilePathList ($root, true, $fileFormats, $excl, array('file'), null, 1, true, $debugMe);
-    } else {
-        $r = getFilePathList ($root, true, $fileFormats, $excl, array('file'), null, 1, false, $debugMe);
-    }
+    return getFilePathList ($root, true, $fileFormats, $excl, array('file'), null, 1, $recursive, $debugMe);
     //echo 'getBackgroundFiles(); $r:'; var_dump($recursive); var_dump ($r); exit();
-    return $r;
 }
 function processBackgroundFiles (&$files, $root, $webRoot, $recursive, $debugMe) {
     $keyCount = 0;
@@ -1439,7 +1434,7 @@ $debug = false;
 }
 
 function getFilePathList (
-//TODO: all features listed below $level are untested.
+//TODO: all features listed below $debug are untested.
 
 	//$pathStart,
 	$path,								// current path
@@ -1630,6 +1625,7 @@ another example:
                                 'fp' => $path.$file,
                                 'frp' => $realPath.$file,
                                 'r' => $recursive,
+                                'rr' => $returnRecursive,
                                 'ft' => $ft,
                                 'pass' => $pass,
                                 'c' => (is_null($depth) || $level < $depth)
@@ -1640,8 +1636,7 @@ another example:
                         if (
                             $recursive
                             && $ft=="dir"
-                            && $pass
-
+                            //&& $pass // DON'T, if you want any backgrounds to show up in the results at all.
                             /*
                             && (
                                 is_null($depth)

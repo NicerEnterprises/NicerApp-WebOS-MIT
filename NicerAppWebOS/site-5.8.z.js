@@ -23,11 +23,12 @@ import { naVividMenu__behavior_rainbowPanels as naVividMenu } from '/NicerAppWeb
 na.site = {
     about : {
         firstCreated : '10 January 2002',
-        copyright : '<table style="height:100%;"><tr><td>Copyright (c)/(C) and All Rights Reserved (r)/(R) 2002-2025 by <a href="mailto:rene.veerman.netherlands@gmail.com" class ="contentSectionTitle3_a"><span class="contentSectionTitle3_span">Rene A.J.M. Veerman</span></a></td><td style="width:40px;"><div class="vividButton" theme="dark" style="position:relative;color:white;height:20px;width:40px;" onclick="na.dismissCopyrightMessage();">Ok</div></td></table>',
+        copyright : '<table style="height:100%;"><tr><td>Copyright (C) 2002-2025 by <a href="mailto:rene.veerman.netherlands@gmail.com" class ="contentSectionTitle3_a"><span class="contentSectionTitle3_span">Rene A.J.M. Veerman</span></a></td><td style="width:40px;"><div class="vividButton" theme="dark" style="position:relative;color:white;height:20px;width:40px;" onclick="na.dismissCopyrightMessage();">Ok</div></td></table>',
         easterEggs : [
-            {
-            msg_html : '<p class="naEasterEgg naStatusMessage">2023-12(Dec)-13(Tue) 11:34CET (Amsterdam.NL\'s timezone) : at a certain point in a soul\'s career,<br/>that soul (learns to) trancend(s) judgement of IQ and EQ of others.<br/>this is usually only once enough kung-fu has been practiced though.<br/><a class="directLink" href="https://youtube.com/@cheetahKungFu" target="ckf">https://youtube.com/@cheetahKungFu</a></p>'
-            }
+            { msg_html : '<p>2023-12(Dec)-13(Tue) 11:34CET (Amsterdam.NL\'s timezone) : At a certain point in a soul\'s career,<br/>that soul (learns to) trancend(s) judgement of IQ and EQ of others.<br/>this is usually only once enough kung-fu has been practiced though.<br/><a class="directLink" href="https://youtube.com/@cheetahKungFu" target="ckf">https://youtube.com/@cheetahKungFu</a></p>' },
+            { msg_html : '<p>2025-07(July)-06(Sun) 09:55CET (Amsterdam.NL\'s timezone) : It\'s only when a man has decided never to let himself get used as romantic toy or tool by women, that he can actually start any sort of relationship with one himself. such is the legacy of the much-hated monogamy movement, surplanted now by <a href="https://tinyurl.com/multi-amarous-church" class="directLink" target+"mac">The Multi-Amarous Church</a>.</p>' },
+            { msg_html : '<p>2025-07(July)-06(Sun) 10:07CET (Amsterdam.NL\'s timezone) : It\'s only when someone has decided never (again) to let the Gods, Angels, Spirits and/or Demons deceive and play with him/her, that he/she becomes actually free from the spiritual world.</p>' },
+            { msg_html : '<p>2025-07(July)-06(Sun) 10:08CET (Amsterdam.NL\'s timezone) : It\'s only when someone has decided never (again) to let the bureaucrats, cops, ambulance staff and politicians deceive and play with him/her, that he/she becomes actually free from the mass media news worlds.</p>' }
         ]
     },
 
@@ -36,9 +37,9 @@ na.site = {
         // NOTE : all of these na.site.globals app get overridden by values stuck in databases of some sort (lol),
         //          and are listed by the index.php file as 'var naGlobals', before merging it's (sub-)values.
         domain : 'nicer.app',
-        domainPath : '/var/www/nicer.app-5.8.z/nicer.app-5.8.0-alpha001d',
-        domainWWWroot : 'nicer.app-5.8.z',
-        domainFolder : 'nicer.app-5.8.0-alpha001d',
+        domainPath : '/var/www/nicer.app-5.9.0/',
+        domainWWWroot : 'nicer.app-5.9.0',
+        domainFolder : 'nicer.app',
 
         // these are all pixel values, without the CSS 'NNNNpx' notation.
         margin : 8,
@@ -196,29 +197,15 @@ na.site = {
                 na.te = new naThemeEditor();
 
                 debugger;
-                /*
                 t.reloadMenu({callback:function() {
                     debugger;
                     t.ui = {
                         vb : new vividUserInterface_2D_button_v4()
                     };
                     na.m.waitForCondition ('site.6.y.z.js::initialize()::t.reloadMenu (callback::) : na.m.desktopIdle? + 500ms?', na.desktopIdle, function() {
-                        setTimeout (function() {
+                        //setTimeout (function() {
                             na.te.onload('siteContent');
                             t.setSpecificity();
-                            debugger;
-                            t.loadTheme();
-
-                            t.startTooltips();
-                            $('.vividDialog').css ({
-                                overflow : 'hidden'
-                            });
-                            $('.vividDialog > .vividDialogContent').fadeIn('normal');
-                            $('.lds-facebook').fadeOut('normal');
-
-                            setInterval (function() {
-                                na.background.next ('#siteBackground');
-                            }, 5 * 60)
 
                             window.onresize  = function(evt) {
                                 $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
@@ -226,17 +213,27 @@ na.site = {
                                     height : $(window).height()
                                 });
                                 //debugger;
-                                    //na.site.onresize ({ reloadMenu : true });
+                                na.site.onresize ({ reloadMenu : true });
                                 na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
                             };
 
-                        }, 1000);
-                    });
+                        //}, 100);
+                    }, 100);
 
                 }});
-                */
 
                         setTimeout (function() {
+
+                            window.onresize  = function(evt) {
+                                $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
+                                    width : $(window).width(),
+                                    height : $(window).height()
+                                });
+                                //debugger;
+                                na.site.onresize ({ reloadMenu : true });
+                                na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
+                            };
+
                             $('.vividDialog').css ({
                                 overflow : 'hidden'
                             });
@@ -253,35 +250,18 @@ na.site = {
                             setTimeout (function(){
                                 na.background.next('#siteBackground');
                             }, 60 * 1000)
+                            na.background.next('#siteBackground');
 
                             na.te.onload('siteContent');
                             t.setSpecificity();
-                            t.loadTheme();
 
-                            window.onresize  = function(evt) {
-                                $('#siteBackground, #siteBackground iframe, #siteBackground img, #siteBackground div').css({
-                                    width : $(window).width(),
-                                    height : $(window).height()
-                                });
-                                //debugger;
-                                    //na.site.onresize ({ reloadMenu : true });
-                                na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
-                            };
-
-                        }, 1000);
+                        }, 500);
 
 
                 na.site.startUIvisuals();
                 //na.site.loadContent_displayContent ($('#siteContent .vividDialogContent').html());
 
                 setTimeout (function() {
-                    debugger;
-                    $('#btnShowStartMenu').mouseenter (function(evt) {
-                        var evt2 = $.extend( {}, evt);
-                        evt2.currentTarget = $('#siteMenu__0')[0];
-                        na.site.components.menus['#siteMenu'].currentEl = evt2.currentTarget;
-                        na.site.components.menus['#siteMenu'].onmouseover (evt2);
-                    });
                     c.taskbar = new vividUserInterface_2D_dialog({
                         naSite : t,
                         el : $('#siteTaskbar')
@@ -1405,8 +1385,9 @@ na.site = {
 
         na.site.bindTodoListAnimations (
             '.todoList, '
-            +'.contentSectionTitle3, '
+            +'.contentSectionTitle3, contentSectionTitle3_a, '
             +'p.todoList, h1.todoList, h2.todoList, h3.todoList, '
+            +'li > a, '
             +'.todoList > li, '
             +'.todoList > li > div, '
             +'.todoList > li > pre, '
@@ -2412,15 +2393,16 @@ na.site = {
             );
             */
             var selectMe = (
-                        na.site.globals.themeSpecificityName === na.site.globals.themesDBkeys[i].specificityName
-                        || na.site.globals.specificityName === na.site.globals.themesDBkeys[i].specificityName
-                    );
+                na.site.globals.themeSpecificityName === na.site.globals.themesDBkeys[i].specificityName
+                || na.site.globals.specificityName === na.site.globals.themesDBkeys[i].specificityName
+            );
+            debugger;
             if (selectMe) {
                 //debugger;
                 $(divEl).addClass('selected');
                 //$('.na_themes_dropdown__specificity > .vividDropDownBox_selected').html (na.site.globals.specificityName);
                 na.site.globals.themeDBkeys = na.site.globals.themesDBkeys[i];
-                //na.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
+                na.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
                 $('.na_themes_dropdown__specificity > .vividDropDownBox_selected').html (na.site.globals.themeDBkeys.specificityName);
                 na.te.settings.current.specificity = na.site.globals.themeDBkeys;
             };
@@ -2883,7 +2865,7 @@ na.site = {
             }
 
         }*/
-
+debugger;
         if (loadBackground && dat.background /*&& dat.background!==na.site.globals.background*/) { /* doesn't jive with na.loadContent() */
             na.background.next (
                 '#siteBackground',

@@ -107,5 +107,8 @@
         <p style="width:350px;">
         Copyright Disclaimer: - Under section 107 of the copyright Act 1976, <a href="https://en.wikipedia.org/wiki/Fair_use" class="contentSectionTitle2_a" target="fairUse">which was reaffirmed in a 2021 court decision</a>, allowance is made for FAIR USE for purpose such a as criticism, comment, news reporting, teaching, scholarship and research. Fair use is a use permitted by copyright statues that might otherwise be infringing. Non- Profit, educational or personal use tips the balance in favor of FAIR USE.
         </p>
+        <p>
+        <a href="/NicerAppWebOS/screenshots/2025%20A.D./Screenshot_20250622_015900.png" class="nomod noPushState" target="_new"><img src="/NicerAppWebOS/screenshots/2025%20A.D./Screenshot_20250622_015900.png" style="width:100%"/></a>
+        </p>
     </div>
     </div>

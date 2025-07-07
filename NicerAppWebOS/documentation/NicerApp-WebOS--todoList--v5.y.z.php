@@ -10,8 +10,16 @@ But eventually yes, this WebOS will be a truly open market (at the technical and
 </p>
 
 <ol class="todoList" style="width:30%; width:content-width;">
-    <li class="todoList"><div>(2025 to Dec 2027 at most) Merge the 5.7.z branch with the 6.y.z branch into the 5.8.z branch because v5 is as high as I want to go before switching to marketing names or year-of-release numbers (probably the latter).<br/>
+    <li class="todoList"><div>(2025 to Dec 2027 at most) Merge the 5.7.z branch with the 6.y.z branch into the <a href="https://youtube.com/@Gavan-NL" class="nomod noPushState" target="fiveDotEightVids">5.8.z branch</a> because v5 is as high as I want to go before switching to marketing names or year-of-release numbers (probably the latter).<br/>
     <a href="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png" class="nomod noPushState"><img src="/NicerAppWebOS/__README__documentation/2025-06-25%20nicerAppWebOS-5.8.z-DOCUMENTATION/Flowchart%205.9.z.png"/></a></div></li>
+
+    <li class="todoList"><div>(2025) On said.by (or in the /me content management subsystem of NicerApp WebOS), add business logic code to prevent URLs from being misrepresented to an end-user.</div></li>
+
+    <li class="todoList"><div>(2025) Complete a 3D folders + files structures viewer, linked to all sorts of 2D user interface components/widgets.</div></li>
+
+    <li class="todoList"><div>oAuth + email authentication + password authentication leading to a username + groups-names list and from there into a set of CSS themes, subscription IDs, and anything that can be described by a CouchDB search query (which would also define a binary search ID/name).</div></li>
+
+    <li class="todoList"><div>Webshop functionality; Secure IMAP email facilities (also cloudhosting compatible versions), Banking Accountancy and Tax Filing modules, and the actual webshop interface with product placement admin interface and email marketing also done from the same admin interface, as just it's 1st finalized feature set. For version 5.9.z, to be released between Jan 2026 and Dec 1st 2026, on a domain name that's yet to be thought up (by me myself) :-)</div></li>
 
     <li class="todoList"><div>(2025) Write a forums/posts + replies/posts API for this WebOS, for the v5.8.z branch.</div></li>
 

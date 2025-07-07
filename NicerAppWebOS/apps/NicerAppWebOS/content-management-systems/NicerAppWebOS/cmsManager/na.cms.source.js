@@ -227,8 +227,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                     ) return false;
 
                     $('#siteContent .vividTabPage').fadeOut('fast');
-                    clearTimeout(na.cms.settings.timeout_changed);
-                    na.cms.settings.timeout_changed = setTimeout (function(data) {
+                    na.m.waitForCondition ('cms::changed.jstree() : desktopIdle?', na.m.desktopIdle, function(data) {
                         var l = data.selected.length, rec = null;
                         for (var i=0; i<l; i++) {
                             var d = data.selected[i], rec2 = data.instance.get_node(d);
@@ -238,14 +237,12 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                             }
                         }
 
-                        debugger;
                         if (
                             na.cms.settings.current.selectedTreeNode
                             && rec
                             && na.cms.settings.current.selectedTreeNode.id!==rec.id
                             && na.cms.settings.current.selectedTreeNode.type=='naDocument'
                         ) na.cms.saveEditorContent(na.cms.settings.current.selectedTreeNode, function(){
-                            debugger;
                             //if (na.cms.settings.current.selectedTreeNode.id===rec.id) {
                                 na.cms.settings.current.selectedTreeNode = rec;
                                 na.cms.onchange_selectedNode (settings, data, rec, function() {
@@ -424,7 +421,6 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
         $('.mce-toolbar-grp, .mce-statusbar').each(function() {
             mce_bars_height += $(this).height();
         });
-        debugger;
 
         var
         l = data.selected.length,
@@ -525,22 +521,26 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                     $('#folder').css({display:'none'});
                     $('#upload').css({display:'none'});
                     $('#document').css({display:'block'});
-                    $('.mce-tinymce').css ({
-                        width : 'calc(100% - 4px)',
-                        height : editorHeight - $('.mce-statusbar').height()
-                    });
-                    //alert (mce_bars_height);
-                    $('.mce-top-part, .mce-statusbar').css({
-                        background : 'rgba(0,0,50,0.4)'
-                    });
-                    $('#tinymce_ifr').css ({
-                        width : '100%',
-                        height : editorHeight - $('.mce-statusbar').height(),
-                        background : 'rgba(0,0,0,0.001)'
-                    });
-
+                                    $('#document, .mce-tinymce, #tinymce_ifr, .mce-edit-area').css({
+                                        width : 'calc(100% - 4px)',
+                                        height : $('#siteContent > .vividDialogContent').height() - $('#document_navBar').height() - $('.mce-first').height() - 40
+                                    });
+                                    $('.mce-tinymce').css({
+                                        height : $('#siteContent > .vividDialogContent').height() - $('.mce-first').height() - 55
+                                    });
+                                    $('.mce-top-part, .mce-statusbar').css({
+                                        background : 'rgba(0,0,50,0.3)'
+                                    });
+                                    $('.mce-edit-area').css ({
+                                        background : 'rgba(0,0,0,0.3)'
+                                    });
+                                    $('.mce-first').css({
+                                        background : 'rgba(0,0,50,0.3)',
+                                        color : 'white',
+                                        fontWeight : 'bold',
+                                        fontSize : 'large'
+                                    });
                 } else if (rec.original.type=='naMediaAlbum') {
-                    debugger;
                     $('#folder').css({display:'none'});
                     $('#upload').css({display:'block'});
                     $('#document').css({display:'none'});
@@ -615,7 +615,7 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                     //alert ('onres');
                     na.m.waitForCondition('na.cms.onresize() : tree node selected and rich text editor (tinymce) ready?',
                         function () {
-                            return (
+                            var r = (
                                 na.m.desktopIdle()
                                 &&  na.cms.settings.current.selectedTreeNode
                                 && (
@@ -624,9 +624,12 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                                         && typeof $('#tinymce_ifr')[0] == 'object'
                                         && $('#tinymce_ifr').css('visibility')!=='hidden'
                                         && $('#tinymce_ifr').css('display')!=='none'
-                                    ) || na.cms.settings.current.selectedTreeNode.type == 'naMediaAlbum'
+                                    )
+                                    || na.cms.settings.current.selectedTreeNode.type == 'naMediaAlbum'
                                 )
-                            )
+                            );
+                            debugger;
+                            return r;
                         },
                         function () {
                             //if (na.cms.settings.current.activeDialog=='#siteContent')
@@ -660,18 +663,24 @@ na.apps.loaded['/NicerAppWebOS/apps/NicerAppWebOS/content-management-systems/Nic
                                     var mce_bars_height = 0;
                                     //alert ($('#document_navBar').height());
                                     $('.mce-toolbar-grp, .mce-statusbar').each(function() { mce_bars_height += $(this).height(); });
-                                    $('.mce-tinymce').css ({
+                                    $('#document, .mce-tinymce, #tinymce_ifr, .mce-edit-area').css({
                                         width : 'calc(100% - 4px)',
-                                        height : editorHeight - $('.mce-statusbar').height() +10
+                                        height : $('#siteContent > .vividDialogContent').height() - $('#document_navBar').height() - $('.mce-first').height() - 40
                                     });
-                                    //alert (mce_bars_height);
+                                    $('.mce-tinymce').css({
+                                        height : $('#siteContent > .vividDialogContent').height() - $('.mce-first').height() - 55
+                                    });
                                     $('.mce-top-part, .mce-statusbar').css({
-                                        background : 'rgba(0,0,50,0.4)'
+                                        background : 'rgba(0,0,50,0.3)'
                                     });
-                                    $('#tinymce_ifr').css ({
-                                        width : '100%',
-                                        height : editorHeight - mce_bars_height +10,
-                                        background : 'rgba(0,0,0,0.4)'
+                                    $('.mce-edit-area').css ({
+                                        background : 'rgba(0,0,0,0.3)'
+                                    });
+                                    $('.mce-first').css({
+                                        background : 'rgba(0,0,50,0.3)',
+                                        color : 'white',
+                                        fontWeight : 'bold',
+                                        fontSize : 'large'
                                     });
                                     $('#document').css({display:d});
                                     break;

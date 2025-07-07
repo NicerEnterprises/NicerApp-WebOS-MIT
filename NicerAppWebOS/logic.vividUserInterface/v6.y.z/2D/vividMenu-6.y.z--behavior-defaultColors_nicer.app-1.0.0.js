@@ -99,7 +99,7 @@ class naVividMenu__behavior_defaultColors {
                 var
                 panelID = t.el.id+'__panel__'+t.el.id,
                 html = '<div id="'+panelID+'" class="vividMenu_subMenuPanel">&nbsp;</div>';
-                $('#'+panelID).remove();
+                //$('#'+panelID).remove();
 
                 //if (!panel[0]) {
                     //if (!panel[0]) {
@@ -159,7 +159,9 @@ class naVividMenu__behavior_defaultColors {
             $(li).attr('id', t.el.id+'__li__'+idx);
             var btnType = $(li).attr('buttonType');
             if (!btnType || btnType=='') btnType = 'vividButton_text';
-            var html2 = '<div id="'+t.el.id+'__'+idx+'" class="vividButton '+btnType+' vividMenu_item backdropped"  theme="dark" style="display:none;"><div class="vividDialogBackground1" style="z-index:-1"></div>'+$(li).children('a')[0].outerHTML.replace('<a ', '<a style="z-index:-1" ').replace($(li).children('a')[0].innerHTML+'</a>', '<span class="contentSectionTitle3_span" style="z-index:-1">'+$(li).children('a')[0].innerText+'</span></a>').replace('class="', 'class="linkToNewPage contentSectionTitle3_a ')+'</div>';
+            if (idx===0) debugger;
+            //var html2 = '<div id="'+t.el.id+'__'+idx+'" class="vividButton '+btnType+' vividMenu_item backdropped"  theme="dark" style="opacity:0.0001;"><div class="vividDialogBackground1" style="z-index:-1"></div>'+$(li).children('a')[0].outerHTML.replace('<a ', '<a style="z-index:-1" ').replace($(li).children('a')[0].innerHTML+'</a>', '<span class="contentSectionTitle3_span" style="z-index:-1">'+$(li).children('a')[0].innerText+'</span></a>').replace('class="', 'class="linkToNewPage contentSectionTitle3_a ')+'</div>';
+            var html2 = '<div id="'+t.el.id+'__'+idx+'" class="vividButton '+btnType+' vividMenu_item"><div class="vividDialogBackground1" style="z-index:-1"></div>'+$(li).children('a')[0].outerHTML.replace('class="', 'class="linkToNewPage ')+'</div>';
             html += html2;
 
             t.items[idx] = {
@@ -239,6 +241,14 @@ class naVividMenu__behavior_defaultColors {
                 if (!it.b) t.createVividButton (t, i, li);
             }
         });
+
+
+        var btns = $('#menu__'+t.el.id).find('div');
+        btns.each (function(i,btn) {
+            var it = t.items[i];
+            btn.it = it;
+        })
+
     }
 
     createVividButton (t, i, li) {
@@ -246,12 +256,15 @@ class naVividMenu__behavior_defaultColors {
         el = $('#'+t.el.id+'__'+i)[0],
         it = t.items[i];
 
+        el.it = it;
+
         el.idx = i;
-        it.b = new vividUserInterface_2D_button({
+        el.b = it.b = new vividUserInterface_2D_button({
             el:el,
             html:null,
             parent:t.el,
-            createHTML:true
+            createHTML:true,
+            opacity : parseFloat($(el).css('opacity'))
         });
 
         it.b.el.menu = t;
@@ -262,9 +275,9 @@ class naVividMenu__behavior_defaultColors {
         it.b.el.level = it.level;
         if (it.level === 1 && !$(t.el).is('.noInitialShowing')) $(it.b.el).css({ display : 'block' }); else $(it.b.el).css({ display : 'none' });
 
-        $(it.b.el).css({opacity:1});
+        $(it.b.el.el).css({opacity:it.b.opacity});
 
-        $(it.b.el).bind('mouseenter', function(event) {
+        $(it.b.el.el).bind('mouseenter', function(event) {
             event.stopPropagation();
 
 
@@ -277,23 +290,23 @@ class naVividMenu__behavior_defaultColors {
 
             if (t.debugMe) na.m.log(20,'naVividMenu.createVividButton : mouseenter '+it.label, false);
 
-            $('.vividMenu_item a').removeClass('contentSectionTitle1_a').addClass('contentSectionTitle3_a');
-            $('.vividMenu_item span').removeClass('contentSectionTitle1_span').addClass('contentSectionTitle3_span');
+            $('.vividMenu_item a').removeClass('contentSectionTitle1_a');//.addClass('contentSectionTitle3_a');
+            //$('.vividMenu_item span').removeClass('contentSectionTitle1_span').addClass('contentSectionTitle3_span');
             if (it.parents)
             for (var i=0; i < it.parents.length; i++) {
-                $('a', it.parents[i].b.el)
-                    .removeClass('contentSectionTitle3_a')
-                    .addClass('contentSectionTitle1_a');
-                $('span', it.parents[i].b.el)
-                    .removeClass('contentSectionTitle3_span')
-                    .addClass('contentSectionTitle1_span');
+                $('a', it.parents[i].b.el.el)
+                    .removeClass('contentSectionTitle3_a');
+                    //.addClass('contentSectionTitle1_a');
+                $('span', it.parents[i].b.el.el)
+                    .removeClass('contentSectionTitle3_span');
+                    //.addClass('contentSectionTitle1_span');
             }
-            $('a', it.b.el)
-                .removeClass('contentSectionTitle3_a')
-                .addClass('contentSectionTitle1_a');
-            $('span', it.b.el)
-                .removeClass('contentSectionTitle3_span')
-                .addClass('contentSectionTitle1_span');
+            $('a', it.b.el.el)
+                .removeClass('contentSectionTitle3_a');
+                //.addClass('contentSectionTitle1_a');
+            $('span', it.b.el.el)
+                .removeClass('contentSectionTitle3_span');
+                //.addClass('contentSectionTitle1_span');
 
             if (t.currentEl_cssItem) $(event.currentTarget).css(t.currentEl_cssItem);
             if (!it) return false;
@@ -318,8 +331,9 @@ class naVividMenu__behavior_defaultColors {
             }
             t.timeout_showSubMenu = {};
 
-            t.prevEl = t.currentEl;
+            t.prevEl = t.currentEl.el;
             if (t.currentEl_cssItem) $(t.prevEl).css(t.currentEl_cssItem);
+            debugger;
             t.currentEl = event.currentTarget;
 
             t.shownChildren[event.currentTarget.id] = event.currentTarget;
@@ -345,7 +359,7 @@ class naVividMenu__behavior_defaultColors {
         });
 
 
-        $(it.b.el).bind('mouseleave', function(event) {
+        $(it.b.el.el).bind('mouseleave', function(event) {
             event.stopPropagation();
 
             var
@@ -374,7 +388,7 @@ class naVividMenu__behavior_defaultColors {
             }
         });
 
-        $(it.b.el).bind('click', function() {
+        $(it.b.el.el).bind('click', function() {
             t.onclick(it);
         });
 
@@ -420,8 +434,7 @@ class naVividMenu__behavior_defaultColors {
             numKids = Object.keys(t.children[itp_idx]).length,
             sqrtNumKids = Math.ceil(Math.sqrt(numKids)),
             h = dim.space2bottom > dim.space2top ? dim.space2bottom : dim.space2top,
-            w = dim.space2left > dim.space2right ? dim.space2left : dim.space2right,
-            numRows = (h/(($(it.b.el).height() + na.d.g.margin))  );
+            w = dim.space2left > dim.space2right ? dim.space2left : dim.space2right;
             if (!$('div#'+t.el.id+'__panel__'+itp_idx)[0]) {
                 var container = document.createElement('div');
                 container.id = t.el.id+'__panel__'+itp_idx;
@@ -432,15 +445,28 @@ class naVividMenu__behavior_defaultColors {
             };
             $(container).css({
                 position : 'absolute',
-                opacity : 0.0001,
-                display : 'block'//,
-                //left : p_bcr.left-tel_bcr.left+(it.level>2?$(it.b.el).width()*.7:10),
-                //top : $(window).height() - 170 -  (p_bcr.height+na.d.g.margin)
+                display : 'block'   ,
+                width : '100%',
+                height : '100%',
+                left : p_bcr.left-tel_bcr.left+(it.level>2?$(it.b.el.el).width()*.7:10),
+                top : $(window).height() - 170 -  (p_bcr.height+na.d.g.margin)
             });
-            if (it.b.el.parentNode.id!==container.id) {
-                if (t.debugMe) na.m.log (20, 'naVividMenu.showMenuItem() : placing "'+it.label+'", parent.id=#'+it.b.el.parentNode.id+' into #'+container.id, false);
-                $(it.b.el).appendTo(container);
+            $(':before', container).css ({
+                position : 'absolute',
+                top : 0,
+                left : 0,
+                background : "url('/NicerAppWebOS/siteMedia/backgrounds/tiled/green/abstract-green-tile-pattern.jpg')",
+                opacity : 0.7
+            });
+            if (!it.b.el.el.parentNode || it.b.el.el.parentNode.id!==container.id) {
+                $(it.b.el.el)
+                    .css ({display : 'none', opacity:1})
+                    .appendTo(container);
+                if (t.debugMe) na.m.log (20, 'naVividMenu.showMenuItem() : placing "'+it.label+'", parent.id=#'+it.b.el.el.parentNode.id+' into #'+container.id, false);
             }
+            var
+            numRows = (h/(($(it.b.el.el).height() + na.d.g.margin))  );
+
 
 
 
@@ -450,8 +476,8 @@ class naVividMenu__behavior_defaultColors {
             //var numRows = Math.ceil(numKids/numColumns);
             //console.log ('t333', numKids, numColumns, numRows);
 
-            $(it.b.el).css({float:'left'});
-            $(container).css ({ left : 10, width : ($(it.b.el).outerWidth() * Math.floor(numColumns)) +  (na.d.g.margin * Math.floor(numColumns)), height : 'auto' });
+            $(it.b.el.el).css({float:'left'});
+            $(container).css ({ left : 10, width : ($(it.b.el.el).outerWidth() * Math.floor(numColumns)) +  (na.d.g.margin * Math.floor(numColumns)), height : 'auto' });
             var bcr = container.getBoundingClientRect();
 //             if (numRows===0) numRows = 1;
 //
@@ -502,10 +528,9 @@ class naVividMenu__behavior_defaultColors {
                 numRows = $('#'+t.el.id+' > .vividMenu_mainUL > li').length;
                 numColumns = 1;
             }
-            if (it.b.el.parentNode.id!==container.id) {
-                debugger;
-                na.m.log (20, 'naVividMenu.showMenuItem() : placing "'+it.label+'", parent.id=#'+it.b.el.parentNode.id+' into #'+container.id, false);
-                $(it.b.el).css({display:'inline-block',position:'absolute'}).appendTo(container);
+            if (it.b.el.el.parentNode.id!==container.id) {
+                na.m.log (20, 'naVividMenu.showMenuItem() : placing "'+it.label+'", parent.id=#'+it.b.el.el.parentNode.id+' into #'+container.id, false);
+                $(it.b.el.el).css({display:'inline-block',position:'absolute'}).appendTo(container);
             }
              //$(it.b.el).detach().appendTo(container);
 
@@ -545,23 +570,23 @@ class naVividMenu__behavior_defaultColors {
         */
         var
         position = (
-            it.b.el.parentNode===document.body
+            it.b.el.el.parentNode===document.body
             ? 'relative'
             : 'relative'
         );
 
         if (t.useFading && useFading) {
         //if (false) {
-            $(it.b.el).css ({
+            $(it.b.el.el).css ({
                 position : position,
                 opacity : 1,
                 display : 'none',
                 float : 'left',
                 zIndex : t.el.style.zIndex + (it.level * 5)
             });
-            $(it.b.el).stop(true,true).fadeIn(t.fadingSpeed);
+            $(it.b.el.el).stop(true,true).fadeIn(t.fadingSpeed);
         } else {
-            $(it.b.el).css ({
+            $(it.b.el.el).css ({
                 opacity : 1,
                 display : 'block',
                 float : 'left',
@@ -611,20 +636,19 @@ class naVividMenu__behavior_defaultColors {
             parentIt = t.items[parentIdx],
             parentKids = parentIt ? t.children[parentIt.idx] : t.children[t.el.id];
 
-            for (var kidsIdx in parentKids) items_prevEl.push(kidsIdx);
+            for (var kidsIdx in parentKids) items_prevEl.push(parseInt(kidsIdx));
         }
 
         if (t.prevEl) {
             items_prevEl.push(t.prevEl);
             var
-            idx = t.prevEl.it.idx,
+            idx = parseInt(t.prevEl.it.idx),
             panelID = '#'+t.el.id+'__panel__'+idx,
             panel = $(panelID)[0];
             //if (panel) items_prevEl.push (panel);
         }
 
-
-
+        debugger;
         if (t.currentEl && t.currentEl.it.parents && t.currentEl.it.parents.length)
         for (var i=0; i < t.currentEl.it.parents.length; i++) {
             var parentIdx = parseInt(t.currentEl.it.parents[i].idx);
@@ -640,7 +664,7 @@ class naVividMenu__behavior_defaultColors {
         if (t.currentEl) {
             items_currentEl.push(t.currentEl);
             var
-            idx = t.currentEl.it.idx,
+            idx = parseInt(t.currentEl.it.idx),
             panelID = '#'+t.el.id+'__panel__'+idx,
             panel = $(panelID)[0];
         }
@@ -672,6 +696,13 @@ class naVividMenu__behavior_defaultColors {
                 t.timeout_hideAll[bp_id] = [];
             };
         }
+
+        /* JUST DON'T!
+        for (var it_id in t.timeout_onmouseout) {
+            clearTimeout (t.timeout_onmouseout[it_id]);
+            delete t.timeout_onmouseout[it_id];
+        }
+        */
     }
 
     showPanel (t, evt, panel, it, pit, dim /* dimensions */, numColumns, numRows, offsetX, offsetY) {
@@ -680,14 +711,12 @@ class naVividMenu__behavior_defaultColors {
         dim2 = t.getDimensions(t, pit.b.el, false),
         i = pit.levelIdx;
         panel.it = pit;
-
-
+        panel.opacity = parseFloat($(panel).css('opacity'));
+        t.cancelHidings(t);
 
         $(panel).css( { height : 'auto' });
-
-
         $(panel).bind('mouseover', function (event) {
-            //t.cancelHidings(t);
+            t.cancelHidings(t);
             //debugger;
             $('#'+t.el.id+'__backPanel').remove();
             t.showBackPanel(t, t.currentEl);
@@ -753,19 +782,20 @@ class naVividMenu__behavior_defaultColors {
             numVer = Math.floor(Object.keys(t.children[pit.idx]).length/numColumns),
             c = t.children[pit.idx],
             k = Object.keys(c),
+            k = k.sort(),
             x1 = c[parseInt(k[0])],
             x2 = c[parseInt(k[k.length-1])],
             cssPanelWidth =
                 t.el.parentNode!==document.body
-                ? ($(x1.b.el).width() * (it.numColumns)) + na.d.g.margin + (na.d.g.margin*it.numColumns)
-                : ($(x1.b.el).width() * (it.numColumns)) + na.d.g.margin + (na.d.g.margin*it.numColumns);
+                ? ($(x1.b.el.el).width() * (it.numColumns)) + na.d.g.margin + (na.d.g.margin*it.numColumns)
+                : ($(x1.b.el.el).width() * (it.numColumns)) + na.d.g.margin + (na.d.g.margin*it.numColumns);
 
             //$(panel).css({width:cssPanelWidth, height : 'auto'}).delay(50);
             var
-            x1_bcr = x1.b.el.getBoundingClientRect(),
-            x2_bcr = x2.b.el.getBoundingClientRect(),
+            x1_bcr = x1.b.el.el.getBoundingClientRect(),
+            x2_bcr = x2.b.el.el.getBoundingClientRect(),
             tel_bcr = t.el.getBoundingClientRect(),
-            itp_bcr = pit.b.el.getBoundingClientRect(),
+            itp_bcr = pit.b.el.el.getBoundingClientRect(),
             offsetX =
                 it.parents && it.parents[0]
                 ? dim.horDirection=='east'
@@ -782,12 +812,12 @@ class naVividMenu__behavior_defaultColors {
                     t.type=='vertical'
                     ? it.level === 1
                         ? 0
-                        : $(it.b.el).outerWidth() * 0.7
+                        : $(it.b.el.el).outerWidth() * 0.7
                     : it.level === 1
                         ? 0
                         : it.level===2
                             ? 0
-                            : ( $(it.b.el).outerWidth() * 0.7 * it.column ) + (2 * it.column * na.d.g.margin )
+                            : ( $(it.b.el.el).outerWidth() * 0.7 * it.column ) + (2 * it.column * na.d.g.margin )
                 )
             ),
             x1t = x1_bcr.top - tel_bcr.top,
@@ -799,18 +829,19 @@ class naVividMenu__behavior_defaultColors {
             var
             cssPanel = {
                 position : 'absolute',
-                border : border,
-                borderRadius : 8,
+                display : 'block',
+                //border : border,
+                //borderRadius : 8,
                 //background : background2a,
-                boxShadow : 'inset 0px 0px 3px 2px rgba(0,0,0,0.8), 4px 4px 2px 2px rgba(0,0,0,0.7)',
+                //boxShadow : 'inset 0px 0px 3px 2px rgba(0,0,0,0.8), 4px 4px 2px 2px rgba(0,0,0,0.7)',
                 height : 'auto',
-                padding : 5,
+                //padding : 5,
 
                 left : (
                     it.level > 2
                     ? dim.horDirection=='east'
                         ? itp_bcr.left
-                            + ($(x2.b.el).outerWidth()*0.85)
+                            + ($(x2.b.el.el).outerWidth()*0.85)
                         : itp_bcr.left
                             - (2 * na.d.g.margin)
 
@@ -829,21 +860,34 @@ class naVividMenu__behavior_defaultColors {
                         : p_bcr.top + 20 + (1.5 * na.d.g.margin)
                 ),
 
-                zIndex : it.b.el.style.zIndex-1
+                zIndex : it.b.el.el.style.zIndex-1
+            },
+            cssPanelPseudo_before = {
+                display : 'block',
+                zIndex : it.b.el.el.style.zIndex-2,
+                position : 'absolute',
+                top : 0,
+                left : 0,
+                width : '100%',
+                height : '100%',
+                background : "url('/NicerAppWebOS/siteMedia/backgrounds/tiled/green/abstract-green-tile-pattern.jpg');",
+                opacity : 0.7
             },
             cssItem = {
-                border : border,
-                boxShadow : 'inset 2px 2px 4px 4px rgba(255,255,255,0.4), 2px 2px 1px 1px rgba(0,0,0,0.55)'
+                //border : border,
+                //boxShadow : 'inset 2px 2px 4px 4px rgba(255,255,255,0.4), 2px 2px 1px 1px rgba(0,0,0,0.55)'
             },
             panelID = it.parents ? t.el.id+'__panel__'+it.parents[0].idx : t.el.id+'__panel__'+t.el.id,
             itID = t.el.id+'__'+pit.idx,
-            html = '<div id="'+panelID+'" class="vividMenu_subMenuPanel">&nbsp;</div>';
+            html = '<div id="'+panelID+'" class="vividMenu_subMenuPanel" lvl="'+it.level+'">&nbsp;</div>';
+            /*
             if (t.percentageFor_rainbowPanels===0) {
                 cssPanel.borderRadius = 0;
                 cssPanel.background = background3;
                 cssPanel.border = '0px solid transparent';
                 cssPanel.boxShadow = 'none';
             };
+            */
             t.currentEl_cssItem = cssItem;
 
             var
@@ -851,19 +895,20 @@ class naVividMenu__behavior_defaultColors {
             kids = [];
             for (var kidIdx=0; kidIdx<itsKids.length; itsKids++) {
                 var itKid = itsKids[kidIdx];
-                kids.push (itKid.b.el);
+                kids.push (itKid.b.el.el);
             }
-            if (t.percentageFor_rainbowPanels>0) $(kids).css(cssItem);
-            t.currentEl_cssItem.border = '2px solid rgba(255,255,255,0.7)';
+            //if (t.percentageFor_rainbowPanels>0) $(kids).css(cssItem);
+            //t.currentEl_cssItem.border = '2px solid rgba(255,255,255,0.7)';
 
-            $(panel).css(cssPanel).css({display:'block'});
+            $(panel).css(cssPanel).addClass('shown');
+            $(':before', panel).css(cssPanelPseudo_before);
             var bcr = container.getBoundingClientRect();
 
             if (bcr.left + bcr.width > $(window).width()) {
                 numRows++;
                 numColumns = Math.floor(numKids/numRows);
                 if (numColumns === 0) numColumns = 1;
-                $(container).css ({ width : ($(it.b.el).outerWidth() * Math.floor(numColumns)) +  (na.d.g.margin * Math.floor(numColumns)), height : 'auto' });
+                $(container).css ({ width : ($(it.b.el.el).outerWidth() * Math.floor(numColumns)) +  (na.d.g.margin * Math.floor(numColumns)), height : 'auto' });
                 var bcr = container.getBoundingClientRect();
             }
             for (var kidIdx=0; kidIdx<itsKids.length; itsKids++) {
@@ -879,9 +924,9 @@ class naVividMenu__behavior_defaultColors {
             );
         }
         if (t.useFading)
-            $(panel).css({opacity:1,display:'none'}).fadeIn(t.fadingSpeed);
+            $(panel).css({opacity:panel.opacity,display:'none'}).fadeIn(t.fadingSpeed);
         else
-            $(panel).css({opacity:1});
+            $(panel).css({opacity:panel.opacity});
     }
 
     showBackPanel (t, el) {
@@ -930,25 +975,13 @@ class naVividMenu__behavior_defaultColors {
         var to = t.timeout_hideAll[bp.id];
         t.timeout_hideAll[bp.id].push( setTimeout(function (t, bp) {
             var hiding = [];
-            $('.vividMenu_item').each(function(idx,button) {
-                var
-                it = t.items[idx],
-                panelID = (it ? t.el.id+'__panel__'+it.idx : null),
-                panel = $('#'+panelID)[0];
+            $('.vividMenu_subMenuPanel').each(function(idx,panel) {
                 if (panel) hiding.push(panel);
-                if (it && (it.level!==1 || $(t.el).is('.noInitialShowing')) && it.b) hiding.push (it.b.el);
             });
 
             $('.vividMenu_backPanel').each(function(idx,el){
                 hiding.push(el);
             });
-
-            $('.vividMenu_item a')
-                .removeClass('contentSectionTitle1_a')
-                .addClass('contentSectionTitle3_a');
-            $('.vividMenu_item span')
-                .removeClass('contentSectionTitle1_span')
-                .addClass('contentSectionTitle3_span');
 
             if (t.useFading) {
                 $(hiding).stop(true,true).fadeOut(t.fadingSpeed);
@@ -970,10 +1003,11 @@ class naVividMenu__behavior_defaultColors {
         t = this,
         vbCheckerID = t.el.id+'_vbChecker',
         bws = na.m.borderWidths($('#'+vbCheckerID)[0]),
+        el = el.el ? el.el : el,
         e = el,//.it && el.it.parentDiv ? el.it.parentDiv : el,
         ebcr = e.getBoundingClientRect(),
         pbcr = (
-            el.it.parentDiv
+            el.it && el.it.parentDiv
             ? el.it.parentDiv.getBoundingClientRect()
             : t.el.getBoundingClientRect()
         ),
@@ -986,13 +1020,18 @@ class naVividMenu__behavior_defaultColors {
             space2top : Math.abs(ebcr.top - bws.top),
             space2bottom : Math.abs(window.innerHeight - ebcr.top - $(e).height() - bws.top - bws.bottom),
         };
-        if (el.it.numColumns) {
-            dim.space2right -= (na.d.g.margin * el.it.numColumns);
-            dim.space2left -= ($(e).width()*el.it.numColumns);
-        };
-        if (el.it.level > 2) {
-            dim.space2right -= ($(e).outerWidth()*0.8);
-            dim.space2left += ($(e).outerWidth()*0.8);
+        if (el.it) {
+            if (el.it.numColumns) {
+                dim.space2right -= (na.d.g.margin * el.it.numColumns);
+                dim.space2left -= ($(e).width()*el.it.numColumns);
+            };
+            if (el.it.level > 2) {
+                dim.space2right -= ($(e).outerWidth()*0.8);
+                dim.space2left += ($(e).outerWidth()*0.8);
+            };
+        } else {
+            dim.space2right -= na.d.g.margin;
+            dim.space2left -= $(e).width();
         };
         dim.bws = bws;
 
@@ -1102,8 +1141,14 @@ class naVividMenu__behavior_defaultColors {
         var
         t = this,
         evt = event,
-        el = event.currentTarget,
-        myKids = t.children[el.parent?el.parent.el.id:el.idx];
+        elDiv   = event.currentTarget,
+        elIdMorphed = elDiv.id.replace('siteMenu__','siteMenu__li__'),
+        el = $('#'+elIdMorphed)[0],
+        myKids = t.children[el.parent?el.parent.el.id:elDiv.idx];
+        //debugger;
+        myKids = myKids.sort(function(a,b){ return a.label - b.label; });
+
+
         if (!el.it) {
             na.m.log (1, '.../logic.vividUserInterface/v6.y.z/2D/vividMenu-5.y.z--behavior-rainbowPanels-1.1.0.js::onMouseOver (event) : #'+el.id+' RETURNED FALSE. RESULT : MELTDOWN! :P');
             return false;
@@ -1121,8 +1166,8 @@ class naVividMenu__behavior_defaultColors {
         t.timeout_onmouseover[el.it.idx] = setTimeout(function(t, el, evt) {
             if (t.debugMe) na.m.log (20, 'naVividMenu.onmouseover() : showing sub-menu for "'+el.it.label+'"', false);
 
-            t.prevDisplayedEl = t.currentEl;
-            t.currentDisplayedEl = t.currentEl;//evt.currentTarget;
+            t.prevDisplayedEl = t.currentEl.el;
+            t.currentDisplayedEl = t.currentEl.el;//evt.currentTarget;
             t.currentDisplayedEl_negativeOffsetY = null;
 
             var
@@ -1132,8 +1177,9 @@ class naVividMenu__behavior_defaultColors {
 
             var
             pit = t.currentEl,
-            it2 = t.items[pit.it.idx],
-            panelID = t.el.id+'__panel__'+pit.it.idx;
+            pidx = pit.it?pit.it.idx:pit.idx,
+            it2 = t.items[pidx],
+            panelID = t.el.id+'__panel__'+pidx;
             //$('#'+panelID).css({display:'block'});
 
 
@@ -1143,38 +1189,34 @@ class naVividMenu__behavior_defaultColors {
                 var
                 it = myKids[i];
 
-                //setTimeout (function(t,it,dim,evt) {
-
-                    var r = t.showMenuItem (t, it, dim, evt);
-                    t.prevDisplayedEl = it.b.el;
-
-                //}, kidIdx * 10, t, it, dim, evt);
+                var r = t.showMenuItem (t, it, dim, evt);
+                t.prevDisplayedEl = it.b.el.el;
             }
-            t.prevDisplayedEl = t.currentEl;
+            t.prevDisplayedEl = t.currentEl.el;
 
             var
             pit = t.currentEl;
-            if (pit && t.children[pit.it.idx]) {
+            if (pit && t.children[pidx]) {
                 var
-                c = t.children[pit.it.idx],
+                c = t.children[pidx],
                 k = Object.keys(c),
-                x1 = t.children[pit.it.idx][parseInt(k[0])],
-                x2 = t.children[pit.it.idx][parseInt(k[k.length-1])];
+                x1 = t.children[pidx][parseInt(k[0])],
+                x2 = t.children[pidx][parseInt(k[k.length-1])];
 
                 if (r && r.it.idx === x2.idx) {
                     var
-                    it2 = t.items[pit.it.idx],
-                    panelID = t.el.id+'__panel__'+pit.it.idx,
+                    it2 = t.items[pidx],
+                    panelID = t.el.id+'__panel__'+pidx,
                     html = '<div id="'+panelID+'" class="vividMenu_subMenuPanel">&nbsp;</div>',
                     panel = $('#'+panelID);
                     if (!panel[0]) t.childPanels[it2.idx] = $(t.el).append(html);
                     panel = $('#'+panelID)[0];
-                    panel.it = pit.it;
+                    panel.it = c[0].parent.it;
 
                     t.showPanel (
-                        t, event, panel, r.it, pit.it, r.dim, r.numColumns, (r.numKids / r.numColumns),
-                        $(x1.b.el).offset().left - $(t.el).offset().left,
-                        $(x1.b.el).offset().top - $(t.el).offset().top
+                        t, event, panel, r.it, c[0].parent.it, r.dim, r.numColumns, (r.numKids / r.numColumns),
+                        $(x1.b.el.el).offset().left - $(t.el).offset().left,
+                        $(x1.b.el.el).offset().top - $(t.el).offset().top
                     );
                 }
             }
@@ -1184,27 +1226,30 @@ class naVividMenu__behavior_defaultColors {
     }
 
     onmouseout (event) {
+
         var toHide = this.mustHide (this, this.currentEl.it, event);
         this.onmouseout_do(event, toHide);
         return true;
+
 
         /*
         var t = this, el = event.currentTarget;
         if (!t.timeout_onmouseout) t.timeout_onmouseout = {};
 
-        if (t.timeout_onmouseout[el.it.idx]) clearTimeout (t.timeout_onmouseout[el.it.idx]);
-        t.timeout_onmouseout[el.it.idx] = setTimeout (function(t, evt) {
+        if (t.timeout_onmouseout[parseInt(el.it.idx)]) clearTimeout (t.timeout_onmouseout[el.it.idx]);
+        t.timeout_onmouseout[parseInt(el.it.idx)] = setTimeout (function(t, evt) {
             var toHide = t.mustHide (t, t.currentEl.it, evt);
             if (t.currentEl.it.level > 1 || $(t.el).is('.noInitialShowing')) {
                 if (t.debugMe) na.m.log (20, 'naVividMenu.onmouseout() : hiding sub-menu for "'+toHide.currentEl[0].it.label+'"', false);
+                debugger;
                 if (
-                    toHide.currentEl[0].length>0
+                    toHide.currentEl.length>0
                     || toHide.prevEl.length>0
                 ) {
                     t.onmouseout_do(evt, toHide);
                 }
             }
-        }, 250, t, event);
+        }, 750, t, event);
         */
     }
 
@@ -1411,13 +1456,21 @@ class naVividMenu__behavior_defaultColors {
 
                 var dit = t.children[it.parents[i].idx];
                 for (var dita in dit) {
-                    rootPath.push (dit[dita].b.el);
-                    if (dit[dita].parent && dit[dita].parent.it) {
+                    dita = parseInt(dita);
+                    debugger;
+                    //rootPath.push (dit[dita].b.el);
+                    while (dita >= 0 && dit[dita].parent && dit[dita].parent.it) {
                         var panel =
                             $('#'+t.el.id+'__panel__'+dit[dita].parent.it.idx);
 
                         if (panel[0] && !rootPath.includes(panel[0]))
                             rootPath.push (panel[0]);
+
+                        dita = dit[dita] && dit[dita].parent && dit[dita].parent.it ? parseInt(dit[dita].parent.it.idx) : null;
+                        if (dita===0) {
+                            rootPath.push ($('#'+t.el.id+'__panel__0')[0]);
+                            break;
+                        }
                     }
                 }
             }
@@ -1426,7 +1479,9 @@ class naVividMenu__behavior_defaultColors {
         var currs =
             $('.vividMenu_item')
             .add('.vividMenu_subMenuPanel')
-            .add(prevKids)
+            .add(prevKids);
+        debugger;
+        currs = currs
             .not(myKids)
             .not(rootLevel)
             .not('#'+t.el.id+'__panel__'+t.el.id)
@@ -1434,6 +1489,7 @@ class naVividMenu__behavior_defaultColors {
             .not(rootPath);
         //console.log ('hiding', currs);
 
+        debugger;
         if (t.useFading) {
             $(currs).stop(true,true).fadeOut(t.fadingSpeed);
         } else {
@@ -1444,7 +1500,7 @@ class naVividMenu__behavior_defaultColors {
 
 
     onclick(it) {
-        var a = $(it.b.el).children('a');
+        var a = $(it.b.el.el).children('a');
         if (
             typeof a.attr('windowName') == 'string'
             && a.attr('windowName')!==''
@@ -1452,6 +1508,7 @@ class naVividMenu__behavior_defaultColors {
             window.open(a.attr('href'),a.attr('windowName')).focus();
         } else {
             var href = a.attr('href');
+            debugger;
             if (href.match(/javascript:/)) eval(href.replace('javascript:','')); else window.location.href = href;
         }
     }

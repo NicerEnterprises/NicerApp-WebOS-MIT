@@ -283,7 +283,7 @@ class naThemeEditor {
                             var
                             d = data.selected[i],
                             rec = data.instance.get_node(d),
-                            btn = na.c.buttons['#btnSelectBackgroundImage'];
+                            btn = na.s.c.buttons['#btnSelectBackgroundImage'];
 
                             $('#documentTitle').val(rec.original.text);
                             na.te.s.c.selectedTreeNode = rec;

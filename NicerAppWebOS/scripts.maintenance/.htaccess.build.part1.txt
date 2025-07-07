@@ -80,15 +80,13 @@ Options +FollowSymLinks
             #
             #### someone's comment to another person's post :
             #
-            # "username" : "Guest",
+            # "username" : "Rene AJM Veerman",
             # "dataID" : "cAsD",
-            # "view" : "{$aDifferentViewID}",
+            # "view" : "{$aViewID}",
             # "appParameters" : [
             #     {
-            #         "{$differentAppName}" : {
-            #             "username" : "{$username}", # the username of the person being replied to.
-            #             "dataID" : "{$dataID}", # the dataID of the post.
-            #             "commentID" : "{$commentID}"
+            #         "{$someAppName}" : {
+            #             "dataID" : "{$dataID}" # the dataID of the post being replied to.
             #         ",
             #         ...
             #     },
@@ -113,7 +111,7 @@ Options +FollowSymLinks
                 # the theme settings are listed in a field with name 'theme', which contains data like what's
                 # defined in and returned by the function
                 # .../NicerAppWebOS/logic.business/class.core.WebsiteOperatingSystem-5.y.z.php::getPageCSS()
-                # but which is to be overlayed *ontop* of the data provided that is provided as the default set of
+                # but which is to be overlayed *on top* of the data provided that is provided as the default set of
                 # specificity and theme data for the rendering, using key names like 'before_0' to indicate that a certain
                 # sub-array should be inserted at the very start of the array provided by getPageCSS().
                 #

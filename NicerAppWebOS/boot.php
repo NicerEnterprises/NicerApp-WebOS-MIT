@@ -25,7 +25,9 @@ NicerApp WebOS from Nicer Enterprises
     global $naSettings;
     global $rootPath_na;
     try {
-        $dcFolderName= basename(realpath(dirname(__FILE__).'/..'));
+        //echo '<pre>'; var_dump ($_SERVER); die();
+        //OLD WAY : $dcFolderName= basename(realpath(dirname(__FILE__).'/../..'));
+        $dcFolderName = basename($_SERVER['DOCUMENT_ROOT']);
 
         // TODO : Place $settingsFilePath file in
         //  dirname(__FILE__).'/PHPserverConfigs/hostname.DOMAIN_TLD/settings.JSON
@@ -68,7 +70,7 @@ NicerApp WebOS from Nicer Enterprises
     //echo '<h1>'.$rootPath_na.'</h1>';
     require_once($rootPath_na.'/NicerAppWebOS/lib_duration.php');
     require_once($rootPath_na.'/NicerAppWebOS/functions.php');
-    require_once($rootPath_na.'/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.errorHandler.php');
+    require_once($rootPath_na.'/NicerAppWebOS/logic.business/class.NicerAppWebOS.errorHandler.php');
     //echo '<h2>'.$rootPath_na.'</h2>';
     $naDebugAll = true;
     global $naDebugAll;
@@ -91,7 +93,7 @@ NicerApp WebOS from Nicer Enterprises
     ini_set ('log_errors', true);
     //var_dump (["test1a"=>true]); echo PHP_EOL; exit();
 
-    require_once($rootPath_na.'/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.log.php');
+    require_once($rootPath_na.'/NicerAppWebOS/logic.business/class.NicerAppWebOS.log.php');
 
     $rootPath_na_dbs = $rootPath_na.'/NicerAppWebOS/logic.databases/generalizedDatabasesAPI-1.0.0';
     require_once ($rootPath_na_dbs.'/class.database_API.php');
@@ -126,7 +128,7 @@ NicerApp WebOS from Nicer Enterprises
     //require_once($rootPath_na.'/NicerAppWebOS/3rd-party/birke/rememberme/src/LoginResult.php'); // small change of my own in the birke-rememberme modern encrypted login system for web 4.0.
 
     // the main() class
-    require_once($rootPath_na.'/NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php');
+    require_once($rootPath_na.'/NicerAppWebOS/logic.business/class.NicerAppWebOS.php');
     //echo 'ohhNo'.$rootPath_na; exit();
 
     global $naIP;
