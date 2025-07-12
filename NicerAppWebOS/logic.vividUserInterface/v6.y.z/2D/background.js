@@ -28,7 +28,7 @@ na.background = na.bg = {
                     //          .../NicerAppWebOS/logic.business-5.8.z/class.NicerAppWebOS.php
                     //             :://TODO 1
                     //debugger;
-                    settings.naSite.globals.domain = 'nicer.app-5.8.0-alpha001d';
+                    settings.naSite.globals.domain = 'nicer.app-5.9.0';
 
                     /*
                     t.next ('#siteBackground', null, null, false, function() {
@@ -83,6 +83,7 @@ na.background = na.bg = {
         var t = na.background;
         if (!div) div = '#siteBackground';
         if (!callStack) callStack = '';
+        if (!callback) callback = na.site.saveTheme;
         if (!search) search = t.settings.backgroundSearchKey;
         if (!search) {
             search = 'landscape';

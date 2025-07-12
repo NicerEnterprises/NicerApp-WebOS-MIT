@@ -982,7 +982,7 @@ class naThemeEditor {
     onclick  (el) {
         if (!el) return false;
         if (na.te.s.c.selectedButtonID) {
-            var b = na.c.buttons['#'+na.te.s.c.selectedButtonID];
+            var b = na.site.c.buttons['#'+na.te.s.c.selectedButtonID];
             if (b) b.deselect();
         }
         

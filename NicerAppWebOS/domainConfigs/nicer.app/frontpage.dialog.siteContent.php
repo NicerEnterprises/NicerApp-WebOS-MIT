@@ -24,7 +24,7 @@
         Best viewed in Chrome, Chromium based browsers or FireFox or Edge.
         </blockquote>
         <p>
-        This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS-MIT" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px;">5th major version, 5.8.0-alpha001d to be exact</span></a> of this software.
+        This is the <a href="https://github.com/NicerEnterprises/NicerApp-WebOS-MIT" class="contentSectionTitle3_a1 nomod noPushState" target="NicerEnterprises---NicerApp-WebOS---on---GitHub-dot-com"><span class="contentSectionTitle3_a1" style="box-shadow:none; padding:0px;margin:0px;">5th major version, 5.9.0 in it's alpha-001A mode, to be exact</span></a> of this software.
         </p>
         <p>
         You should disable your VPN (if you can), or at least for this website. VPNs significantly reduce loading speed for websites like these, rich in graphics and client-side user-interface code.
@@ -74,10 +74,12 @@
     <div style="width:40%;margin:8px;padding:8px;border-radius:5px;background:rgba(250, 233, 52,0.35);box-shadow:0px 0px 8px 4px rgba(0,0,0,0.631), 2px 2px 2px rgba(0,0,0,0.7);line-height:1.5em">
         <p style="background:none;">
         <a href="https://nicer.app" target="naHP">https://nicer.app</a>, <a href="https://said.by" target="sbHP">https://said.by</a>, <a href="https://zoned.at" target="zAt">https://zoned.at</a>, <a href="https://github.com/NicerEnterprises" target="githubNicerEnterprises">https://github.com/NicerEnterprises</a>, in addition to ALL of the content listed on and/or hosted by the cloudhosting service companies, online forums and social media accounts that I use (or have ever used), are ENTIRELY
-        Copyrighted (C) and Owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
+        Copyrighted (C) and Owned by <a href="mailto:rene.veerman.netherlands@gmail.com" target="_new" class="nomod noPushState">Rene A.J.M. Veerman a.k.a. Gavan P.U.R.A. Hoverswell &lt;rene.veerman.netherlands@gmail.com&gt;</a>.<br/>
         </p>
 
         <p style="background:none;"><a href="https://x.com/ReneVeerma64021">https://x.com/ReneVeerma64021</a>.</p>
+        <p style="background:none;"><a href="https://youtube.com/@Rene-AJM-Veerman">https://youtube.com/@Rene-AJM-Veerman</a>.</p>
+        <iframe src="https://nicer.app/zelfies-50-007ATF-Gavan-PURA-Hoverswell" style="width:400px;height:1000px;"></iframe>
     </div>
 
 

@@ -204,6 +204,7 @@ na.site = {
                     };
                     na.m.waitForCondition ('site.6.y.z.js::initialize()::t.reloadMenu (callback::) : na.m.desktopIdle? + 500ms?', na.desktopIdle, function() {
                         //setTimeout (function() {
+                        /*
                             na.te.onload('siteContent');
                             t.setSpecificity();
 
@@ -217,6 +218,7 @@ na.site = {
                                 na.desktop.resize(na.site.delayedReloadMenu); // .resize() is delayed with clearTimeout() and setTimeout() - independent of .delayedReloadMenu
                             };
 
+                        */
                         //}, 100);
                     }, 100);
 
@@ -250,11 +252,10 @@ na.site = {
                             setTimeout (function(){
                                 na.background.next('#siteBackground');
                             }, 60 * 1000)
-                            na.background.next('#siteBackground');
+                            //na.background.next('#siteBackground');
 
                             na.te.onload('siteContent');
                             t.setSpecificity();
-
                         }, 500);
 
 
@@ -2396,15 +2397,15 @@ na.site = {
                 na.site.globals.themeSpecificityName === na.site.globals.themesDBkeys[i].specificityName
                 || na.site.globals.specificityName === na.site.globals.themesDBkeys[i].specificityName
             );
-            debugger;
             if (selectMe) {
                 //debugger;
                 $(divEl).addClass('selected');
                 //$('.na_themes_dropdown__specificity > .vividDropDownBox_selected').html (na.site.globals.specificityName);
                 na.site.globals.themeDBkeys = na.site.globals.themesDBkeys[i];
-                na.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
+                na.site.loadTheme_applySettings (na.site.globals.themes[na.site.globals.themeName]);
                 $('.na_themes_dropdown__specificity > .vividDropDownBox_selected').html (na.site.globals.themeDBkeys.specificityName);
                 na.te.settings.current.specificity = na.site.globals.themeDBkeys;
+                break;
             };
 
             //debugger;
@@ -3246,11 +3247,11 @@ debugger;
             regExApps = /#app__(.*)__(.*)$/;
             if (divSel.match(regExDialogs)) {
                 var divName = divSel.match(regExDialogs)[1];
-                if (!themeData.themeSettings['dialogs'][divName])
-                    themeData.themeSettings['dialogs'][divName] = { css : {} };
-                themeData.themeSettings['dialogs'][divName]['css'] =
+                if (!themeData.themeSettings['Dialogs'][divName])
+                    themeData.themeSettings['Dialogs'][divName] = { css : {} };
+                themeData.themeSettings['Dialogs'][divName]['css'] =
                     $.extend (
-                        themeData.themeSettings['dialogs'][divName]['css'],
+                        themeData.themeSettings['Dialogs'][divName]['css'],
                         na.site.fetchTheme (divSel)
                     );
             } else if (divSel.match(regExApps)) {

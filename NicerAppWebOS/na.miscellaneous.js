@@ -637,7 +637,7 @@ na.m = {
 
             };
             for (var k in a) {
-                if (k=='conditions') debugger;
+                //if (k=='conditions') debugger;
                 if (!cmd.refs.includes(a[k])) {
                     var v = a[k];
                     cd.at = a;

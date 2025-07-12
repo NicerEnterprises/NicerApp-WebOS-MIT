@@ -1546,11 +1546,13 @@ class NicerAppWebOS {
         $viewFolder = '[UNKNOWN VIEW]';
 
         //echo '<pre>$this->view='; var_dump ($this->view); exit();
-        if (is_array($this->view)) {
+        if (is_array($this->view) && !is_null($this->view)) {
             foreach ($this->view as $viewFolder => $viewSettings) break;
             //$viewFolder = preg_replace('/.*\//','', $viewFolder);
-            //var_dump ($viewFolder); exit();
+            //echo '<pre>'; var_dump ($this->view); exit();
             $url = '/view/'.base64_encode_url(json_encode($this->view));
+
+            //if ($viewFolder=='/') $url = '/';
         } /*else if (array_key_exists('REQUEST_URI',$_SERVER)) {
             // use defaults if not in proper format (when URL uses HTTP URL parameters for instance)..
             $viewName = '[front page]';
@@ -1575,11 +1577,12 @@ class NicerAppWebOS {
                 strpos($_SERVER['REQUEST_URI'], 'pageSpecificSettings.php')===false
             )
         ) {
-            if (is_array($this->view)) {
+            if (is_array($this->view) && !is_null($this->view)) {
                 foreach ($this->view as $viewFolder => $viewSettings) break;
                 //$viewFolder = preg_replace('/.*\//','', $viewFolder);
                 //var_dump ($viewFolder); exit();
                 $url = '/view/'.base64_encode_url(json_encode($this->view));
+                //if ($viewFolder=='/') $url = '/';
             } /*else if (array_key_exists('REQUEST_URI',$_SERVER)) {
                 // use defaults if not in proper format (when URL uses HTTP URL parameters for instance)..
                 $viewName = '[front page]';
@@ -1895,7 +1898,7 @@ class NicerAppWebOS {
                     ],
                     'specificityName' => 'app \''.$appName.'\' for user '.$username101,
                     'app' => $viewFolder,
-                    'user' => $username100,
+                    'user' => $username101,
                     'display' => true
                 );
                 $selectorNames[] = 'app \''.$appName.'\' for user '.$username101;
@@ -1906,7 +1909,7 @@ class NicerAppWebOS {
                     ],
                     'specificityName' => 'app \''.$appName.'\' for user '.$username101.' at the client',
                     'app' => $viewFolder,
-                    'user' => $username100,
+                    'user' => $username101,
                     'ip' => $naIP,
                     'display' => true
                 );
@@ -1923,7 +1926,7 @@ class NicerAppWebOS {
                 ],
                 'specificityName' => 'current page for user '.$username101,
                 'url' => $url,
-                'user' => $username100,
+                'user' => $username101,
                 'display' => true
             );
             $selectorNames[] = 'current page for user '.$username101;
@@ -1936,7 +1939,7 @@ class NicerAppWebOS {
                 ],
                 'specificityName' => 'current page for user '.$username101.' at the client',
                 'url' => $url,
-                'user' => $username100,
+                'user' => $username101,
                 'ip' => $naIP,
                 'display' => true
             );
@@ -1962,15 +1965,15 @@ class NicerAppWebOS {
         $hasJS = false;
         $hasCSS = false;
 
-        /*
+
         if ($debug) {
             $dbg1a = [
                 '$hasJS' => $hasJS,
                 '$hasCSS' => $hasCSS,
                 '$selectors' => $selectors
             ];
-            echo '<pre>';var_dump ($dbg1a); exit();
-        }*/
+            echo '<pre style="color:green;">';var_dump ($dbg1a); echo '</pre>';
+        }
         return [
             //'selectorNames' => $selectorNames,
             'selectors' => $selectors//,
@@ -2115,7 +2118,7 @@ class NicerAppWebOS {
                 'sort' => [['lastUsed'=>'desc']],
                 'use_index' => '_design/5a5ca56d9824edad32284bf01bc7fb3838fa049c'
             );
-            /*
+
             $findCommand = array (
                 'selector' => $sel,
                 'fields' => [ '_id', 'lastUsed' ],
@@ -2126,10 +2129,10 @@ class NicerAppWebOS {
             $findCommand = array (
                 'selector' => $sel,
                 'fields' => [ '_id', 'user', 'role', 'view', 'app', 'url', 'specificityName', 'ip', 'lastUsed' ],
-                'sort' => [['lastUsed'=>'asc']],
-            /'use_index' => 'sortIndex_lastUsed'
+                'sort' => [['lastUsed'=>'asc']]//   ,
+            //'use_index' => 'sortIndex_lastUsed'
                // 'use_index' => 'primaryIndex'
-            );*/
+            );
             try {
                 $call = $this->dbs->findConnection('couchdb')->cdb->find ($findCommand);
             } catch (Exception $e) {
@@ -2143,7 +2146,7 @@ class NicerAppWebOS {
                 echo $msg;
                 exit();
             }
-            if ($debug) echo 'HTTP status==='.$call->headers->_HTTP->status.', count($call->body->docs)==='.count($call->body->docs).'!<br/>';
+            if ($debug)  {echo 'HTTP status==='.$call->headers->_HTTP->status.', count($call->body->docs)==='.count($call->body->docs).'!<br/>'; };
 
             $hasRecord = false;
             $rets = [];

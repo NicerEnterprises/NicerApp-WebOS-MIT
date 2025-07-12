@@ -32,7 +32,7 @@ class naVividMenu__behavior_defaultColors {
         t.theme = $(el).attr('theme');
         t.type = $(el).attr('type') === 'vertical' ? 'vertical' : 'horizontal';
         t.debugMe = true;
-        t.useDelayedShowingAndHiding = true;
+        t.useDelayedShowingAndHiding = false;
         t.useFading = true;
         t.fadingSpeed = 'fast';
         t.sensitivitySpeed = 400;
@@ -1227,12 +1227,14 @@ class naVividMenu__behavior_defaultColors {
 
     onmouseout (event) {
 
+        /*
         var toHide = this.mustHide (this, this.currentEl.it, event);
         this.onmouseout_do(event, toHide);
         return true;
+        */
 
 
-        /*
+
         var t = this, el = event.currentTarget;
         if (!t.timeout_onmouseout) t.timeout_onmouseout = {};
 
@@ -1249,8 +1251,8 @@ class naVividMenu__behavior_defaultColors {
                     t.onmouseout_do(evt, toHide);
                 }
             }
-        }, 750, t, event);
-        */
+        }, 1500, t, event);
+
     }
 
     onmouseout_do (event, toHide) {
@@ -1375,6 +1377,7 @@ class naVividMenu__behavior_defaultColors {
         if (toHide.currentEl[0]) {
             var myKids2 = t.children[toHide.currentEl[0].it.idx];
 
+            /*
             for (var kidIdx in myKids2) {
                 var it2 = myKids2[kidIdx];
                 if (it2.b) {
@@ -1382,23 +1385,25 @@ class naVividMenu__behavior_defaultColors {
                     myKids.push (it2.b.el);
 
                 };
-            }
+            }*/
 
             currPanel = $('#'+t.el.id+'__panel__'+toHide.currentEl[0].it.idx)[0];
             myKids.push (currPanel);
 
+            /*
             if (
                 toHide.currentEl[0].it.parents
                 && toHide.currentEl[0].it.parents[0]
             ) {
                 currPanel = $('#'+t.el.id+'__panel__'+toHide.currentEl[0].it.parents[0].idx)[0];
                 myKids.push (currPanel);
-            }
+            }*/
         }
 
         var myPeers = [];
         var prevKids = [];
         var prevPeers = [];
+        /*
         if (
             toHide.currentEl[0]
             && toHide.currentEl[0].it.parents && toHide.currentEl[0].it.parents.length > 0
@@ -1431,7 +1436,7 @@ class naVividMenu__behavior_defaultColors {
                     if (it3 && it3.b) prevKids.push (it3.b.el);
                 }
             }
-        }
+        }*/
 
         if (
             toHide.currentEl[0]
@@ -1440,61 +1445,45 @@ class naVividMenu__behavior_defaultColors {
             && t.prevEl.it.parents && t.prevEl.it.parents.length > 0
         ) {
             var prevKids_idxs = t.children[t.prevEl.it.idx];
+            /*
             for (var peerIdx in prevKids_idxs) {
                 var it2 = prevKids_idxs[peerIdx];
                 if (it2.b) prevKids.push (it2.b.el);
-            }
+            }*/
             var panel = $('#'+t.el.id+'__panel__'+t.prevEl.it.idx);
             if (panel[0]) prevKids.push (panel[0]);
         }
 
         var rootPath = [];
+        var panel = $('#'+t.el.id+'__panel__'+it.idx);
+        if (panel[0]) rootPath.push (panel[0]);
         if (it.parents && it.parents.length > 0) {
             for (var i=0; i < it.parents.length; i++) {
                 var panel = $('#'+t.el.id+'__panel__'+it.parents[i].idx);
                 if (panel[0]) rootPath.push (panel[0]);
-
-                var dit = t.children[it.parents[i].idx];
-                for (var dita in dit) {
-                    dita = parseInt(dita);
-                    debugger;
-                    //rootPath.push (dit[dita].b.el);
-                    while (dita >= 0 && dit[dita].parent && dit[dita].parent.it) {
-                        var panel =
-                            $('#'+t.el.id+'__panel__'+dit[dita].parent.it.idx);
-
-                        if (panel[0] && !rootPath.includes(panel[0]))
-                            rootPath.push (panel[0]);
-
-                        dita = dit[dita] && dit[dita].parent && dit[dita].parent.it ? parseInt(dit[dita].parent.it.idx) : null;
-                        if (dita===0) {
-                            rootPath.push ($('#'+t.el.id+'__panel__0')[0]);
-                            break;
-                        }
-                    }
-                }
             }
         }
 
-        var currs =
-            $('.vividMenu_item')
-            .add('.vividMenu_subMenuPanel')
-            .add(prevKids);
-        debugger;
-        currs = currs
-            .not(myKids)
-            .not(rootLevel)
-            .not('#'+t.el.id+'__panel__'+t.el.id)
-            .not(myPeers)
-            .not(rootPath);
-        //console.log ('hiding', currs);
+        //if (t.timeout_hidingPrevs) clearTimeout (t.timeout_hidingPrevs);
+        //t.timeout_hidingPrevs = setTimeout (function (prevKids, myKids) {
+            var currs =
+                //$('.vividMenu_item')
+                $('.vividMenu_subMenuPanel')
+                .add(prevKids)
+                .not(myKids)
+                //.not(rootLevel)
+                .not('#'+t.el.id+'__panel__'+t.el.id)
+                //.not(myPeers)
+                .not(rootPath);
+            //console.log ('hiding', currs);
 
-        debugger;
-        if (t.useFading) {
-            $(currs).stop(true,true).fadeOut(t.fadingSpeed);
-        } else {
-            $(currs).css({display:'none'});
-        }
+            debugger;
+            if (t.useFading) {
+                $(currs).stop(true,true).fadeOut(t.fadingSpeed);
+            } else {
+                $(currs).css({display:'none'});
+            }
+        //}, t.sensitivitySpeed * 2.5, prevKids, myKids);
 
     }
 
@@ -1508,7 +1497,6 @@ class naVividMenu__behavior_defaultColors {
             window.open(a.attr('href'),a.attr('windowName')).focus();
         } else {
             var href = a.attr('href');
-            debugger;
             if (href.match(/javascript:/)) eval(href.replace('javascript:','')); else window.location.href = href;
         }
     }
